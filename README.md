@@ -1,12 +1,41 @@
 
 # Report factory
 
+## The report factory in a nutshell 
+
 The report factory is a lightweight infrastructure for compiling multiple `.Rmd`
 reports stored in a dedicated folder, with naming conventions enforcing the date
 of the report to be part of the file name. Each compiled report is rendered
 using `rmarkdown::render`, and newly created files are stored into a dedicated,
 time-stamped folder. Several functions facilitate this workflow, and allow to
 compile all documents, or only the most recent reports.
+
+
+## Motivation
+
+Some projects may require different types of analyses to be run repeatedly over
+time, for instance due to updates in data and inputs. 
+
+While `rmkardown::render` is becoming a standard for compiling a single analysis
+document, a number of issues remain: one needs to keep track of different
+version of the data/inputs, of the analysis code itself, and of different
+versions of the ouputs.
+
+The *report factory* aims to facilitate these tasks by:
+
+- defining a report as an explicitely dated `.Rmd` file
+- providing functions to compile all reports, using by default the most recent
+  versions
+- storing each report output in a separate, time-stamp folder
+- maintaining compatibility with basic workflows, i.e. all reports can still be
+  directly compiled using `rmarkdown::render()` for testing purposes (although
+  one should make sure to remove the outputs afterwards)
+- keeping things simple: no configuration files, no handling of potential
+  dependencies between reports, no caching
+- git-friendly: the factory is compatible with git-based workflows, with
+  produced outputs being ignored by git
+
+
 
 
 ## Components of the factory
@@ -22,7 +51,7 @@ compile all documents, or only the most recent reports.
   `[report_base_name]_[yyyy-mm-dd]/compiled_[timestamp]/`
 
 - `R/`, `DESCRIPTION`: part of the package structure (the factory itself is a
-  package)
+  package); this will soon be externalised
 
 
 ## Referring external files in reports
