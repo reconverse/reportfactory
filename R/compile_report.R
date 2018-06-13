@@ -1,17 +1,11 @@
 
-## Run this script to recompile all reports
-if (!require("here")) {
-  stop("package 'here' is not installed")
-}
-
-
-
-
-
 ## This function will compile a report for a given date, entered as format
 ## yyyy-mm-dd, e.g. 2018-06-13
 
 compile_report <- function(date) {
+  if (!require("here")) {
+    stop("package 'here' is not installed")
+  }
 
   shorthand <- paste0(date, ".Rmd")
   rmd_path <- dir(here::here("report_sources"),
@@ -47,44 +41,5 @@ compile_report <- function(date) {
     destination <- paste(output_dir, file, sep = "/")
     file.rename(file, destination)
   }
-
-}
-
-
-
-## Compile all documents, or the most recent one
-
-## all: logical, if TRUE all documents are recompiled, otherwise only the most
-## recent one is
-
-update_reports <- function(all = FALSE) {
-
-  report_sources <- dir(here("report_sources"), pattern = ".Rmd$")
-  dates <- sub("^.*_", "", report_sources)
-  dates <- sub("[.]Rmd$", "", dates)
-
-  if (all) {
-    lapply(dates, compile_report)
-  } else {
-    latest <- as.character(max(as.Date(dates)))
-    compile_report(latest)
-  }
-
-}
-
-
-
-
-
-last_report <- function() {
-
-  report_sources <- dir(here("report_sources"), pattern = ".Rmd$")
-  dates <- sub("^.*_", "", report_sources)
-  dates <- sub("[.]Rmd$", "", dates)
-  last_date <- as.character(max(as.Date(dates)))
-  out <- dir(here(), recursive = TRUE, pattern = last_date)
-  out <- unique(sub("~$", "", out))
-  out <- out[-grep("^data/", out)]
-  out
 
 }
