@@ -1,5 +1,5 @@
 ---
-title: "Modelling further incidence of the Ebola Virus Disease (EVD) outbreak in Nikoro, DRC"
+title: "Modelling further incidence of the Ebola Virus Disease (EVD) outbreak in Bikoro, DRC"
 author: "Thibaut Jombart, Adom San Koffi for the DRC Incident Management Team, Kinshasa"
 date: '`r format(Sys.time(), "%d %B, %Y")`'
 output: html_document

@@ -1,5 +1,11 @@
 
 ## Run this script to recompile all reports
+if (!require("here")) {
+  stop("package 'here' is not installed")
+}
+
+
+
 
 
 ## This function will compile a report for a given date, entered as format
@@ -11,6 +17,8 @@ compile_report <- function(date) {
   rmd_path <- dir(here::here("report_sources"),
                   pattern = paste0(shorthand, "$"),
                   full.names = TRUE)
+  base_name <- sub("^.*/", "", rmd_path)
+  base_name <- sub("_[0-9]{4}-[0-9]{2}-[0-9]{2}.Rmd", "", base_name)
 
   odir <- getwd()
   on.exit(setwd(odir))
@@ -29,7 +37,8 @@ compile_report <- function(date) {
                        files_before)
 
   datetime <- sub(" ", "_", as.character(Sys.time()))
-  report_dir <- paste(here("report_outputs/report"), date, sep = "_")
+  report_dir <- paste0(here("report_outputs"),
+                       "/", base_name, "_", date)
   dir.create(report_dir)
   output_dir <- paste0(report_dir, "/compiled_", datetime)
   dir.create(output_dir)
@@ -49,10 +58,6 @@ compile_report <- function(date) {
 ## recent one is
 
 update_reports <- function(all = FALSE) {
-  if (!require("here")) {
-    stop("package 'here' is not installed")
-  }
-
 
   report_sources <- dir(here("report_sources"), pattern = ".Rmd$")
   dates <- sub("^.*_", "", report_sources)
@@ -64,5 +69,22 @@ update_reports <- function(all = FALSE) {
     latest <- as.character(max(as.Date(dates)))
     compile_report(latest)
   }
+
+}
+
+
+
+
+
+last_report <- function() {
+
+  report_sources <- dir(here("report_sources"), pattern = ".Rmd$")
+  dates <- sub("^.*_", "", report_sources)
+  dates <- sub("[.]Rmd$", "", dates)
+  last_date <- as.character(max(as.Date(dates)))
+  out <- dir(here(), recursive = TRUE, pattern = last_date)
+  out <- unique(sub("~$", "", out))
+  out <- out[-grep("^data/", out)]
+  out
 
 }
