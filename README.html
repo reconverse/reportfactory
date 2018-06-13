@@ -222,26 +222,26 @@ named after their sources, with appended date and time of compilation</p></li>
 <h2>Updating reports</h2>
 
 <p>Provided all paths in the <code>.Rmd</code> sources are specified using <code>here()</code>, the
-compilation using the following approach should work. The script
-<code>compile_reports.R</code> contains all useful functions for compiling documents.
-<code>update_reports()</code> will identify the latest version of the report in
-<code>report_sources</code>, compile it, and move all resulting files in a separate folder
-in <code>report_outputs</code>. To update the latest report:</p>
+compilation using the following approach should work. <code>update_reports()</code> will
+identify the latest version of the report in <code>report_sources</code>, compile it, and
+move all resulting files in a separate folder in <code>report_outputs</code>. To update the
+latest report:</p>
 
-<pre><code class="r">source(&quot;compile_reports.R&quot;)
-update_reports()
+<pre><code class="r">devtools::load_all()
+update_reports(quiet = TRUE)
 </code></pre>
 
 <p>to recompile all reports:</p>
 
-<pre><code class="r">source(&quot;compile_reports.R&quot;)
-update_reports(all = TRUE)
+<pre><code class="r">devtools::load_all()
+update_reports(all = TRUE, quiet = TRUE)
 </code></pre>
 
 <p>Alternatively, to compile the latest report one can execute the script
 <code>./update_reports</code> on a linux environment.</p>
 
-<p>Note that manual compilation of each document can still be done the usual way, using <code>rmarkdown::render</code>.</p>
+<p>Note that manual compilation of each document can still be done the usual way,
+using <code>rmarkdown::render</code>.</p>
 
 <p><br> <br></p>
 
