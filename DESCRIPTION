@@ -10,5 +10,6 @@ URL: https://github.com/thibautjombart/sitrep_factory
 BugReports: https://github.com/thibautjombart/sitrep_factory/issues
 RoxygenNote: 6.0.1
 Imports:
-    here
+    here,
+    stringr
 VignetteBuilder: knitr

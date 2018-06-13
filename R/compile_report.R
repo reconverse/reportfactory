@@ -1,18 +1,41 @@
 
-## This function will compile a report for a given date, entered as format
-## yyyy-mm-dd, e.g. 2018-06-13
+## This function will compile a report whose path or short name is provided.
 
-compile_report <- function(date) {
+#' @param file the full path, or a partial, unambiguous match for the Rmd
+#'   report to be compiled
+#'
+#' @param ... further arguments passed to \code{rmarkdown::render}
+#'
+
+compile_report <- function(file, ...) {
   if (!require("here")) {
     stop("package 'here' is not installed")
   }
 
-  shorthand <- paste0(date, ".Rmd")
-  rmd_path <- dir(here::here("report_sources"),
-                  pattern = paste0(shorthand, "$"),
-                  full.names = TRUE)
+  if (length(file) > 1L) {
+    stop("more than one report asked from 'compile_report'")
+  }
+
+  rmd_path <- grep(".Rmd",
+                   dir(here::here("report_sources"),
+                       recursive = TRUE, pattern = file,
+                       full.names = TRUE),
+                   value = TRUE)
+
+  if (length(rmd_path) == 0L) {
+    stop(sptrinf("cannot find a source file for %s", file))
+  }
+
   base_name <- sub("^.*/", "", rmd_path)
-  base_name <- sub("_[0-9]{4}-[0-9]{2}-[0-9]{2}.Rmd", "", base_name)
+  base_name <- sub(".[0-9]{4}-[0-9]{2}-[0-9]{2}.Rmd", "", base_name)
+  date <- extract_date(file)
+  if (is.na(date)) {
+    stop(
+      sprintf("cannot identify a date in format yyyy-mm-dd in %s", file)
+      )
+  }
+
+  shorthand <- paste0(base_name, "_", date)
 
   odir <- getwd()
   on.exit(setwd(odir))
@@ -22,7 +45,7 @@ compile_report <- function(date) {
   files_before <- unique(sub("~$", "", files_before))
 
   cat("/// compiling report:", shorthand, "\n")
-  rmarkdown::render(rmd_path)
+  rmarkdown::render(rmd_path, ...)
   cat("/// report", shorthand, "done\n")
 
   files_after <- dir(here::here("report_sources"))
@@ -33,7 +56,7 @@ compile_report <- function(date) {
   datetime <- sub(" ", "_", as.character(Sys.time()))
   report_dir <- paste0(here("report_outputs"),
                        "/", base_name, "_", date)
-  dir.create(report_dir)
+  dir.create(report_dir, showWarnings = FALSE)
   output_dir <- paste0(report_dir, "/compiled_", datetime)
   dir.create(output_dir)
 
