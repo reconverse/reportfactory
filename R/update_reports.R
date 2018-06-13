@@ -4,20 +4,27 @@
 ## all: logical, if TRUE all documents are recompiled, otherwise only the most
 ## recent one is
 
-update_reports <- function(all = FALSE) {
+update_reports <- function(all = FALSE, ...) {
   if (!require("here")) {
     stop("package 'here' is not installed")
   }
 
-  report_sources <- dir(here("report_sources"), pattern = ".Rmd$")
-  dates <- sub("^.*_", "", report_sources)
-  dates <- sub("[.]Rmd$", "", dates)
+  odir <- getwd()
+  on.exit(setwd(odir))
+
+  report_sources <- list_reports()
+  dates <- extract_date(report_sources)
+  types <- extract_base(report_sources)
 
   if (all) {
-    lapply(dates, compile_report)
+    lapply(report_sources, compile_report, ...)
   } else {
-    latest <- as.character(max(as.Date(dates)))
-    compile_report(latest)
+    sources_by_type <- split(report_sources, types)
+    for (e in sources_by_type) {
+      index_latest <- which.max(as.Date(extract_date(e)))
+      compile_report(e[index_latest], ...)
+    }
   }
 
+  invisible(NULL)
 }

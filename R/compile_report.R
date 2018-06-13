@@ -26,8 +26,7 @@ compile_report <- function(file, ...) {
     stop(sptrinf("cannot find a source file for %s", file))
   }
 
-  base_name <- sub("^.*/", "", rmd_path)
-  base_name <- sub(".[0-9]{4}-[0-9]{2}-[0-9]{2}.Rmd", "", base_name)
+  base_name <- extract_base(rmd_path)
   date <- extract_date(file)
   if (is.na(date)) {
     stop(
@@ -44,9 +43,9 @@ compile_report <- function(file, ...) {
   files_before <- dir()
   files_before <- unique(sub("~$", "", files_before))
 
-  cat("/// compiling report:", shorthand, "\n")
+  cat(sprintf("\n/// compiling report: '%s'", shorthand))
   rmarkdown::render(rmd_path, ...)
-  cat("/// report", shorthand, "done\n")
+  cat(sprintf("\n/// '%s' done!\n", shorthand))
 
   files_after <- dir(here::here("report_sources"))
   files_after <- unique(sub("~$", "", files_after))
