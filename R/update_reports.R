@@ -1,13 +1,33 @@
+#' Compile reports within the factory
+#'
+#' This function is used to compile several reports stored in the factory,
+#' inside the \code{report_sources} folder (or any subfolder within). Outputs
+#' will be generated in a named and time-stamped directory within
+#' \code{report_outputs}. By default, only the most recent version of each
+#' report is compiled, but an option permits to compile all reports. Reports are
+#' expected to be \code{rmarkdown} documents (\code{.Rmd} extension), named
+#' using the following convention: \code{[name]_[date].Rmd}, where \code{date}
+#' must have the format \code{yyy-mm-dd}, for instance 2018-12-01 for the 1st
+#' December 2018; \code{[name]} should be any explicit name, without blank
+#' spaces or accentuated characters. For instance,
+#' \code{bird_phylogeny_2017-04-01.Rmd} or \code{estimation_R_2018-02-04.Rmd}
+#' are good file names.
+#'
+#' @export
+#'
+#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
+#' 
+#' @param all a logical indicating if all reports should be compiled; it
+#'   defaults to \code{FALSE}, in which case only the latest versions of each
+#'   reports will be compuled.
+#'
+#' @param quiet a logical indicating if messages from rmarkdown compilation
+#'   should be displayed; \code{FALSE} by default.
+#'
+#' @param ... further arguments passed to \code{rmarkdown::render}.
+#'
 
-## Compile all documents, or the most recent one
-
-## all: logical, if TRUE all documents are recompiled, otherwise only the most
-## recent one is
-
-update_reports <- function(all = FALSE, ...) {
-  if (!require("here")) {
-    stop("package 'here' is not installed")
-  }
+update_reports <- function(all = FALSE, quiet = TRUE, ...) {
 
   odir <- getwd()
   on.exit(setwd(odir))

@@ -14,12 +14,12 @@
 #'   report to be compiled.
 #'
 #' @param quiet a logical indicating if messages from rmarkdown compilation
-#'   should be displayed; \code{FALSE} by default.
+#'   should be displayed; \code{TRUE} by default.
 #'
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 
-compile_report <- function(file, quiet = TRUE, ...) {
+compile_report <- function(file, quiet = FALSE, ...) {
   if (!require("here")) {
     stop("package 'here' is not installed")
   }

@@ -4,14 +4,14 @@
 \alias{compile_report}
 \title{Compile an rmarkdown report}
 \usage{
-compile_report(file, quiet = TRUE, ...)
+compile_report(file, quiet = FALSE, ...)
 }
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
 report to be compiled.}
 
 \item{quiet}{a logical indicating if messages from rmarkdown compilation
-should be displayed; \code{FALSE} by default.}
+should be displayed; \code{TRUE} by default.}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }
