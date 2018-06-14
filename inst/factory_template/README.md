@@ -41,20 +41,17 @@ How to run the factory: useful commands
 Suggested workflow
 ------------------
   
-1. create a new factory using `new_factory()`
-
-2. set the working directory to this new folder; note that you can do both in
-   one go using `setwd(new_factory())`
+1. create a new factory using `new_factory()` and move into this new folder
    
-3. go to `report_sources/`, write your `.Rmd` report, using the provided
+2. go to `report_sources/`, write your `.Rmd` report, using the provided
    examples as inspiration; remove the examples files; make sure you use the
    naming conventions explained above, e.g. `foobar_2018-01-25.Rmd`.
 
-4. check your report by compiling the `.Rmd` manually if needed,
+3. check your report by compiling the `.Rmd` manually if needed,
    e.g. `rmarkdown::render("foobar_2018-01-25.Rmd")`; once you are happy with the
    results, **make sure you remove all output files from the source folder**
    
-5. run `update_reports()` to generate all outputs, or
+4. run `update_reports()` to generate all outputs, or
    `compile_report("foobar_2018-01-25")` if you just want to produce
    time-stamped outputs for this report; check results in the folder
    `report_outputs`
