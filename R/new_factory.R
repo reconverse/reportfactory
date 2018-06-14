@@ -3,7 +3,11 @@
 #' This function can be used to create a new report factory, using a template
 #' containing data and associated reports as examples. The provided examples use
 #' (simulated) infectious disease data, but any other data analysis would work
-#' the same. The factory includes:
+#' the same. See details for the content of the factory
+#'
+#' @details
+#' The factory includes:
+#' 
 #' \itemize{
 #'
 #'  \item \code{data/}: a folder storing data, with subfolders for
@@ -23,11 +27,11 @@
 #'
 #' @param destination the name of the report factory folder to be created
 #' 
-#' @param include_example a logical indicating if examples of reports shoud be
+#' @param include_examples a logical indicating if examples of reports shoud be
 #'   added to the factory; defaults to \code{TRUE}
 #'
 #' @param move_in a logical indicating if the current session should move into
-#'   the created factory; defaults to \code{FALSE}
+#'   the created factory; defaults to \code{TRUE}
 #'
 #' @export
 #'
@@ -35,7 +39,7 @@
 #' 
 new_factory <- function(destination = "new_factory",
                         include_examples = TRUE,
-                        move_in = FALSE) {
+                        move_in = TRUE) {
   template_path <- system.file("factory_template", package = "reportfactory")
 
   dir.create(destination)
@@ -65,7 +69,6 @@ new_factory <- function(destination = "new_factory",
 
   if (move_in) {
     setwd(destination)
-    here::here(".")
   }
   
   return(destination)

@@ -6,11 +6,14 @@ Authors@R: c(person("Thibaut", "Jombart", role = c("aut", "cre"), email =
   "thibautjombart@gmail.com"))
 Description: Scripts for compiling reports using \code{rmarkdown::render}.
 License: MIT + file LICENSE
-URL: https://github.com/thibautjombart/sitrep_factory
-BugReports: https://github.com/thibautjombart/sitrep_factory/issues
+URL: https://github.com/thibautjombart/reportfactory
+BugReports: https://github.com/thibautjombart/reportfactory/issues
 RoxygenNote: 6.0.1
 Imports:
-    here,
     rmarkdown,
+    rprojroot,
     stringr
+Suggests:
+    here,
+    knitr
 VignetteBuilder: knitr

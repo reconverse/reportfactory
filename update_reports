@@ -1,3 +1,0 @@
-#!/usr/bin/env Rscript
-source("sitrep_factory.R")
-update_reports()

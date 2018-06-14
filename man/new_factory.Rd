@@ -5,16 +5,42 @@
 \title{Create a new report factory}
 \usage{
 new_factory(destination = "new_factory", include_examples = TRUE,
-  move_in = FALSE)
+  move_in = TRUE)
 }
 \arguments{
 \item{destination}{the name of the report factory folder to be created}
 
-\item{move_in}{a logical indicating if the current session should move into
-the created factory; defaults to \code{FALSE}}
-
-\item{include_example}{a logical indicating if examples of reports shoud be
+\item{include_examples}{a logical indicating if examples of reports shoud be
 added to the factory; defaults to \code{TRUE}}
+
+\item{move_in}{a logical indicating if the current session should move into
+the created factory; defaults to \code{TRUE}}
+}
+\description{
+This function can be used to create a new report factory, using a template
+containing data and associated reports as examples. The provided examples use
+(simulated) infectious disease data, but any other data analysis would work
+the same. See details for the content of the factory
+}
+\details{
+The factory includes:
+
+\itemize{
+
+ \item \code{data/}: a folder storing data, with subfolders for
+ \code{contacts} and \code{linelists} (two types of epidemiological data),
+ and \code{.xlsx} files within these folders
+
+ \item \code{report_sources/}: a folder storing the reports, named after the
+convention described in \code{\link{update_reports}}, and stored in
+subfolders \code{contacts} and \code{epicurves}
+
+ \item \code{.gitignore}: a file used to tell git to ignore the produced
+outputs in \code{report_outputs}
+
+ \item \code{.here}: an empty file used as anchor by \code{\link[here]{here}}
+
+}
 }
 \author{
 Thibaut Jombart \email{thibautjombart@gmail.com}

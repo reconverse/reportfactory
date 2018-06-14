@@ -37,12 +37,12 @@ update_reports <- function(all = FALSE, quiet = TRUE, ...) {
   types <- extract_base(report_sources)
 
   if (all) {
-    lapply(report_sources, compile_report, ...)
+    lapply(report_sources, compile_report, quiet = quiet, ...)
   } else {
     sources_by_type <- split(report_sources, types)
     for (e in sources_by_type) {
       index_latest <- which.max(as.Date(extract_date(e)))
-      compile_report(e[index_latest], ...)
+      compile_report(e[index_latest], quiet = quiet, ...)
     }
   }
 

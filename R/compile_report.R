@@ -34,7 +34,7 @@ compile_report <- function(file, quiet = FALSE, ...) {
   file_dir <- locate_file_directory(rmd_path)
 
   if (length(rmd_path) == 0L) {
-    stop(sptrinf("cannot find a source file for %s", file))
+    stop(sprintf("cannot find a source file for %s", file))
   }
 
   base_name <- extract_base(rmd_path)
@@ -75,8 +75,6 @@ compile_report <- function(file, quiet = FALSE, ...) {
   dir.create(report_dir, showWarnings = FALSE)
   output_dir <- paste0(report_dir, "/compiled_", datetime)
   dir.create(output_dir)
-
-  ##browser()
  
   for (file in new_files) {
     destination <- paste(output_dir, file, sep = "/")
