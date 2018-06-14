@@ -65,8 +65,8 @@ compile_report <- function(file, quiet = TRUE, ...) {
                        files_before)
   new_files <- unique(c(new_files, output_file))
 
-  if (!dir.exists(here::here("report_ouputs"))) {
-    dir.create(here::here("report_ouputs"))
+  if (!dir.exists(here::here("report_outputs"))) {
+    dir.create(here::here("report_outputs"))
   }
   
   datetime <- sub(" ", "_", as.character(Sys.time()))
