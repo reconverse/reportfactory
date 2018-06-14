@@ -16,22 +16,6 @@ the created factory; defaults to \code{FALSE}}
 \item{include_example}{a logical indicating if examples of reports shoud be
 added to the factory; defaults to \code{TRUE}}
 }
-\details{
-\item \code{data/}: a folder storing data, with subfolders for
- \code{contacts} and \code{linelists} (two types of epidemiological data),
- and \code{.xlsx} files within these folders
-
-\item \code{report_sources/): a folder storing the reports, named after the
-convention described in \code{\link{update_reports}}, and stored in
-subfolders \code{contacts} and \code{epicurves}
-
-\item \code{.gitignore}: a file used to tell git to ignore the produced
-outputs in \code{report_outputs}
-
-\item \code{.here}: an empty file used as anchor by \code{\link[here]{here}}
-
-}
-}
 \author{
 Thibaut Jombart \email{thibautjombart@gmail.com}
 }

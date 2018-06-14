@@ -10,7 +10,7 @@
 #'  \code{contacts} and \code{linelists} (two types of epidemiological data),
 #'  and \code{.xlsx} files within these folders
 #'
-#'  \item \code{report_sources/): a folder storing the reports, named after the
+#'  \item \code{report_sources/}: a folder storing the reports, named after the
 #' convention described in \code{\link{update_reports}}, and stored in
 #' subfolders \code{contacts} and \code{epicurves}
 #'
@@ -65,7 +65,7 @@ new_factory <- function(destination = "new_factory",
 
   if (move_in) {
     setwd(destination)
-    ## here::here(".")
+    here::here(".")
   }
   
   return(destination)

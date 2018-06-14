@@ -9,7 +9,7 @@
 #' 
 
 list_reports <- function() {
-  out <- dir(root_file("report_sources"),
+  out <- dir(find_file("report_sources"),
              recursive = TRUE, pattern = ".Rmd$",
              full.names = TRUE)
   out <- gsub(".*/", "", out)

@@ -26,10 +26,12 @@ compile_report <- function(file, quiet = FALSE, ...) {
   }
 
   rmd_path <- grep(".Rmd",
-                   dir(root_file("report_sources"),
+                   dir(find_file("report_sources"),
                        recursive = TRUE, pattern = file,
                        full.names = TRUE),
                    value = TRUE)
+  
+  file_dir <- locate_file_directory(rmd_path)
 
   if (length(rmd_path) == 0L) {
     stop(sptrinf("cannot find a source file for %s", file))
@@ -47,32 +49,35 @@ compile_report <- function(file, quiet = FALSE, ...) {
 
   odir <- getwd()
   on.exit(setwd(odir))
-  setwd(root_file("report_sources"))
+  setwd(file_dir)
 
-  files_before <- dir()
+  files_before <- dir(recursive = TRUE)
   files_before <- unique(sub("~$", "", files_before))
 
   cat(sprintf("\n/// compiling report: '%s'", shorthand))
   output_file <- rmarkdown::render(rmd_path, quiet = quiet, ...)
   cat(sprintf("\n/// '%s' done!\n", shorthand))
 
-  files_after <- dir(root_file("report_sources"))
+  files_after <- dir(recursive = TRUE)
   files_after <- unique(sub("~$", "", files_after))
   new_files <- setdiff(files_after,
                        files_before)
-  new_files <- unique(c(new_files, output_file))
+  new_files <- c(new_files, sub(file_dir, "", output_file))
+  new_files <- unique(new_files)
 
-  if (!dir.exists(root_file("report_outputs"))) {
-    dir.create(root_file("report_outputs"))
+  if (!dir.exists(find_file("report_outputs"))) {
+    dir.create(find_file("report_outputs"))
   }
   
   datetime <- sub(" ", "_", as.character(Sys.time()))
-  report_dir <- paste0(root_file("report_outputs"),
+  report_dir <- paste0(find_file("report_outputs"),
                        "/", base_name, "_", date)
   dir.create(report_dir, showWarnings = FALSE)
   output_dir <- paste0(report_dir, "/compiled_", datetime)
   dir.create(output_dir)
 
+  ##browser()
+ 
   for (file in new_files) {
     destination <- paste(output_dir, file, sep = "/")
     file.rename(file, destination)
