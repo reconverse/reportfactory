@@ -20,16 +20,13 @@
 #'
 
 compile_report <- function(file, quiet = FALSE, ...) {
-  if (!require("here")) {
-    stop("package 'here' is not installed")
-  }
 
   if (length(file) > 1L) {
     stop("more than one report asked from 'compile_report'")
   }
 
   rmd_path <- grep(".Rmd",
-                   dir(here::here("report_sources"),
+                   dir(root_file("report_sources"),
                        recursive = TRUE, pattern = file,
                        full.names = TRUE),
                    value = TRUE)
@@ -50,7 +47,7 @@ compile_report <- function(file, quiet = FALSE, ...) {
 
   odir <- getwd()
   on.exit(setwd(odir))
-  setwd(here::here("report_sources"))
+  setwd(root_file("report_sources"))
 
   files_before <- dir()
   files_before <- unique(sub("~$", "", files_before))
@@ -59,18 +56,18 @@ compile_report <- function(file, quiet = FALSE, ...) {
   output_file <- rmarkdown::render(rmd_path, quiet = quiet, ...)
   cat(sprintf("\n/// '%s' done!\n", shorthand))
 
-  files_after <- dir(here::here("report_sources"))
+  files_after <- dir(root_file("report_sources"))
   files_after <- unique(sub("~$", "", files_after))
   new_files <- setdiff(files_after,
                        files_before)
   new_files <- unique(c(new_files, output_file))
 
-  if (!dir.exists(here::here("report_outputs"))) {
-    dir.create(here::here("report_outputs"))
+  if (!dir.exists(root_file("report_outputs"))) {
+    dir.create(root_file("report_outputs"))
   }
   
   datetime <- sub(" ", "_", as.character(Sys.time()))
-  report_dir <- paste0(here("report_outputs"),
+  report_dir <- paste0(root_file("report_outputs"),
                        "/", base_name, "_", date)
   dir.create(report_dir, showWarnings = FALSE)
   output_dir <- paste0(report_dir, "/compiled_", datetime)

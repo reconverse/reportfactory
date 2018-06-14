@@ -2,4 +2,5 @@
 
 export(compile_report)
 export(list_reports)
+export(new_factory)
 export(update_reports)

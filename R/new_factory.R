@@ -65,7 +65,7 @@ new_factory <- function(destination = "new_factory",
 
   if (move_in) {
     setwd(destination)
-    here::set_here(".", verbose = FALSE)
+    ## here::here(".")
   }
   
   return(destination)
