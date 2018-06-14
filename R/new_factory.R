@@ -26,41 +26,47 @@
 #' @param include_example a logical indicating if examples of reports shoud be
 #'   added to the factory; defaults to \code{TRUE}
 #'
+#' @param move_in a logical indicating if the current session should move into
+#'   the created factory; defaults to \code{FALSE}
+#'
 #' @export
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #' 
 new_factory <- function(destination = "new_factory",
-                        include_examples = TRUE) {
-  path_to_template <- system.file("factory_template", package = "reportfactory")
+                        include_examples = TRUE,
+                        move_in = FALSE) {
+  template_path <- system.file("factory_template", package = "reportfactory")
 
-  odir <- getwd()
-  on.exit(setwd(odir))
- 
   dir.create(destination)
 
   ## copy files: .here, .gitignore
   file.copy(
-    dir(path_to_template, pattern = ".here", full.names = TRUE),
+    dir(template_path, pattern = "here", full.names = TRUE, all.files = TRUE),
     destination, copy.mode = TRUE)
   file.copy(
-    dir(path_to_template, pattern = ".gitignore", full.names = TRUE),
+    dir(template_path, pattern = "gitignore", full.names = TRUE, all.files = TRUE),
     destination, copy.mode = TRUE)
   file.copy(
-    dir(path_to_template, pattern = "README", full.names = TRUE),
+    dir(template_path, pattern = "README", full.names = TRUE),
     destination, copy.mode = TRUE)
   
   ## copy folders
   if (include_examples) {
     file.copy(
-      dir(path_to_template, pattern = "data", full.names = TRUE),
+      dir(template_path, pattern = "data", full.names = TRUE),
       destination, copy.mode = TRUE, recursive = TRUE)
     file.copy(
-      dir(path_to_template, pattern = "report_sources", full.names = TRUE),
+      dir(template_path, pattern = "report_sources", full.names = TRUE),
       destination, copy.mode = TRUE, recursive = TRUE)
   } else {
     dir.create("report_sources")
   }
 
+  if (move_in) {
+    setwd(destination)
+    here::set_here(".", verbose = FALSE)
+  }
+  
   return(destination)
 }
