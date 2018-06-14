@@ -36,7 +36,28 @@
 #' @export
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
+#'
+#' @examples
+#' destination <- file.path(tempdir(), "new_factory")
+#' destination
+#' new_factory(destination)
+#' dir()
 #' 
+#' ## check content
+#' list_reports()
+#' list_outputs()
+#'
+#' 
+#' ## compile a single report:
+#' 
+#' compile_report("contacts_2017-10-29", quiet = TRUE)
+#' list_outputs()
+#' 
+#' ## compile all reports (only most recent versions):
+#' 
+#' update_reports()
+#' list_outputs()
+
 new_factory <- function(destination = "new_factory",
                         include_examples = TRUE,
                         move_in = TRUE) {
