@@ -1,13 +1,14 @@
 ---
 title: "Example of epicurve analysis"
 author: Yourname Here
-date: 2017-10-27
+date: 2017-10-28
 ---
 
 	
 ```{r options, include = FALSE, message = FALSE, warning = FALSE, error = FALSE}
 library(knitr)
-opts_chunk$set(collapse = TRUE)
+opts_chunk$set(collapse = TRUE, dev = c("png", "pdf"),
+               fig.width = 8, fig.height = 6, dpi = 150)
 ```
 
 
@@ -57,5 +58,47 @@ case, the 27th October 2017:
 i <- incidence(linelist$onset, last_date = as.Date("2017-10-27"))
 i
 plot(i)
+```
+
+
+
+# Statistical analyses
+
+## Log-linear model
+
+We try and fit a log-linear model to these data:
+
+```{r fit}
+f <- fit(i)
+f
+plot(i, fit = f)
+```
+
+
+
+## Estimation of transmissibility ($R$)
+
+We use `earlyR` for estimating the reproduction number $R$:
+
+```{r estimate-R, echo = FALSE}
+
+library(earlyR)
+
+## serial interval parameters
+mu <- 15.3 # mean in days
+sigma <- 9.3 # standard deviation in days
+
+R <- get_R(i, si_mean = mu, si_sd = sigma, max_R = 10)
+
+```
+
+You can visualise the results as follows:
+
+```{r plot-r}
+R
+plot(R)
+plot(R, "lambdas")
+abline(v = linelist$onset, lty = 2)
+
 ```
 

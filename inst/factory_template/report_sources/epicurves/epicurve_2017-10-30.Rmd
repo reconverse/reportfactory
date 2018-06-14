@@ -7,7 +7,8 @@ date: 2017-10-30
 	
 ```{r options, include = FALSE, message = FALSE, warning = FALSE, error = FALSE}
 library(knitr)
-opts_chunk$set(collapse = TRUE)
+opts_chunk$set(collapse = TRUE, dev = c("png", "pdf"),
+               fig.width = 8, fig.height = 6, dpi = 150)
 ```
 
 
