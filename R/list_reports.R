@@ -1,3 +1,12 @@
+#' List reports in the factory
+#'
+#' This function can be used to list available reports stored in the factory, in
+#' inside the \code{report_sources} folder (or any subfolder within).
+#'
+#' @export
+#'
+#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
+#' 
 
 list_reports <- function() {
   out <- dir(here::here("report_sources"),
