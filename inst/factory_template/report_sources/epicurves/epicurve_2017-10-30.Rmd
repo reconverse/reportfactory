@@ -121,14 +121,16 @@ proj <- project(i, R = R$R_ml, si = R$si, n_sim = 200, n_days = 21)
 proj
 ```
 
-We plot the results separately, then add them to the epicurve:
+We plot the results separately, then add them to the epicurve (requires the
+development version of `projections`):
 
 ```{r proj_plot}
-library(magrittr)
-library(ggplot2)
-plot(proj, boxplots = TRUE)
+if (packageVersion("projections") >= "0.3.0") {
+  library(magrittr)
+  library(ggplot2)
+  plot(proj, boxplots = TRUE)
 
-plot(i) %>% add_projections(proj, quantiles = c(.025, .5)) + scale_x_date()
-
+  plot(i) %>% add_projections(proj, quantiles = c(.025, .5)) + scale_x_date()
+}
 ```
 
