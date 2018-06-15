@@ -83,6 +83,14 @@ The main features of the package include:
 
 - **`list_outputs()`**: will list available outputs
 
+- **`list_deps()`**: will list packages needed in the reports; use the option
+  `missing = TRUE` to list only packages that are missing and need to be
+  installed
+
+- **`install_deps()`**: will install packages needed in the reports; by default,
+  only install missing packages; use `update = TRUE` to force the install of all
+  packages
+
 - **`compile_report()`**: compiles one specific report (name to be
   matched against the output of `list_reports()`
   
@@ -125,9 +133,9 @@ library(reportfactory)
 
 destination <- file.path(tempdir(), "new_factory")
 destination
-#> [1] "/tmp/RtmpxVYm9g/new_factory"
+#> [1] "/tmp/Rtmpqz9eom/new_factory"
 new_factory(destination)
-#> [1] "/tmp/RtmpxVYm9g/new_factory"
+#> [1] "/tmp/Rtmpqz9eom/new_factory"
 dir()
 #> [1] "data"           "README.md"      "report_sources"
 ```
@@ -143,6 +151,11 @@ list_reports()
 #> [5] "epicurve_2017-10-28.Rmd" "epicurve_2017-10-30.Rmd"
 list_outputs()
 #> character(0)
+list_deps() # list all needed packages
+#> [1] "earlyR"      "epicontacts" "ggplot2"     "here"        "incidence"  
+#> [6] "knitr"       "magrittr"    "projections" "readxl"
+list_deps(missing = TRUE) # list only missing ones
+#> character(0)
 ```
 
 To compile a single report, one can use:
@@ -154,7 +167,7 @@ compile_report("contacts_2017-10-29", quiet = TRUE)
 #> /// compiling report: 'contacts_2017-10-29'
 #> /// 'contacts_2017-10-29' done!
 list_outputs()
-#> [1] "contacts_2017-10-29/compiled_2018-06-14_19:49:36/contacts_2017-10-29.html"
+#> [1] "contacts_2017-10-29/compiled_2018-06-15_14-21-18/contacts_2017-10-29.html"
 ```
 
 To compile all reports (only most recent versions), use:
@@ -167,9 +180,9 @@ update_reports()
 #> /// compiling report: 'epicurve_2017-10-30'
 #> /// 'epicurve_2017-10-30' done!
 list_outputs()
-#> [1] "contacts_2017-10-29/compiled_2018-06-14_19:49:36/contacts_2017-10-29.html"
-#> [2] "contacts_2017-11-01/compiled_2018-06-14_19:49:37/contacts_2017-11-01.html"
-#> [3] "epicurve_2017-10-30/compiled_2018-06-14_19:49:41/epicurve_2017-10-30.html"
+#> [1] "contacts_2017-10-29/compiled_2018-06-15_14-21-18/contacts_2017-10-29.html"
+#> [2] "contacts_2017-11-01/compiled_2018-06-15_14-21-20/contacts_2017-11-01.html"
+#> [3] "epicurve_2017-10-30/compiled_2018-06-15_14-21-23/epicurve_2017-10-30.html"
 ```
 
 

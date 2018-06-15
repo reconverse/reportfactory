@@ -7,7 +7,7 @@
 #'
 #' @details
 #' The factory includes:
-#' 
+#'
 #' \itemize{
 #'
 #'  \item \code{data/}: a folder storing data, with subfolders for
@@ -26,7 +26,7 @@
 #' }
 #'
 #' @param destination the name of the report factory folder to be created
-#' 
+#'
 #' @param include_examples a logical indicating if examples of reports shoud be
 #'   added to the factory; defaults to \code{TRUE}
 #'
@@ -38,25 +38,31 @@
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
 #' @examples
+#'
+#' \dontrun{
 #' destination <- file.path(tempdir(), "new_factory")
 #' destination
 #' new_factory(destination)
 #' dir()
-#' 
+#'
 #' ## check content
 #' list_reports()
 #' list_outputs()
 #'
-#' 
+#' ## check dependencies
+#' list_deps()
+#' install_deps()
+#'
 #' ## compile a single report:
-#' 
+#'
 #' compile_report("contacts_2017-10-29", quiet = TRUE)
 #' list_outputs()
-#' 
+#'
 #' ## compile all reports (only most recent versions):
-#' 
+#'
 #' update_reports()
 #' list_outputs()
+#' }
 
 new_factory <- function(destination = "new_factory",
                         include_examples = TRUE,
@@ -75,7 +81,7 @@ new_factory <- function(destination = "new_factory",
   file.copy(
     dir(template_path, pattern = "README", full.names = TRUE),
     destination, copy.mode = TRUE)
-  
+
   ## copy folders
   if (include_examples) {
     file.copy(
@@ -91,6 +97,6 @@ new_factory <- function(destination = "new_factory",
   if (move_in) {
     setwd(destination)
   }
-  
+
   return(destination)
 }

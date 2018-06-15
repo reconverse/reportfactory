@@ -43,6 +43,8 @@ outputs in \code{report_outputs}
 }
 }
 \examples{
+
+\dontrun{
 destination <- file.path(tempdir(), "new_factory")
 destination
 new_factory(destination)
@@ -52,6 +54,9 @@ dir()
 list_reports()
 list_outputs()
 
+## check dependencies
+list_deps()
+install_deps()
 
 ## compile a single report:
 
@@ -62,6 +67,7 @@ list_outputs()
 
 update_reports()
 list_outputs()
+}
 }
 \author{
 Thibaut Jombart \email{thibautjombart@gmail.com}
