@@ -66,7 +66,7 @@ To install the development version of the package, use:
 
 
 ```r
-devtools::install_github("thibautjombart/reportfactory")
+devtools::install_github("reconhub/reportfactory")
 ```
 
 Note that this requires the package *devtools* installed.
@@ -233,7 +233,7 @@ minimum infrastructure (`report_sources/` and other files).
 
 See details of contributions on:
 <br>
-https://github.com/thibautjombart/reportfactory/contributors
+https://github.com/reconhub/reportfactory/contributors
 
 
 Contributions are welcome via **pull requests**.

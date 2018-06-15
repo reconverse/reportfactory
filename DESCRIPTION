@@ -6,8 +6,8 @@ Authors@R: c(person("Thibaut", "Jombart", role = c("aut", "cre"), email =
   "thibautjombart@gmail.com"))
 Description: Scripts for compiling reports using \code{rmarkdown::render}.
 License: MIT + file LICENSE
-URL: https://github.com/thibautjombart/reportfactory
-BugReports: https://github.com/thibautjombart/reportfactory/issues
+URL: https://github.com/reconhub/reportfactory
+BugReports: https://github.com/reconhub/reportfactory/issues
 RoxygenNote: 6.0.1
 Imports:
     checkpoint,
