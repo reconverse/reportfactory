@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
-#' 
+#'
 #' @param file the full path, or a partial, unambiguous match for the Rmd
 #'   report to be compiled.
 #'
@@ -30,7 +30,7 @@ compile_report <- function(file, quiet = FALSE, ...) {
                        recursive = TRUE, pattern = file,
                        full.names = TRUE),
                    value = TRUE)
-  
+
   file_dir <- locate_file_directory(rmd_path)
 
   if (length(rmd_path) == 0L) {
@@ -68,14 +68,15 @@ compile_report <- function(file, quiet = FALSE, ...) {
   if (!dir.exists(find_file("report_outputs"))) {
     dir.create(find_file("report_outputs"))
   }
-  
+
   datetime <- sub(" ", "_", as.character(Sys.time()))
+  datetime <- gsub(":", "-", datetime)
   report_dir <- paste0(find_file("report_outputs"),
                        "/", base_name, "_", date)
   dir.create(report_dir, showWarnings = FALSE)
   output_dir <- paste0(report_dir, "/compiled_", datetime)
   dir.create(output_dir)
- 
+
   for (file in new_files) {
     destination <- paste(output_dir, file, sep = "/")
     file.rename(file, destination)
