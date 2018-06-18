@@ -1,4 +1,9 @@
 
+<img src="https://raw.githubusercontent.com/reconhub/reportfactory/master/artwork/workflow.png" width="100%">
+
+<br>
+
+
 [![Travis-CI Build Status](https://travis-ci.org/reconhub/reportfactory.svg?branch=master)](https://travis-ci.org/reconhub/reportfactory)
 [![Build status](https://ci.appveyor.com/api/projects/status/7h2mgej230dv5r7w/branch/master?svg=true)](https://ci.appveyor.com/project/thibautjombart/reportfactory/branch/master)
 [![Coverage Status](https://codecov.io/github/reconhub/reportfactory/coverage.svg?branch=master)](https://codecov.io/github/reconhub/reportfactory?branch=master)

@@ -1,4 +1,9 @@
 
+<img src="https://raw.githubusercontent.com/reconhub/reportfactory/master/artwork/workflow.png" width="100%">
+
+<br>
+
+
 [![Travis-CI Build Status](https://travis-ci.org/reconhub/reportfactory.svg?branch=master)](https://travis-ci.org/reconhub/reportfactory)
 [![Build status](https://ci.appveyor.com/api/projects/status/7h2mgej230dv5r7w/branch/master?svg=true)](https://ci.appveyor.com/project/thibautjombart/reportfactory/branch/master)
 [![Coverage Status](https://codecov.io/github/reconhub/reportfactory/coverage.svg?branch=master)](https://codecov.io/github/reconhub/reportfactory?branch=master)
@@ -140,12 +145,17 @@ We start by creating a new factory in the temporary folder:
 
 ```r
 library(reportfactory)
+#> 
+#> Attaching package: 'reportfactory'
+#> The following object is masked from 'package:devtools':
+#> 
+#>     install_deps
 
 destination <- file.path(tempdir(), "new_factory")
 destination
-#> [1] "/tmp/RtmpEHzdPk/new_factory"
+#> [1] "/tmp/RtmpyESa5b/new_factory"
 new_factory(destination)
-#> [1] "/tmp/RtmpEHzdPk/new_factory"
+#> [1] "/tmp/RtmpyESa5b/new_factory"
 dir()
 #> [1] "data"           "README.md"      "report_sources"
 ```
@@ -178,7 +188,7 @@ compile_report("contacts_2017-10-29", quiet = TRUE)
 #> 
 #> /// 'contacts_2017-10-29' done!
 list_outputs()
-#> [1] "contacts_2017-10-29/compiled_2018-06-18_17-31-19/contacts_2017-10-29.html"
+#> [1] "contacts_2017-10-29/compiled_2018-06-18_20-50-28/contacts_2017-10-29.html"
 ```
 
 To compile all reports (only most recent versions), use:
@@ -195,9 +205,9 @@ update_reports()
 #> 
 #> /// 'epicurve_2017-10-30' done!
 list_outputs()
-#> [1] "contacts_2017-10-29/compiled_2018-06-18_17-31-19/contacts_2017-10-29.html"
-#> [2] "contacts_2017-11-01/compiled_2018-06-18_17-31-21/contacts_2017-11-01.html"
-#> [3] "epicurve_2017-10-30/compiled_2018-06-18_17-31-23/epicurve_2017-10-30.html"
+#> [1] "contacts_2017-10-29/compiled_2018-06-18_20-50-28/contacts_2017-10-29.html"
+#> [2] "contacts_2017-11-01/compiled_2018-06-18_20-50-29/contacts_2017-11-01.html"
+#> [3] "epicurve_2017-10-30/compiled_2018-06-18_20-50-32/epicurve_2017-10-30.html"
 ```
 
 
