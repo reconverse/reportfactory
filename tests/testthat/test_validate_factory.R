@@ -5,16 +5,19 @@ test_that("A new_factory is valid", {
 
   skip_on_cran()
 
-  time <- format(Sys.time(), "%Y-%m-%d_%H-%M-%S")
-  new_fac_path <- file.path(tempdir(), paste("new_factory", time, sep = "_"))
-  new_factory(new_fac_path, move_in = FALSE)
+  new_dir <- function() {
+    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
+    file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
+  }
+
+  new_factory(x <- new_dir(), move_in = FALSE)
 
   no_probs <- function(test) {
     length(test$errors) == 0L && length(test$warnings) == 0L
   }
-  expect_true(no_probs(validate_factory(new_fac_path)))
-  update_reports(quiet = TRUE, factory = new_fac_path)
-  expect_true(no_probs(validate_factory(new_fac_path)))
+  expect_true(no_probs(validate_factory(x)))
+  update_reports(quiet = TRUE, factory = x)
+  expect_true(no_probs(validate_factory(x)))
 
 })
 
@@ -27,7 +30,7 @@ test_that("Broken factories are identified", {
   skip_on_cran()
 
   new_dir <- function() {
-    rnd  <- paste(runif(8), collapse = "")
+    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
     file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
   }
 
@@ -41,8 +44,7 @@ test_that("Broken factories are identified", {
                    "file '.gitignore' is missing",
                    "folder 'report_sources/' is missing",
                    sep = "\n")
-  expect_error(validate_factory(x),
-               exp_msg)
+  expect_error(validate_factory(x), exp_msg)
 
 
   ## .here missing
@@ -51,8 +53,7 @@ test_that("Broken factories are identified", {
   dir.create(file.path(x, "report_sources"))
 
   exp_msg <- "file '.here' is missing"
-  expect_error(validate_factory(x),
-               exp_msg)
+  expect_error(validate_factory(x), exp_msg)
 
 
   ## .gitignore missing
@@ -61,8 +62,7 @@ test_that("Broken factories are identified", {
   dir.create(file.path(x, "report_sources"))
 
   exp_msg <- "file '.gitignore' is missing"
-  expect_error(validate_factory(x),
-               exp_msg)
+  expect_error(validate_factory(x), exp_msg)
 
 
   ## report_sources missing
@@ -71,8 +71,7 @@ test_that("Broken factories are identified", {
   file.create(file.path(x, ".gitignore"))
 
   exp_msg <- "folder 'report_sources/' is missing"
-  expect_error(validate_factory(x),
-               exp_msg)
+  expect_error(validate_factory(x), exp_msg)
 
   ## duplicated report names
   dir.create(x <- new_dir(), FALSE, TRUE)
@@ -86,8 +85,7 @@ test_that("Broken factories are identified", {
   exp_msg <- paste("the following reports are duplicated:",
                    "toto.Rmd", sep = "\n")
 
-  expect_error(validate_factory("broken_factories/duplicated_reports/"),
-               exp_msg)
+  expect_error(validate_factory(x), exp_msg)
 
 
   ## non-rmd files in sources
@@ -101,7 +99,6 @@ test_that("Broken factories are identified", {
   exp_msg <- paste("the following files in 'report_sources/' are not .Rmd:",
                    "my_data.csv",
                    "toto.html", sep = "\n")
-  expect_warning(validate_factory("broken_factories/messy_sources/"),
-               exp_msg)
+  expect_warning(validate_factory(x), exp_msg)
 
 })
