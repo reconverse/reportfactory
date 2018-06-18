@@ -1,0 +1,19 @@
+context("Creation of report factory")
+
+
+test_that("new_factory generates the right files", {
+
+  skip_on_cran()
+
+  time <- format(Sys.time(), "%Y-%m-%d_%H-%M-%S")
+  out <- file.path(tempdir(), paste("new_factory", time, sep = "_"))
+  new_factory(out, move_in = FALSE)
+
+  hashes <- tools::md5sum(dir(out,
+                              recursive = TRUE,
+                              full.names = TRUE,
+                              all.files = TRUE))
+  expect_equal_to_reference(hashes, file = "rds/hashes.rds")
+
+
+})
