@@ -69,7 +69,7 @@ new_factory <- function(destination = "new_factory",
                         move_in = TRUE) {
   template_path <- system.file("factory_template", package = "reportfactory")
 
-  dir.create(destination)
+  dir.create(destination, FALSE, TRUE)
 
   ## copy files: .here, .gitignore
   file.copy(
@@ -91,7 +91,7 @@ new_factory <- function(destination = "new_factory",
       dir(template_path, pattern = "report_sources", full.names = TRUE),
       destination, copy.mode = TRUE, recursive = TRUE)
   } else {
-    dir.create("report_sources")
+    dir.create("report_sources", FALSE, TRUE)
   }
 
   if (move_in) {

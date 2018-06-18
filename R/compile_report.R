@@ -71,16 +71,16 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   new_files <- unique(new_files)
 
   if (!dir.exists(find_file("report_outputs"))) {
-    dir.create(find_file("report_outputs"))
+    dir.create(find_file("report_outputs"), FALSE, TRUE)
   }
 
   datetime <- sub(" ", "_", as.character(Sys.time()))
   datetime <- gsub(":", "-", datetime)
   report_dir <- paste0(find_file("report_outputs"),
                        "/", base_name, "_", date)
-  dir.create(report_dir, showWarnings = FALSE)
+  dir.create(report_dir, FALSE, TRUE)
   output_dir <- paste0(report_dir, "/compiled_", datetime)
-  dir.create(output_dir)
+  dir.create(output_dir, FALSE, TRUE)
 
   for (file in new_files) {
     destination <- paste(output_dir, file, sep = "/")
