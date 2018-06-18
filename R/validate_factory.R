@@ -3,23 +3,21 @@
 #'
 #' This function can be used to inspect the content of a factory and make sure
 #' it looks fine. This includes various sanity checks listed in details. The
-#' function returns \code{TRUE} if all checks were done without errors, and
-#' \code{FALSE} otherwise; note that warnings do not count as \code{errors} and
-#' therefore can result in \code{TRUE} being returned.
+#' function returns a list of error and warning messages.
 #'
 #' @details
-#' Checks ran on the factory include:
+#' Checks ran on the factory include (the result of a failure is indicated in brackets):
 #'
 #' \itemize{
 #'
-#'  \item the directory exists
+#'  \item the directory exists [error]
 #'
-#'  \item all mandatory files exist: .here, .gitignore
+#'  \item all mandatory files exist: .here, .gitignore [error]
 #'
-#'  \item all mandatory folders exist: report_sources/
+#'  \item all mandatory folders exist: report_sources/ [error]
 #'
 #'  \item all .Rmd reports have unique names once outside their folders (to
-#'  avoid conflicts in outputs)
+#'  avoid conflicts in outputs) [warning]
 #'
 #' }
 #'
@@ -43,14 +41,14 @@ validate_factory <- function(factory = getwd(),
                              errors = TRUE) {
 
 
+  out <- list(warnings = character(0),
+              errors = character(0))
+
   ## check that the directory exists
 
   if (!dir.exists(factory)) {
-    if (errors) {
       msg <- sprintf("the directory '%s' does not exist", factory)
       stop(msg)
-    }
-    return(FALSE)
   }
 
   odir <- getwd()
@@ -66,55 +64,74 @@ validate_factory <- function(factory = getwd(),
     f <- ifelse(is_folder, dir.exists, file.exists)
 
     if (!f(x)) {
-      if (errors) {
-        msg <- sprintf("%s '%s' is missing",
-                       ifelse(is_folder, "folder", "file"),
-                       x)
-        stop(msg)
-      }
-      return(FALSE)
-    } else {
-      return(TRUE)
+      msg <- sprintf("%s '%s' is missing",
+                     ifelse(is_folder, "folder", "file"),
+                     x)
+      out$errors <<- c(out$errors, msg)
     }
   }
   expected <- c(".here", ".gitignore", "report_sources/")
-  content_present <- vapply(expected, check_item, logical(1))
-  if (!all(content_present)) {
-    return(FALSE)
+  for (e in expected) {
+    check_item(e)
   }
 
 
-  ## check that all reports are unique
+  ## these checks rely on the existence of 'report_sources/'
 
-  is_duplicate <- duplicated(list_reports())
+  if (dir.exists("report_sources")) {
+    ## check that all reports are unique
 
-  if (any(is_duplicate)) {
-    if (errors){
-      culprits <- list_reports()[is_duplicated]
-      msg <- sprintf("the following reports are duplicated:\n%s",
-                     paste(culprits, collapse = "\n"))
-      stop(msg)
+    files <- list.files(recursive = TRUE)
+    files <- gsub(".*/", "", files)
+    is_duplicated <- duplicated(files)
+
+    if (any(is_duplicated)) {
+      if (errors){
+        culprits <- files[is_duplicated]
+        msg <- sprintf("the following reports are duplicated:\n%s",
+                       paste(culprits, collapse = "\n"))
+        out$errors <- c(out$errors, msg)
+      }
+
     }
-    return(FALSE)
+
+
+    ## check that the report_sources/ only contains `Rmd` files
+
+    files <- list.files("report_sources/", recursive = TRUE)
+    is_rmd <- grep("[.]rmd$", tolower(files))
+    not_rmd <- setdiff(seq_along(files), is_rmd)
+    if (length(not_rmd) > 0L) {
+      if (warnings) {
+        culprits <- files[not_rmd]
+        msg <- sprintf(
+          "the following files in 'report_sources/' are not .Rmd:\n%s",
+          paste(culprits, collapse = "\n"),
+          "\nWe recommend only storing .Rmd in report_sources/",
+          "Store data, scripts etc. in separate folders and refer",
+          "to files using e.g. 'here::here(data/my_data.R)'")
+        out$warnings <- c(out$warnings, msg)
+      }
+    }
+
   }
 
 
-  ## check that the report_sources/ only contains `Rmd` files
-  files <- list.files("report_sources/", recursive = TRUE)
-  is_rmd <- grep("[.]rmd$", tolower(files))
-  not_rmd <- setdiff(seq_along(files), is_rmd)
-  if (length(not_rmd) > 0L) {
-    if (warnings) {
-      culprits <- files[not_rmd]
-      msg <- sprintf("the following files are not .Rmd:\n%s",
-                     paste(culprits, collapse = "\n"),
-                     "\nWe recommend only storing .Rmd in report_sources/",
-                     "Store data, scripts etc. in separate folders and refer",
-                     "to files using e.g. 'here::here(data/my_data.R)'")
-      warning("msg")
+  if (warnings) {
+    if (length(out$warnings) > 0L) {
+      msg <- paste(out$warnings, collapse = "\n")
+      warning("the following warnings were found:\n", msg)
     }
   }
 
 
-  return(TRUE)
+  if (errors) {
+    if (length(out$errors) > 0L) {
+      msg <- paste(out$errors, collapse = "\n")
+      stop("the following errors were found:\n", msg)
+    }
+  }
+
+
+  return(out)
 }
