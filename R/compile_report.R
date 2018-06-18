@@ -59,9 +59,9 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   files_before <- unique(sub("~$", "", files_before))
 
 
-  cat(sprintf("\n/// compiling report: '%s'", shorthand))
+  message(sprintf("\n/// compiling report: '%s'", shorthand))
   output_file <- rmarkdown::render(rmd_path, quiet = quiet, ...)
-  cat(sprintf("\n/// '%s' done!\n", shorthand))
+  message(sprintf("\n/// '%s' done!\n", shorthand))
 
   files_after <- dir(recursive = TRUE)
   files_after <- unique(sub("~$", "", files_after))
