@@ -1,5 +1,5 @@
 
-#' List dependencies of reprots within
+#' List dependencies of reports within a factory
 #'
 #' This function can be used to list package dependencies based of the reports
 #' within the factory. It is a wrapper for \code{checkpoint::scanForPackages}.

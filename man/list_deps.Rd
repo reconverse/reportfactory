@@ -2,7 +2,7 @@
 % Please edit documentation in R/list_deps.R
 \name{list_deps}
 \alias{list_deps}
-\title{List dependencies of reprots within}
+\title{List dependencies of reports within a factory}
 \usage{
 list_deps(missing = FALSE, factory = getwd())
 }
