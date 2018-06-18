@@ -8,8 +8,15 @@
 #' @export
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
-#' 
+#'
+#' @inheritParams compile_report
+#'
 
-list_outputs <- function() {
+list_outputs <- function(factory = getwd()) {
+
+  odir <- getwd()
+  on.exit(setwd(odir))
+  setwd(factory)
+
   dir(find_file("report_outputs"), recursive = TRUE)
 }

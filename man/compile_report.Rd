@@ -4,7 +4,7 @@
 \alias{compile_report}
 \title{Compile an rmarkdown report}
 \usage{
-compile_report(file, quiet = FALSE, ...)
+compile_report(file, quiet = FALSE, factory = getwd(), ...)
 }
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
@@ -12,6 +12,9 @@ report to be compiled.}
 
 \item{quiet}{a logical indicating if messages from rmarkdown compilation
 should be displayed; \code{TRUE} by default.}
+
+\item{factory}{the path to a report factory; defaults to the current working
+directory}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }

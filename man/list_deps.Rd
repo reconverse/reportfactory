@@ -4,12 +4,15 @@
 \alias{list_deps}
 \title{List dependencies of reprots within}
 \usage{
-list_deps(missing = FALSE)
+list_deps(missing = FALSE, factory = getwd())
 }
 \arguments{
 \item{missing}{A logical indicating if only missing dependencies should be
 listed (\code{TRUE}); otherwise, all packages needed in the reports are
 listed; defaults to \code{FALSE}}
+
+\item{factory}{the path to a report factory; defaults to the current working
+directory}
 }
 \description{
 This function can be used to list package dependencies based of the reports

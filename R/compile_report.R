@@ -16,10 +16,17 @@
 #' @param quiet a logical indicating if messages from rmarkdown compilation
 #'   should be displayed; \code{TRUE} by default.
 #'
+#' @param factory the path to a report factory; defaults to the current working
+#'   directory
+#'
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 
-compile_report <- function(file, quiet = FALSE, ...) {
+compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
+
+  odir <- getwd()
+  on.exit(setwd(odir))
+  setwd(factory)
 
   if (length(file) > 1L) {
     stop("more than one report asked from 'compile_report'")

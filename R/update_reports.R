@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
-#' 
+#'
 #' @param all a logical indicating if all reports should be compiled; it
 #'   defaults to \code{FALSE}, in which case only the latest versions of each
 #'   reports will be compuled.
@@ -26,11 +26,13 @@
 #'
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
+#' @inheritParams compile_report
 
 update_reports <- function(all = FALSE, quiet = TRUE, ...) {
 
   odir <- getwd()
   on.exit(setwd(odir))
+  setwd(factory)
 
   report_sources <- list_reports()
   dates <- extract_date(report_sources)

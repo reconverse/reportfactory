@@ -4,7 +4,11 @@
 \alias{list_outputs}
 \title{List outputs of the factory}
 \usage{
-list_outputs()
+list_outputs(factory = getwd())
+}
+\arguments{
+\item{factory}{the path to a report factory; defaults to the current working
+directory}
 }
 \description{
 This function can be used to list available report outputs stored in the
