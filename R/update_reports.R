@@ -30,6 +30,8 @@
 
 update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE, ...) {
 
+  validate_factory(factory)
+
   odir <- getwd()
   on.exit(setwd(odir))
   setwd(factory)

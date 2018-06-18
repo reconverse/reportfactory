@@ -24,6 +24,8 @@
 
 compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
+  validate_factory(factory)
+
   odir <- getwd()
   on.exit(setwd(odir))
   setwd(factory)

@@ -1,4 +1,11 @@
 
+[![Travis-CI Build Status](https://travis-ci.org/reconhub/reportfactory.svg?branch=master)](https://travis-ci.org/reconhub/reportfactory)
+[![Build status](https://ci.appveyor.com/api/projects/status/7h2mgej230dv5r7w/branch/master?svg=true)](https://ci.appveyor.com/project/thibautjombart/reportfactory/branch/master)
+[![Coverage Status](https://codecov.io/github/reconhub/reportfactory/coverage.svg?branch=master)](https://codecov.io/github/reconhub/reportfactory?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/reportfactory)](https://cran.r-project.org/package=reportfactory)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/reportfactory)](https://cran.r-project.org/package=reportfactory)
+
+
 ```{r, echo = FALSE, message=FALSE, results='hide'}
 knitr::opts_chunk$set(
   collapse = TRUE,
@@ -99,6 +106,9 @@ The main features of the package include:
 - **`install_deps()`**: will install packages needed in the reports; by default,
   only install missing packages; use `update = TRUE` to force the install of all
   packages
+
+- **`validate_factory()`**: will check that the factory is valid, that all
+  report names are unique, etc.
 
 - **`compile_report()`**: compiles one specific report (name to be
   matched against the output of `list_reports()`
