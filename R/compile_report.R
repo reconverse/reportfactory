@@ -53,13 +53,11 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   }
 
   shorthand <- paste0(base_name, "_", date)
-
-  odir <- getwd()
-  on.exit(setwd(odir))
   setwd(file_dir)
 
   files_before <- dir(recursive = TRUE)
   files_before <- unique(sub("~$", "", files_before))
+
 
   cat(sprintf("\n/// compiling report: '%s'", shorthand))
   output_file <- rmarkdown::render(rmd_path, quiet = quiet, ...)

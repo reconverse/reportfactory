@@ -28,7 +28,7 @@
 #'
 #' @inheritParams compile_report
 
-update_reports <- function(all = FALSE, quiet = TRUE, ...) {
+update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE, ...) {
 
   odir <- getwd()
   on.exit(setwd(odir))
