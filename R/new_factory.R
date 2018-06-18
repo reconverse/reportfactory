@@ -67,32 +67,43 @@
 new_factory <- function(destination = "new_factory",
                         include_examples = TRUE,
                         move_in = TRUE) {
-  template_path <- system.file("factory_template", package = "reportfactory")
 
-  dir.create(destination, FALSE, TRUE)
-
-  ## copy files: .here, .gitignore
-  file.copy(
-    dir(template_path, pattern = "here", full.names = TRUE, all.files = TRUE),
-    destination, copy.mode = TRUE)
-  file.copy(
-    dir(template_path, pattern = "gitignore", full.names = TRUE, all.files = TRUE),
-    destination, copy.mode = TRUE)
-  file.copy(
-    dir(template_path, pattern = "README", full.names = TRUE),
-    destination, copy.mode = TRUE)
-
-  ## copy folders
   if (include_examples) {
-    file.copy(
-      dir(template_path, pattern = "data", full.names = TRUE),
-      destination, copy.mode = TRUE, recursive = TRUE)
-    file.copy(
-      dir(template_path, pattern = "report_sources", full.names = TRUE),
-      destination, copy.mode = TRUE, recursive = TRUE)
+    zip_path <- system.file("factory_template.zip",
+                            package = "reportfactory")
   } else {
-    dir.create("report_sources", FALSE, TRUE)
+    zip_path <- system.file("factory_template_no_example.zip",
+                            package = "reportfactory")
   }
+
+  utils::unzip(zipfile = zip_path, exdir = destination)
+
+
+
+  ## dir.create(destination, FALSE, TRUE)
+
+  ## ## copy files: .here, .gitignore
+  ## file.copy(
+  ##   dir(template_path, pattern = "here", full.names = TRUE, all.files = TRUE),
+  ##   destination, copy.mode = TRUE)
+  ## file.copy(
+  ##   dir(template_path, pattern = "gitignore", full.names = TRUE, all.files = TRUE),
+  ##   destination, copy.mode = TRUE)
+  ## file.copy(
+  ##   dir(template_path, pattern = "README", full.names = TRUE),
+  ##   destination, copy.mode = TRUE)
+
+  ## ## copy folders
+  ## if (include_examples) {
+  ##   file.copy(
+  ##     dir(template_path, pattern = "data", full.names = TRUE),
+  ##     destination, copy.mode = TRUE, recursive = TRUE)
+  ##   file.copy(
+  ##     dir(template_path, pattern = "report_sources", full.names = TRUE),
+  ##     destination, copy.mode = TRUE, recursive = TRUE)
+  ## } else {
+  ##   dir.create("report_sources", FALSE, TRUE)
+  ## }
 
   if (move_in) {
     setwd(destination)
