@@ -1,4 +1,11 @@
 
+[![Travis-CI Build Status](https://travis-ci.org/reconhub/reportfactory.svg?branch=master)](https://travis-ci.org/reconhub/reportfactory)
+[![Build status](https://ci.appveyor.com/api/projects/status/7h2mgej230dv5r7w/branch/master?svg=true)](https://ci.appveyor.com/project/thibautjombart/reportfactory/branch/master)
+[![Coverage Status](https://codecov.io/github/reconhub/reportfactory/coverage.svg?branch=master)](https://codecov.io/github/reconhub/reportfactory?branch=master)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/reportfactory)](https://cran.r-project.org/package=reportfactory)
+[![CRAN Downloads](https://cranlogs.r-pkg.org/badges/reportfactory)](https://cran.r-project.org/package=reportfactory)
+
+
 
 
 # Welcome to the report factory!
@@ -91,6 +98,9 @@ The main features of the package include:
   only install missing packages; use `update = TRUE` to force the install of all
   packages
 
+- **`validate_factory()`**: will check that the factory is valid, that all
+  report names are unique, etc.
+
 - **`compile_report()`**: compiles one specific report (name to be
   matched against the output of `list_reports()`
   
@@ -133,9 +143,9 @@ library(reportfactory)
 
 destination <- file.path(tempdir(), "new_factory")
 destination
-#> [1] "/tmp/Rtmpqz9eom/new_factory"
+#> [1] "/tmp/RtmpEHzdPk/new_factory"
 new_factory(destination)
-#> [1] "/tmp/Rtmpqz9eom/new_factory"
+#> [1] "/tmp/RtmpEHzdPk/new_factory"
 dir()
 #> [1] "data"           "README.md"      "report_sources"
 ```
@@ -165,9 +175,10 @@ To compile a single report, one can use:
 compile_report("contacts_2017-10-29", quiet = TRUE)
 #> 
 #> /// compiling report: 'contacts_2017-10-29'
+#> 
 #> /// 'contacts_2017-10-29' done!
 list_outputs()
-#> [1] "contacts_2017-10-29/compiled_2018-06-15_14-21-18/contacts_2017-10-29.html"
+#> [1] "contacts_2017-10-29/compiled_2018-06-18_17-31-19/contacts_2017-10-29.html"
 ```
 
 To compile all reports (only most recent versions), use:
@@ -175,14 +186,18 @@ To compile all reports (only most recent versions), use:
 
 ```r
 update_reports()
+#> 
 #> /// compiling report: 'contacts_2017-11-01'
+#> 
 #> /// 'contacts_2017-11-01' done!
+#> 
 #> /// compiling report: 'epicurve_2017-10-30'
+#> 
 #> /// 'epicurve_2017-10-30' done!
 list_outputs()
-#> [1] "contacts_2017-10-29/compiled_2018-06-15_14-21-18/contacts_2017-10-29.html"
-#> [2] "contacts_2017-11-01/compiled_2018-06-15_14-21-20/contacts_2017-11-01.html"
-#> [3] "epicurve_2017-10-30/compiled_2018-06-15_14-21-23/epicurve_2017-10-30.html"
+#> [1] "contacts_2017-10-29/compiled_2018-06-18_17-31-19/contacts_2017-10-29.html"
+#> [2] "contacts_2017-11-01/compiled_2018-06-18_17-31-21/contacts_2017-11-01.html"
+#> [3] "epicurve_2017-10-30/compiled_2018-06-18_17-31-23/epicurve_2017-10-30.html"
 ```
 
 
