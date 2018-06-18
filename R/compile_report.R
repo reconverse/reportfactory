@@ -76,14 +76,16 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
   datetime <- sub(" ", "_", as.character(Sys.time()))
   datetime <- gsub(":", "-", datetime)
-  report_dir <- paste0(find_file("report_outputs"),
-                       "/", base_name, "_", date)
+  report_dir <- file.path(find_file("report_outputs"),
+                          paste(base_name, date, sep = "_"))
   dir.create(report_dir, FALSE, TRUE)
   output_dir <- paste0(report_dir, "/compiled_", datetime)
+  output_dir <- file.path(report_dir,
+                          paste("compiled", datetime, sep = "_"))
   dir.create(output_dir, FALSE, TRUE)
 
   for (file in new_files) {
-    destination <- paste(output_dir, file, sep = "/")
+    destination <- file.path(output_dir, file)
     file.rename(file, destination)
   }
 
