@@ -5,11 +5,12 @@ test_that("new_factory generates the right files", {
 
   skip_on_cran()
 
-  ## time <- format(Sys.time(), "%Y-%m-%d_%H-%M-%S")
-  ## out <- file.path(tempdir(), paste("new_factory", time, sep = "_"))
+  zip_path <-  system.file("factory_template.zip",
+                           package = "reportfactory")
 
-  ref_path <-  system.file("factory_template", package = "reportfactory")
-
+  ref_path <- file.path(tempdir(), "ref_factory")
+  unzip(zipfile = zip_path,
+        exdir = ref_path)
   new_fac_path <- file.path(tempdir(), "new_factory")
   new_factory(new_fac_path, move_in = FALSE)
 
@@ -29,16 +30,23 @@ test_that("new_factory generates the right files", {
 
 
 
-test_that("update_reports compiles recent reports okay", {
+test_that("working directory unchanged", {
 
   skip_on_cran()
 
-  time <- format(Sys.time(), "%Y-%m-%d_%H-%M-%S")
-  new_fac_path <- file.path(tempdir(), paste("new_factory", time, sep = "_"))
-  new_factory(new_fac_path, move_in = FALSE)
+
+  new_dir <- function() {
+    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
+    file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
+  }
 
   odir <- getwd()
-  update_reports(quiet = TRUE, factory = new_fac_path)
+  new_factory(x <- new_dir(), move_in = FALSE)
+
+  ## new_factory with move_in = FALSE should not alter the working directory
+  expect_identical(odir, getwd())
+
+  update_reports(quiet = TRUE, factory = x)
 
 
   ## update_reports should not alter the working directory
