@@ -4,9 +4,12 @@
 \alias{update_reports}
 \title{Compile reports within the factory}
 \usage{
-update_reports(all = FALSE, quiet = TRUE, ...)
+update_reports(factory = getwd(), all = FALSE, quiet = TRUE, ...)
 }
 \arguments{
+\item{factory}{the path to a report factory; defaults to the current working
+directory}
+
 \item{all}{a logical indicating if all reports should be compiled; it
 defaults to \code{FALSE}, in which case only the latest versions of each
 reports will be compuled.}
