@@ -12,8 +12,7 @@ RoxygenNote: 6.0.1
 Imports:
     checkpoint,
     rmarkdown,
-    rprojroot,
-    stringr
+    rprojroot
 Suggests:
     here,
     knitr,

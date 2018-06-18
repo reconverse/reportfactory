@@ -17,23 +17,21 @@ directory}
 \description{
 This function can be used to inspect the content of a factory and make sure
 it looks fine. This includes various sanity checks listed in details. The
-function returns \code{TRUE} if all checks were done without errors, and
-\code{FALSE} otherwise; note that warnings do not count as \code{errors} and
-therefore can result in \code{TRUE} being returned.
+function returns a list of error and warning messages.
 }
 \details{
-Checks ran on the factory include:
+Checks ran on the factory include (the result of a failure is indicated in brackets):
 
 \itemize{
 
- \item the directory exists
+ \item the directory exists [error]
 
- \item all mandatory files exist: .here, .gitignore
+ \item all mandatory files exist: .here, .gitignore [error]
 
- \item all mandatory folders exist: report_sources/
+ \item all mandatory folders exist: report_sources/ [error]
 
  \item all .Rmd reports have unique names once outside their folders (to
- avoid conflicts in outputs)
+ avoid conflicts in outputs) [warning]
 
 }
 }
