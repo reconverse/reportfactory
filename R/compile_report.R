@@ -43,6 +43,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
 
   file_dir <- locate_file_directory(rmd_path)
+  browser()
 
   if (length(rmd_path) == 0L) {
     stop(sprintf("cannot find a source file for %s", file))
@@ -59,7 +60,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   shorthand <- paste0(base_name, "_", date)
   setwd(file_dir)
 
-  dirs_before <- list.dirs(recursive = TRUE)
   files_before <- list.files(recursive = TRUE)
   files_before <- unique(sub("~$", "", files_before))
 
@@ -68,12 +68,9 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   output_file <- rmarkdown::render(rmd_path, quiet = quiet, ...)
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
-  dirs_after <- list.dirs(recursive = TRUE)
   files_after <- list.files(recursive = TRUE)
 
   files_after <- unique(ignore_tilde(files_after))
-  new_dirs <- setdiff(dirs_after,
-                       dirs_before)
   new_files <- setdiff(files_after,
                        files_before)
   new_files <- c(new_files, sub(file_dir, "", output_file))
@@ -81,9 +78,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
   if (!dir.exists(find_file("report_outputs"))) {
     dir.create(find_file("report_outputs"), FALSE, TRUE)
-  }
-  for (e in new_dirs) {
-    dir.create()
   }
 
   datetime <- sub(" ", "_", as.character(Sys.time()))
@@ -98,7 +92,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
   for (file in new_files) {
     destination <- file.path(output_dir, file)
-    file.rename(file, destination)
+    move_file(file, destination)
   }
 
 }
