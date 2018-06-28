@@ -35,15 +35,13 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   }
 
   rmd_path <- grep(".Rmd",
-                   dir(find_file("report_sources"),
-                       recursive = TRUE, pattern = paste0(file, "$"),
-                       full.names = TRUE),
-                   value = TRUE)
+                  dir(find_file("report_sources"),
+                      recursive = TRUE, pattern = file,
+                      full.names = TRUE),
+                  value = TRUE, ignore.case = TRUE)
   rmd_path <- ignore_tilde(rmd_path)
 
-
-  file_dir <- locate_file_directory(rmd_path)
-  browser()
+  file_dir <- dirname(rmd_path)
 
   if (length(rmd_path) == 0L) {
     stop(sprintf("cannot find a source file for %s", file))
