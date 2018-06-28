@@ -59,6 +59,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   setwd(file_dir)
 
   files_before <- list.files(recursive = TRUE)
+  dirs_before <- list.dirs(recursive = TRUE)
   files_before <- unique(sub("~$", "", files_before))
 
 
@@ -67,12 +68,13 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
   files_after <- list.files(recursive = TRUE)
+  dirs_after <- list.dirs(recursive = TRUE)
 
   files_after <- unique(ignore_tilde(files_after))
-  new_files <- setdiff(files_after,
-                       files_before)
+  new_files <- setdiff(files_after, files_before)
   new_files <- c(new_files, sub(file_dir, "", output_file))
   new_files <- unique(new_files)
+  new_dirs <- unique(basename(setdiff(dirs_after, dirs_before)))
 
   if (!dir.exists(find_file("report_outputs"))) {
     dir.create(find_file("report_outputs"), FALSE, TRUE)
@@ -93,4 +95,9 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
     move_file(file, destination)
   }
 
+  ## remove empty directories
+  to_remove <- file.path(new_dirs)
+  file.remove(to_remove)
+
+  return(invisible(NULL))
 }
