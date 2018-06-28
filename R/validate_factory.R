@@ -81,8 +81,13 @@ validate_factory <- function(factory = getwd(),
   if (dir.exists("report_sources")) {
     ## check that all reports are unique
 
-    files <- list.files(recursive = TRUE)
-    files <- gsub(".*/", "", files)
+    files <- list_reports()
+    ## files <- list.files("report_sources/", recursive = TRUE)
+    ## to_remove <- grep("~$", files)
+    ## if (length(to_remove) > 0L) {
+    ##   files <- files[-to_remove]
+    ## }
+    ## files <- gsub(".*/", "", files)
     is_duplicated <- duplicated(files)
 
     if (any(is_duplicated)) {
@@ -99,6 +104,11 @@ validate_factory <- function(factory = getwd(),
     ## check that the report_sources/ only contains `Rmd` files
 
     files <- list.files("report_sources/", recursive = TRUE)
+    to_remove <- grep("~$", files)
+    if (length(to_remove) > 0L) {
+      files <- files[-to_remove]
+    }
+
     is_rmd <- grep("[.]rmd$", tolower(files))
     not_rmd <- setdiff(seq_along(files), is_rmd)
     if (length(not_rmd) > 0L) {

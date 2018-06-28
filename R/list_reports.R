@@ -18,7 +18,7 @@ list_reports <- function(factory = getwd()) {
 
   out <- dir(find_file("report_sources"),
              recursive = TRUE, pattern = ".Rmd$",
-             full.names = TRUE)
+             ignore.case = TRUE, full.names = TRUE)
   out <- gsub(".*/", "", out)
   out
 }
