@@ -36,9 +36,11 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
   rmd_path <- grep(".Rmd",
                    dir(find_file("report_sources"),
-                       recursive = TRUE, pattern = file,
+                       recursive = TRUE, pattern = paste0(file, "$"),
                        full.names = TRUE),
                    value = TRUE)
+  rmd_path <- ignore_tilde(rmd_path)
+
 
   file_dir <- locate_file_directory(rmd_path)
 
@@ -57,7 +59,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   shorthand <- paste0(base_name, "_", date)
   setwd(file_dir)
 
-  files_before <- dir(recursive = TRUE)
+  dirs_before <- list.dirs(recursive = TRUE)
+  files_before <- list.files(recursive = TRUE)
   files_before <- unique(sub("~$", "", files_before))
 
 
@@ -65,8 +68,12 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   output_file <- rmarkdown::render(rmd_path, quiet = quiet, ...)
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
-  files_after <- dir(recursive = TRUE)
-  files_after <- unique(sub("~$", "", files_after))
+  dirs_after <- list.dirs(recursive = TRUE)
+  files_after <- list.files(recursive = TRUE)
+
+  files_after <- unique(ignore_tilde(files_after))
+  new_dirs <- setdiff(dirs_after,
+                       dirs_before)
   new_files <- setdiff(files_after,
                        files_before)
   new_files <- c(new_files, sub(file_dir, "", output_file))
@@ -74,6 +81,9 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
   if (!dir.exists(find_file("report_outputs"))) {
     dir.create(find_file("report_outputs"), FALSE, TRUE)
+  }
+  for (e in new_dirs) {
+    dir.create()
   }
 
   datetime <- sub(" ", "_", as.character(Sys.time()))
