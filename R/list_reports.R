@@ -7,10 +7,13 @@
 #'
 #' @inheritParams compile_report
 #'
+#' @param pattern an optional regular expression used to look for specific
+#'   patterns in report names
+#'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
 
-list_reports <- function(factory = getwd()) {
+list_reports <- function(factory = getwd(), pattern = NULL) {
 
   odir <- getwd()
   on.exit(setwd(odir))
@@ -20,5 +23,10 @@ list_reports <- function(factory = getwd()) {
              recursive = TRUE, pattern = ".Rmd$",
              ignore.case = TRUE, full.names = TRUE)
   out <- gsub(".*/", "", out)
+
+  if (!is.null(pattern)) {
+    out <- grep(pattern, out, value = TRUE)
+  }
+
   out
 }

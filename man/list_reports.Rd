@@ -4,11 +4,14 @@
 \alias{list_reports}
 \title{List reports in the factory}
 \usage{
-list_reports(factory = getwd())
+list_reports(factory = getwd(), pattern = NULL)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working
 directory}
+
+\item{pattern}{an optional regular expression used to look for specific
+patterns in report names}
 }
 \description{
 This function can be used to list available reports stored in the factory, in

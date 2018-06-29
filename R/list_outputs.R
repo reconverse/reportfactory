@@ -9,14 +9,20 @@
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
-#' @inheritParams compile_report
+#' @inheritParams list_reports
 #'
 
-list_outputs <- function(factory = getwd()) {
+list_outputs <- function(factory = getwd(), pattern = NULL) {
 
   odir <- getwd()
   on.exit(setwd(odir))
   setwd(factory)
 
-  dir(find_file("report_outputs"), recursive = TRUE)
+  out <- dir(find_file("report_outputs"), recursive = TRUE)
+
+  if (!is.null(pattern)) {
+    out <- grep(pattern, out, value = TRUE)
+  }
+
+  out
 }
