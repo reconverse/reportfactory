@@ -81,7 +81,12 @@ validate_factory <- function(factory = getwd(),
   if (dir.exists("report_sources")) {
     ## check that all reports are unique
 
-    files <- list_reports()
+
+    files <- dir("report_sources",
+                 recursive = TRUE, pattern = ".Rmd$",
+                 ignore.case = TRUE, full.names = TRUE)
+    files <- gsub(".*/", "", files)
+
     is_duplicated <- duplicated(files)
 
     if (any(is_duplicated)) {

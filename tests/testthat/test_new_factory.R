@@ -11,6 +11,8 @@ test_that("new_factory generates the right files", {
   ref_path <- file.path(tempdir(), "ref_factory")
   unzip(zipfile = zip_path,
         exdir = ref_path)
+
+
   new_fac_path <- file.path(tempdir(), "new_factory")
   new_factory(new_fac_path, move_in = FALSE)
 

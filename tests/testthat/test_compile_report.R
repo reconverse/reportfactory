@@ -5,11 +5,10 @@ test_that("Compilation can handle multiple outputs", {
 
   skip_on_cran()
 
-  id <- paste(sample(c(letters, 0:10), 12, replace = TRUE), collapse = "")
-  destination <- file.path(tempdir(), id)
-  new_factory(destination)
+  setwd(tempdir())
+  random_factory()
 
-  compile_report(list_reports(pattern = "foo")[1])
+  compile_report(list_reports(pattern = "foo")[1], quiet = TRUE)
   outputs <- sub("([[:alnum:]_-]+/){2}", "",
                      list_outputs())
 
