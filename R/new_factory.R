@@ -33,9 +33,14 @@
 #' @param move_in a logical indicating if the current session should move into
 #'   the created factory; defaults to \code{TRUE}
 #'
+#' @param overwrite a logical indicating if files in an existing directory are
+#'   to be overwritten; defaults to \code{FALSE} indicating that no files are
+#'   to be overwritten, preserving the state of the files on your system.
+#'
 #' @export
 #'
-#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
+#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}, 
+#'         Zhian N. Kamvar \email{zkamvar@@gmail.com}
 #'
 #' @examples
 #'
@@ -66,48 +71,62 @@
 
 new_factory <- function(destination = "new_factory",
                         include_examples = TRUE,
-                        move_in = TRUE) {
+                        move_in = TRUE,
+                        overwrite = FALSE) {
 
-  if (include_examples) {
-    zip_path <- system.file("factory_template.zip",
-                            package = "reportfactory")
-  } else {
-    zip_path <- system.file("factory_template_no_example.zip",
-                            package = "reportfactory")
+  file_path    <- system.file("factory_template", package = "reportfactory")
+  file_exists  <- file.exists(destination)
+  if (!file_exists) {
+    message("  /// Could not find destination. Attempting to create it...")
+    file_exists <- dir.create(destination)
+    if (!file_exists) {
+      msg <- paste("destination", destination, "could not be created.",
+                   "If you are not an administrator on this system, this may be",
+                   "due to insufficient permissions."
+                  )
+      stop(msg)
+    }
   }
-
-  utils::unzip(zipfile = zip_path, exdir = destination)
-
-
-
-  ## dir.create(destination, FALSE, TRUE)
-
-  ## ## copy files: .here, .gitignore
-  ## file.copy(
-  ##   dir(template_path, pattern = "here", full.names = TRUE, all.files = TRUE),
-  ##   destination, copy.mode = TRUE)
-  ## file.copy(
-  ##   dir(template_path, pattern = "gitignore", full.names = TRUE, all.files = TRUE),
-  ##   destination, copy.mode = TRUE)
-  ## file.copy(
-  ##   dir(template_path, pattern = "README", full.names = TRUE),
-  ##   destination, copy.mode = TRUE)
-
-  ## ## copy folders
-  ## if (include_examples) {
-  ##   file.copy(
-  ##     dir(template_path, pattern = "data", full.names = TRUE),
-  ##     destination, copy.mode = TRUE, recursive = TRUE)
-  ##   file.copy(
-  ##     dir(template_path, pattern = "report_sources", full.names = TRUE),
-  ##     destination, copy.mode = TRUE, recursive = TRUE)
-  ## } else {
-  ##   dir.create("report_sources", FALSE, TRUE)
-  ## }
+  is_directory <- file_exists && file.info(destination)$isdir
+  if (is_directory) {
+    the_files <- list.files(file_path,
+                            all.files = TRUE,
+                            full.names = TRUE,
+                            no.. = TRUE)
+    if (!include_examples) {
+      # Filter out directories
+      are_dirs  <- file.info(the_files)$isdir
+      the_files <- the_files[!are_dirs]
+      dir.create(file.path(destination, "data"))
+      dir.create(file.path(destination, "report_sources"))
+    }
+    copied <- file.copy(from      = the_files,
+                        to        = destination,
+                        recursive = TRUE,
+                        overwrite = overwrite
+                       )
+    if (!all(copied) && !overwrite) {
+      whoops <- the_files[!copied]
+      msg <- paste0("The following files were not copied:\n\t",
+                    paste(basename(whoops), collapse = "\n\t"),
+                    "\n",
+                    "If you want these files to be overwritten, use overwrite = TRUE"
+                   )
+      message(msg)
+    } else if (!all(copied)) {
+      whoops <- paste(the_files[!copied], collapse = "\n\t")
+      stop("Some files were not copied:\n\t", whoops)
+    }
+  }
 
   if (move_in) {
+    oldwd <- getwd()
+    msg <- paste0("  /// Changing working directory to ", destination, "\n",
+                  "  /// If you want to go back, your can use ",
+                    "setwd('", oldwd, "')"
+                  )
+    message(msg)
     setwd(destination)
   }
-
   return(destination)
 }

@@ -5,7 +5,7 @@
 \title{Create a new report factory}
 \usage{
 new_factory(destination = "new_factory", include_examples = TRUE,
-  move_in = TRUE)
+  move_in = TRUE, overwrite = FALSE)
 }
 \arguments{
 \item{destination}{the name of the report factory folder to be created}
@@ -15,6 +15,10 @@ added to the factory; defaults to \code{TRUE}}
 
 \item{move_in}{a logical indicating if the current session should move into
 the created factory; defaults to \code{TRUE}}
+
+\item{overwrite}{a logical indicating if files in an existing directory are
+to be overwritten; defaults to \code{FALSE} indicating that no files are
+to be overwritten, preserving the state of the files on your system.}
 }
 \description{
 This function can be used to create a new report factory, using a template
@@ -70,5 +74,6 @@ list_outputs()
 }
 }
 \author{
-Thibaut Jombart \email{thibautjombart@gmail.com}
+Thibaut Jombart \email{thibautjombart@gmail.com}, 
+        Zhian N. Kamvar \email{zkamvar@gmail.com}
 }
