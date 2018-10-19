@@ -4,18 +4,21 @@ context("Creation of report factory")
 test_that("new_factory generates the right files", {
 
   skip_on_cran()
+  pkg_path     <- system.file("factory_template", package = "reportfactory")
+  tim          <- as.integer(Sys.time())
+  ref_path     <- file.path(tempdir(), paste0(tim, "ref_factory"))
+  new_fac_path <- file.path(tempdir(), paste0(tim, "new_factory"))
+  dir.create(ref_path)
+  file.copy(list.files(pkg_path, 
+                       all.files = TRUE,
+                       full.names = TRUE,
+                       no.. = TRUE),
+            to = ref_path,
+            overwrite = TRUE,
+            recursive = TRUE
+           )
 
-  zip_path <-  system.file("factory_template.zip",
-                           package = "reportfactory")
-
-  ref_path <- file.path(tempdir(), "ref_factory")
-  unzip(zipfile = zip_path,
-        exdir = ref_path)
-
-
-  new_fac_path <- file.path(tempdir(), "new_factory")
   new_factory(new_fac_path, move_in = FALSE)
-
   ref_hashes <- tools::md5sum(dir(ref_path,
                               recursive = TRUE,
                               full.names = TRUE,
