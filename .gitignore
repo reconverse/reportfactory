@@ -1,3 +1,5 @@
+# editor outputs
 *~
+*.swp
 report_outputs
 .Rhistory
