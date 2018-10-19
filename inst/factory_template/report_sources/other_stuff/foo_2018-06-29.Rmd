@@ -1,0 +1,66 @@
+---
+title: "Example of a report generating outputs"
+author: Jean-Raoul Dupont
+date: 2018-06-29
+---
+
+	
+```{r options, include = FALSE, message = FALSE, warning = FALSE, error = FALSE}
+library(knitr)
+opts_chunk$set(collapse = TRUE, dev = c("png", "pdf"),
+               fig.width = 8, fig.height = 6, dpi = 150,
+               fig.path = "figures/")
+```
+
+
+# Generating figures using the Iris data
+
+We load the `iris` data and reshape it for plotting with *ggplot2*: 
+```{r iris}
+data(iris)
+library(tidyr)
+library(dplyr)
+library(ggplot2)
+
+head(iris)
+x <- gather(iris, "measurement", "value", 1:4)
+head(x)
+
+```
+
+We can now visualise the data using different graphics:
+```{r boxplots}
+ggplot(x, aes(x = Species, y = value)) +
+  geom_boxplot(aes(fill = Species), alpha = .5) +
+  facet_grid(measurement ~ .)
+```
+
+```{r violins}
+ggplot(x, aes(x = Species, y = value)) +
+  geom_violin(aes(fill = Species), alpha = .5) +
+  facet_grid(measurement ~ .)
+```
+
+
+# Saving outputs to file
+
+Summaries using base R:
+
+```{r summary_base}
+res_base <- sapply(iris[, -5], tapply, iris$Species, mean)
+res_base
+```
+
+Same using the 'tidyverse':
+```{r summary_tidy}
+res_tidy <- iris[,-5] %>%
+  group_by(iris$Species) %>%
+  dplyr::summarise_all(funs(mean))
+res_tidy
+```
+
+```{r outputs}
+write.csv(res_base, file = "outputs_base.csv", row.names = TRUE)
+```
+
+

@@ -1,0 +1,136 @@
+---
+title: "Example of  epicurve analysis"
+author: Yourname Here
+date: 2017-10-30
+---
+
+	
+```{r options, include = FALSE, message = FALSE, warning = FALSE, error = FALSE}
+library(knitr)
+opts_chunk$set(collapse = TRUE, dev = c("png", "pdf"),
+               fig.width = 8, fig.height = 6, dpi = 150)
+```
+
+
+# An example of linelist
+
+## Loading the data
+
+We use `here` to locate the data stored in the `data/` folder, and `readxl` to import data from the `.xlsx` file `PHM-EVD-linelist-2017-10-27.xlsx`
+	
+```{r read_data}
+path_to_file <- here::here("data/linelists/PHM-EVD-linelist-2017-10-27.xlsx")
+linelist <- readxl::read_xlsx(path_to_file)
+```
+
+Note that for further analyses, you will need to make sure all dates are stored
+as `Date` objects. This can be done using `as.Date`:
+
+```{r date_conversion}
+linelist$onset <- as.Date(linelist$onset)
+```
+
+We have a look at the data:
+```{r read_files}
+## linelist: one line per case
+linelist
+```
+
+
+
+# Descriptive analyses
+
+## Looking at incidence curves
+
+We build an incidence curve based on date of onset:
+
+```{r incidence, echo = -c(1,2)}
+library(incidence)
+i <- incidence(linelist$onset)
+i
+plot(i)
+```
+
+We need to specify the most recent date at which the data was complete, in this
+case, the 27th October 2017:
+
+```{r incidence_rectif}
+i <- incidence(linelist$onset, last_date = as.Date("2017-10-27"))
+i
+plot(i)
+```
+
+
+
+# Statistical analyses
+
+## Log-linear model
+
+We try and fit a log-linear model to these data:
+
+```{r fit}
+f <- fit(i)
+f
+plot(i, fit = f)
+```
+
+
+
+## Estimation of transmissibility ($R$)
+
+We use `earlyR` for estimating the reproduction number $R$:
+
+```{r estimate-R, echo = FALSE}
+
+library(earlyR)
+
+## serial interval parameters
+mu <- 15.3 # mean in days
+sigma <- 9.3 # standard deviation in days
+
+R <- get_R(i, si_mean = mu, si_sd = sigma, max_R = 10)
+
+```
+
+You can visualise the results as follows:
+
+```{r plot-r}
+R
+plot(R)
+plot(R, "lambdas")
+abline(v = linelist$onset, lty = 2)
+
+```
+
+
+## Short-term forecasting
+
+The function `project` from the package `projections` can be used to simulate
+plausible epidemic trajectories by simulating daily incidence using the same
+branching process as the one used to estimate $R_0$ in `earlyR`. We illustrate
+this procedure after sampling 200 plausible values of $R$ from the likelihood
+function:
+
+```{r project_expl}
+R_values <- sample_R(R, 200)
+hist(R_values, col = "grey", border = "white",
+     main = "Sample values of R", xlab = "reproduction number")
+
+library(projections)
+proj <- project(i, R = R$R_ml, si = R$si, n_sim = 200, n_days = 21)
+proj
+```
+
+We plot the results separately, then add them to the epicurve (requires the
+development version of `projections`):
+
+```{r proj_plot}
+if (packageVersion("projections") >= "0.3.0") {
+  library(magrittr)
+  library(ggplot2)
+  plot(proj, boxplots = TRUE)
+
+  plot(i) %>% add_projections(proj, quantiles = c(.025, .5)) + scale_x_date()
+}
+```
+
