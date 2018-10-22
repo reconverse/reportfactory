@@ -119,6 +119,11 @@ new_factory <- function(destination = "new_factory",
     }
   }
 
+  # Renaming dot files
+
+  file.rename(file.path(destination, "_here"), file.path(destination, ".here"))
+  file.rename(file.path(destination, "_gitignore"), file.path(destination, ".gitignore"))
+  
   if (move_in) {
     oldwd <- getwd()
     msg <- paste0("  /// Changing working directory to ", destination, "\n",
