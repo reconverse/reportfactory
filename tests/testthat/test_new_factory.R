@@ -18,8 +18,8 @@ test_that("new_factory generates the right files", {
             recursive = TRUE
            )
 
-  file.rename(file.path(ref_path, "_here"), file.path(ref_path, ".here"))
-  file.rename(file.path(ref_path, "_gitignore"), file.path(ref_path, ".gitignore"))
+  make_gitignore(file.path(ref_path, ".gitignore"))
+  cat("", file = file.path(ref_path, ".here"))
   new_factory(new_fac_path, move_in = FALSE)
   ref_hashes <- tools::md5sum(dir(ref_path,
                               recursive = TRUE,
