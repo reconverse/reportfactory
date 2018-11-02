@@ -11,11 +11,20 @@ BugReports: https://github.com/reconhub/reportfactory/issues
 RoxygenNote: 6.1.0
 Encoding: UTF-8
 Imports:
-    checkpoint,
-    rmarkdown,
-    rprojroot
+  checkpoint,
+  rmarkdown,
+  rprojroot
 Suggests:
-    here,
-    knitr,
-    testthat
+  testthat,
+  dplyr,
+  earlyR,
+  epicontacts,
+  ggplot2,
+  here,
+  incidence,
+  knitr,
+  magrittr,
+  projections,
+  readxl,
+  tidyr 
 VignetteBuilder: knitr
