@@ -8,7 +8,7 @@ Description: Scripts for compiling reports using \code{rmarkdown::render}.
 License: MIT + file LICENSE
 URL: https://github.com/reconhub/reportfactory
 BugReports: https://github.com/reconhub/reportfactory/issues
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1
 Imports:
     checkpoint,
     rmarkdown,

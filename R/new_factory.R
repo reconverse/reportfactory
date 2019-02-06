@@ -82,7 +82,7 @@ new_factory <- function(destination = "new_factory",
     zip_path <- system.file("factory_template_default.zip",
                             package = "reportfactory")
   } else {
-    zip_path <- system.file("factory_template_no_example.zip",
+    zip_path <- system.file("factory_template_empty.zip",
                             package = "reportfactory")
   }
 
