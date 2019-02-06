@@ -6,13 +6,11 @@
 #' the same. See details for the content of the factory
 #'
 #' @details
-#' The factory includes:
+#' The default factory includes:
 #'
 #' \itemize{
 #'
-#'  \item \code{data/}: a folder storing data, with subfolders for
-#'  \code{contacts} and \code{linelists} (two types of epidemiological data),
-#'  and \code{.xlsx} files within these folders
+#'  \item \code{data/}: a folder storing data
 #'
 #'  \item \code{report_sources/}: a folder storing the reports, named after the
 #' convention described in \code{\link{update_reports}}, and stored in
@@ -21,14 +19,19 @@
 #'  \item \code{.gitignore}: a file used to tell git to ignore the produced
 #' outputs in \code{report_outputs}
 #'
+#'  \item \code{open.Rproj}: an Rproject to open the factory using Rstudio
+#'
 #'  \item \code{.here}: an empty file used as anchor by \code{\link[here]{here}}
 #'
 #' }
 #'
 #' @param destination the name of the report factory folder to be created
 #'
+#' @param include_template a logical indicating if a template of report and folders
+#'   structure shoud be added to the factory; defaults to \code{TRUE}
+#'
 #' @param include_examples a logical indicating if examples of reports shoud be
-#'   added to the factory; defaults to \code{TRUE}
+#'   added to the factory; defaults to \code{FALSE}
 #'
 #' @param move_in a logical indicating if the current session should move into
 #'   the created factory; defaults to \code{TRUE}
@@ -65,11 +68,15 @@
 #' }
 
 new_factory <- function(destination = "new_factory",
-                        include_examples = TRUE,
+                        include_template = TRUE,
+                        include_examples = FALSE,
                         move_in = TRUE) {
 
-  if (include_examples) {
-    zip_path <- system.file("factory_template.zip",
+  if (include_templates) {
+    zip_path <- system.file("factory_template_default.zip",
+                            package = "reportfactory")
+  } else if (include_examples) {
+    zip_path <- system.file("factory_template_with_examples.zip",
                             package = "reportfactory")
   } else {
     zip_path <- system.file("factory_template_no_example.zip",

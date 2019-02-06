@@ -33,7 +33,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   if (length(file) > 1L) {
     stop("more than one report asked from 'compile_report'")
   }
-
   rmd_path <- grep(".Rmd",
                   dir(find_file("report_sources"),
                       recursive = TRUE, pattern = file,
