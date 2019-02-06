@@ -72,7 +72,7 @@ new_factory <- function(destination = "new_factory",
                         include_examples = FALSE,
                         move_in = TRUE) {
 
-  if (include_templates) {
+  if (include_template) {
     zip_path <- system.file("factory_template_default.zip",
                             package = "reportfactory")
   } else if (include_examples) {

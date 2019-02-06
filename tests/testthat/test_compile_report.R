@@ -6,7 +6,7 @@ test_that("Compilation can handle multiple outputs", {
   skip_on_cran()
 
   setwd(tempdir())
-  random_factory()
+  random_factory(include_examples = TRUE)
 
   compile_report(list_reports(pattern = "foo")[1], quiet = TRUE)
   outputs <- sub("([[:alnum:]_-]+/){2}", "",
