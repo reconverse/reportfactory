@@ -72,11 +72,14 @@ new_factory <- function(destination = "new_factory",
                         include_examples = FALSE,
                         move_in = TRUE) {
 
-  if (include_template) {
-    zip_path <- system.file("factory_template_default.zip",
-                            package = "reportfactory")
-  } else if (include_examples) {
+  ## factory with example data and reports is not the default, but will override
+  ## the template if requested
+  
+  if (include_examples) {
     zip_path <- system.file("factory_template_with_examples.zip",
+                            package = "reportfactory")
+  } else if (include_template) {
+    zip_path <- system.file("factory_template_default.zip",
                             package = "reportfactory")
   } else {
     zip_path <- system.file("factory_template_no_example.zip",

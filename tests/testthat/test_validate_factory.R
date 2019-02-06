@@ -10,7 +10,7 @@ test_that("A new_factory is valid", {
     file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
   }
 
-  new_factory(x <- new_dir(), move_in = FALSE)
+  new_factory(x <- new_dir(), move_in = FALSE, include_examples = TRUE)
 
   no_probs <- function(test) {
     length(test$errors) == 0L && length(test$warnings) == 0L

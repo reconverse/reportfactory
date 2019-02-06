@@ -14,7 +14,7 @@ test_that("new_factory generates the right files", {
 
 
   new_fac_path <- file.path(tempdir(), "new_factory")
-  new_factory(new_fac_path, move_in = FALSE)
+  new_factory(new_fac_path, move_in = FALSE, include_examples = TRUE)
 
   ref_hashes <- tools::md5sum(dir(ref_path,
                               recursive = TRUE,
@@ -43,7 +43,7 @@ test_that("working directory unchanged", {
   }
 
   odir <- getwd()
-  new_factory(x <- new_dir(), move_in = FALSE)
+  new_factory(x <- new_dir(), move_in = FALSE, include_examples = TRUE)
 
   ## new_factory with move_in = FALSE should not alter the working directory
   expect_identical(odir, getwd())
