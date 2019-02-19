@@ -28,5 +28,6 @@ list_reports <- function(factory = getwd(), pattern = NULL) {
     out <- grep(pattern, out, value = TRUE)
   }
 
+  class(out) <- c("punchcard", oldClass(out))
   out
 }
