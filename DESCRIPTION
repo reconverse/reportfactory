@@ -1,9 +1,10 @@
 Package: reportfactory
 Type: Package
 Title: Report factory
-Version: 0.0.2
+Version: 0.0.3
 Authors@R: c(person("Thibaut", "Jombart", role = c("aut", "cre"), email =
-  "thibautjombart@gmail.com"))
+  "thibautjombart@gmail.com"),
+  person("Zhian N.", "Kamvar", role = "ctb", email = "zkamvar@gmail.com"))
 Description: Scripts for compiling reports using \code{rmarkdown::render}.
 License: MIT + file LICENSE
 URL: https://github.com/reconhub/reportfactory

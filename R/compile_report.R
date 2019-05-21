@@ -35,7 +35,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
   }
   rmd_path <- grep(".Rmd",
                   dir(find_file("report_sources"),
-                      recursive = TRUE, pattern = file,
+                      recursive = TRUE, pattern = sprintf("^%s$", file),
                       full.names = TRUE),
                   value = TRUE, ignore.case = TRUE)
   rmd_path <- ignore_tilde(rmd_path)

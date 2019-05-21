@@ -1,5 +1,10 @@
 context("Creation of report factory")
 
+new_dir <- function() {
+  rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
+  file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
+}
+
 
 test_that("new_factory generates the right files - with examples", {
   
@@ -100,12 +105,6 @@ test_that("working directory unchanged", {
 
   skip_on_cran()
 
-
-  new_dir <- function() {
-    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
-    file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
-  }
-
   odir <- getwd()
   new_factory(x <- new_dir(), move_in = FALSE, include_examples = TRUE)
 
@@ -132,3 +131,20 @@ test_that("working directory unchanged", {
 
 
 })
+
+
+test_that("factories with similar slugs don't cause problems", {
+
+skip_on_cran()
+odir <- getwd()
+
+reportfactory::new_factory(x <- new_dir(), move_in = FALSE)
+
+file.copy(file.path(x, "report_sources/example_report_2019-01-31.Rmd"), 
+          to = file.path(x, "report_sources/foo_example_report_2019-01-31.Rmd"))
+
+expect_output(reportfactory::update_reports(factory = x), 
+              "/// 'foo_example_report_2019-01-31' done!")
+  
+})
+
