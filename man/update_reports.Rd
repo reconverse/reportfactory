@@ -4,7 +4,8 @@
 \alias{update_reports}
 \title{Compile reports within the factory}
 \usage{
-update_reports(factory = getwd(), all = FALSE, quiet = TRUE, ...)
+update_reports(factory = getwd(), all = FALSE, quiet = TRUE,
+  ignore_archive = TRUE, ...)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working

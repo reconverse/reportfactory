@@ -27,8 +27,9 @@
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 #' @inheritParams compile_report
+#' @inheritParams list_reports
 
-update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE, ...) {
+update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE, ignore_archive = TRUE, ...) {
 
   validate_factory(factory)
 
@@ -36,7 +37,7 @@ update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE, ...) {
   on.exit(setwd(odir))
   setwd(factory)
 
-  report_sources <- list_reports()
+  report_sources <- list_reports(ignore_archive = ignore_archive)
   dates <- extract_date(report_sources)
   types <- extract_base(report_sources)
 
