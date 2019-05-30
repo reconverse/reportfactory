@@ -18,6 +18,9 @@ reports will be compuled.}
 \item{quiet}{a logical indicating if messages from rmarkdown compilation
 should be displayed; \code{FALSE} by default.}
 
+\item{ignore_archive}{when \code{TRUE}, any reports within an `_archive` 
+sub-directory are ignored. Set to \code{FALSE} to list these reports.}
+
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }
 \description{

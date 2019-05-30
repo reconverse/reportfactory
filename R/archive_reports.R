@@ -7,6 +7,7 @@
 #' @param before a Date or POSIXt object indicating the earliest date keep. All
 #'   dates before this date will be archived.
 #'
+#' @export
 #' @return a named logical vector of archived reports. Successfully archived
 #'   reports will return TRUE and unsuccessfully archived will return FALSE
 #'
