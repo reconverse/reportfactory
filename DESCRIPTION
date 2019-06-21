@@ -17,5 +17,14 @@ Imports:
 Suggests:
     here,
     knitr,
-    testthat
+    testthat,
+    dplyr,
+    earlyR,
+    epicontacts,
+    ggplot2,
+    incidence,
+    magrittr,
+    projections,
+    readxl,
+    tidyr
 VignetteBuilder: knitr

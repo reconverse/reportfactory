@@ -4,7 +4,8 @@
 \alias{update_reports}
 \title{Compile reports within the factory}
 \usage{
-update_reports(factory = getwd(), all = FALSE, quiet = TRUE, ...)
+update_reports(factory = getwd(), all = FALSE, quiet = TRUE,
+  ignore_archive = TRUE, ...)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working
@@ -16,6 +17,9 @@ reports will be compuled.}
 
 \item{quiet}{a logical indicating if messages from rmarkdown compilation
 should be displayed; \code{FALSE} by default.}
+
+\item{ignore_archive}{when \code{TRUE}, any reports within an `_archive` 
+sub-directory are ignored. Set to \code{FALSE} to list these reports.}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }

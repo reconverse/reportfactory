@@ -4,7 +4,8 @@
 \alias{list_reports}
 \title{List reports in the factory}
 \usage{
-list_reports(factory = getwd(), pattern = NULL)
+list_reports(factory = getwd(), pattern = NULL,
+  ignore_archive = TRUE)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working
@@ -12,6 +13,9 @@ directory}
 
 \item{pattern}{an optional regular expression used to look for specific
 patterns in report names}
+
+\item{ignore_archive}{when \code{TRUE}, any reports within an `_archive` 
+sub-directory are ignored. Set to \code{FALSE} to list these reports.}
 }
 \description{
 This function can be used to list available reports stored in the factory, in

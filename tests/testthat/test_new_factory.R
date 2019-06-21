@@ -1,5 +1,4 @@
 context("Creation of report factory")
-
 new_dir <- function() {
   rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
   file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
