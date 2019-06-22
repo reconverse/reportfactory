@@ -24,12 +24,17 @@
 #' @param quiet a logical indicating if messages from rmarkdown compilation
 #'   should be displayed; \code{FALSE} by default.
 #'
+#' @param encoding a character string indicating which encoding should be used
+#'   when compiling the document; defaults to `"UTF-8"`, which ensures that
+#'   non-ascii characters work across different systems
+#' 
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 #' @inheritParams compile_report
 #' @inheritParams list_reports
 
-update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE, ignore_archive = TRUE, ...) {
+update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE,
+                           encoding = "UTF-8", ignore_archive = TRUE, ...) {
 
   validate_factory(factory)
 
@@ -42,12 +47,17 @@ update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE, ignore_
   types <- extract_base(report_sources)
 
   if (all) {
-    lapply(report_sources, compile_report, quiet = quiet, ...)
+    lapply(report_sources,
+           compile_report,
+           quiet = quiet, encoding = encoding, ...)
   } else {
     sources_by_type <- split(report_sources, types)
     for (e in sources_by_type) {
       index_latest <- which.max(as.Date(extract_date(e)))
-      compile_report(e[index_latest], quiet = quiet, ...)
+      compile_report(e[index_latest],
+                     quiet = quiet,
+                     encoding = encoding,
+                     ...)
     }
   }
 

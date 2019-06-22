@@ -1,18 +1,18 @@
 Package: reportfactory
 Type: Package
 Title: Report factory
-Version: 0.0.3
+Version: 0.0.4
 Authors@R: c(person("Thibaut", "Jombart", role = c("aut", "cre"), email =
   "thibautjombart@gmail.com"),
   person("Zhian N.", "Kamvar", role = "ctb", email = "zkamvar@gmail.com"))
-Description: Scripts for compiling reports using \code{rmarkdown::render}.
+Description: Lightweight infrastructure for handling multiple dated reports using \code{rmarkdown::render}.
 License: MIT + file LICENSE
 URL: https://github.com/reconhub/reportfactory
 BugReports: https://github.com/reconhub/reportfactory/issues
 RoxygenNote: 6.1.1
 Imports:
     checkpoint,
-    rmarkdown,
+    rmarkdown (>= 1.13),
     rprojroot
 Suggests:
     here,
