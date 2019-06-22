@@ -4,7 +4,8 @@
 \alias{compile_report}
 \title{Compile an rmarkdown report}
 \usage{
-compile_report(file, quiet = FALSE, factory = getwd(), ...)
+compile_report(file, quiet = FALSE, factory = getwd(),
+  encoding = "UTF-8", ...)
 }
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
@@ -15,6 +16,10 @@ should be displayed; \code{TRUE} by default.}
 
 \item{factory}{the path to a report factory; defaults to the current working
 directory}
+
+\item{encoding}{a character string indicating which encoding should be used
+when compiling the document; defaults to `"UTF-8"`, which ensures that
+non-ascii characters work across different systems}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }

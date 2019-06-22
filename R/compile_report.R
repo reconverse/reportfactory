@@ -16,13 +16,18 @@
 #' @param quiet a logical indicating if messages from rmarkdown compilation
 #'   should be displayed; \code{TRUE} by default.
 #'
+#' @param encoding a character string indicating which encoding should be used
+#'   when compiling the document; defaults to `"UTF-8"`, which ensures that
+#'   non-ascii characters work across different systems
+#'
 #' @param factory the path to a report factory; defaults to the current working
 #'   directory
 #'
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 
-compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
+compile_report <- function(file, quiet = FALSE, factory = getwd(),
+                           encoding = "UTF-8", ...) {
 
   validate_factory(factory)
 
@@ -63,7 +68,9 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(), ...) {
 
 
   message(sprintf("\n/// compiling report: '%s'", shorthand))
-  output_file <- rmarkdown::render(rmd_path, quiet = quiet, ...)
+  output_file <- rmarkdown::render(rmd_path,
+                                   quiet = quiet,
+                                   encoding = encoding, ...)
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
   files_after <- list.files(recursive = TRUE)
