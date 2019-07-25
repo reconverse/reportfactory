@@ -18,3 +18,5 @@ README.html
 ^appveyor\.yml$
 bug_reports/*
 artwork/*
+^\.travis\.yml$
+^drat\.sh$
