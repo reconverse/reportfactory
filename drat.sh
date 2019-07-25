@@ -8,7 +8,7 @@ addToDrat(){
   git config --global push.default simple
 
   ## Get drat repo
-  git remote add upstream "https://$GITHUB_PAT@github.com/samplerecon/recondrat.git"
+  git remote add upstream "https://$GITHUB_PAT@github.com/reconhub/recondrat.git"
   git fetch upstream
   git checkout master
 
