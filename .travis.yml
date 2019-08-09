@@ -5,3 +5,11 @@ warnings_are_errors: true
 after_success:
   - Rscript -e 'covr::codecov()'
   - bash <(curl -s https://codecov.io/bash)
+  
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:chris-lea/libsodium'
+    packages:
+      - libsodium-dev
+      - libicu-dev
