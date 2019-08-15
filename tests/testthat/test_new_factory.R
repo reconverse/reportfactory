@@ -1,7 +1,7 @@
 context("Creation of report factory")
 new_dir <- function() {
   rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
-  file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
+  file.path(tempdir(), paste("foo_example_report", rnd, sep = "_"))
 }
 
 
@@ -142,7 +142,7 @@ reportfactory::new_factory(x <- new_dir(), move_in = FALSE)
 file.copy(file.path(x, "report_sources/example_report_2019-01-31.Rmd"), 
           to = file.path(x, "report_sources/foo_example_report_2019-01-31.Rmd"))
 
-expect_output(reportfactory::update_reports(factory = x), 
+expect_message(reportfactory::update_reports(factory = x), 
               "/// 'foo_example_report_2019-01-31' done!")
   
 })
