@@ -29,6 +29,19 @@
 compile_report <- function(file, quiet = FALSE, factory = getwd(),
                            encoding = "UTF-8", ...) {
 
+  ## This function will:
+  
+  ## 1. identify all files in report_sources prior to the compilation
+
+  ## 2. compile a specific .Rmd file stored in report_sources/
+
+  ## 3. identify all files in report_sources; new ones are those which where not
+  ## around at step 1
+
+  ## 4. move all outputs identified in 3. to a dedicated folder in
+  ## report_outputs/
+  
+  
   validate_factory(factory)
 
   odir <- getwd()
@@ -67,10 +80,68 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   files_before <- unique(sub("~$", "", files_before))
 
 
+  ## handle optional parameters passed through ...:
+
+  ## we extract `params`, display
+  ## some information to the console on parameters used, and generate some text
+  ## that will be used to name the output folder
+  
+  dots <- list(...)
+  has_params <- FALSE
+  if ("params" %in% names(dots)) {
+    ##browser()
+    params <- dots$params
+    
+    ## remove unnamed parameters
+    named <- names(params) != ""
+    params <- params[named]
+
+    if (length(params) > 0) {
+      has_params <- TRUE
+
+      ## convert the parameter values to txt and abbreviate them for display to
+      ## console and for naming the output
+      turn_to_character <- function(x, sep = "_") {
+        out <- as.character(unlist(x))
+        out <- paste(out, collapse = sep)
+        out
+      }
+
+      params_as_txt_console <- lapply(params, turn_to_character, sep = " ")
+      params_as_txt <- lapply(params, turn_to_character)
+      
+      long_values <- nchar(params_as_txt) > 8
+      params_as_txt_console <- lapply(params_as_txt_console, substr, 1, 8)
+      params_as_txt <- lapply(params_as_txt, substr, 1, 8)
+      params_as_txt <- sub("-$", "", params_as_txt)
+
+      ## create character strings to be displayed to the console
+      txt_display <- paste(names(params),
+                           params_as_txt_console,
+                           sep = ": ")
+      txt_display[long_values] <- paste0(txt_display[long_values], "...")
+      txt_display <- paste(txt_display, collapse = "\n")
+
+      ## create character strings to be used for file naming
+      txt_name_folder <- paste(names(params), params_as_txt,
+                               sep = "_", collapse = "_")
+      txt_name_folder <- sub("_$", "", txt_name_folder)
+
+    }
+  }
+
+
+  ## display messages to the console
   message(sprintf("\n/// compiling report: '%s'", shorthand))
   output_file <- rmarkdown::render(rmd_path,
                                    quiet = quiet,
-                                   encoding = encoding, ...)
+                                   encoding = encoding,
+                                   envir = new.env(), # force clean environment
+                                   ...) # params can be passed here
+  if (has_params) {
+    message(sprintf("\n/// using params: \n'%s'",
+                    txt_display))
+  }
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
   files_after <- list.files(recursive = TRUE)
@@ -91,7 +162,17 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   report_dir <- file.path(find_file("report_outputs"),
                           paste(base_name, date, sep = "_"))
   dir.create(report_dir, FALSE, TRUE)
-  output_dir <- paste0(report_dir, "/compiled_", datetime)
+
+  ## add txt indicative of params if needed
+  if (has_params) {
+    output_dir <- paste0(report_dir,
+                         "/compiled_",
+                         txt_name_folder,
+                         datetime)
+  } else {
+    output_dir <- paste0(report_dir, "/compiled_", datetime)
+  }
+    
   output_dir <- file.path(report_dir,
                           paste("compiled", datetime, sep = "_"))
   dir.create(output_dir, FALSE, TRUE)
