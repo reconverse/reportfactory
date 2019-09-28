@@ -139,7 +139,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
                                    envir = new.env(), # force clean environment
                                    ...) # params can be passed here
   if (has_params) {
-    message(sprintf("\n/// using params: \n'%s'",
+    message(sprintf("// using params: \n%s",
                     txt_display))
   }
   message(sprintf("\n/// '%s' done!\n", shorthand))
@@ -168,13 +168,12 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
     output_dir <- paste0(report_dir,
                          "/compiled_",
                          txt_name_folder,
+                         "_",
                          datetime)
   } else {
     output_dir <- paste0(report_dir, "/compiled_", datetime)
   }
-    
-  output_dir <- file.path(report_dir,
-                          paste("compiled", datetime, sep = "_"))
+
   dir.create(output_dir, FALSE, TRUE)
 
   for (file in new_files) {
