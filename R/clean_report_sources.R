@@ -1,10 +1,10 @@
 #' Clean the folder report_sources
 #'
-#' This function removes all files and folders present in `report_sources`
+#' This function removes undesirable files and folders present in `report_sources`
 #' except for:
 #' * `Rmd` files
 #' * `README*` files
-#' * `cache/`
+#' * `cache/` (unless `remove_cache` is `FALSE`)
 #'
 #' @author Thibaut Jombart
 #'
@@ -14,8 +14,13 @@
 #'
 #' @param quiet a logical indicating if the function should throw a message if
 #'   content gets removed; defaults to `FALSE`
+#'
+#' @param remove_cache a logical indicating if `cache` folder should be kept
+#'
+#' @export
 
-clean_report_sources <- function(factory = getwd(), quiet = FALSE) {
+clean_report_sources <- function(factory = getwd(), quiet = FALSE,
+                                 remove_cache = TRUE) {
 
   ## The approach is is:
   
@@ -42,13 +47,17 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE) {
   ## 2. define regexp for protected content
   protected <- c("report_sources/.$",
                  "report_sources/..$",
-                 "report_sources/cache$",
-                 "report_sources/cache/.*$",
                  "report_sources/_archive$",
                  "report_sources/_archive/.*$",
                  "report_sources/README.*$",
                  "report_sources/.*[.][rR][Mm][Dd]$"
                  )
+
+  if (!remove_cache) {
+    protected <- c(protected,
+                   "report_sources/cache$",
+                   "report_sources/cache/.*$")
+  }
 
   ## 3. identify protected files from regexp
   to_keep <- lapply(protected, grep, folder_content, value = TRUE)
@@ -58,13 +67,13 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE) {
   to_remove <- setdiff(folder_content, to_keep)  
 
   ## 5. remove stuff that needs to be, with a message if needed
-
   if (length(to_remove) > 0) {
     if (!quiet) {
       to_remove_txt <- paste(to_remove, collapse = "\n")
       msg <- paste0("The following files in `report_sources/` ",
-                   "are not rmarkdown sources and will be removed:\n",
-                   to_remove_txt)
+                   "are not rmarkdown sources \nand will be removed:\n\n",
+                   to_remove_txt,
+                   "\n")
       message(msg)
     }
     
@@ -72,5 +81,5 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE) {
   }
 
   invisible(NULL)
-  
+
 }
