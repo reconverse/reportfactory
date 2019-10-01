@@ -1,0 +1,76 @@
+#' Clean the folder report_sources
+#'
+#' This function removes all files and folders present in `report_sources`
+#' except for:
+#' * `Rmd` files
+#' * `README*` files
+#' * `cache/`
+#'
+#' @author Thibaut Jombart
+#'
+#'
+#' @param factory the path to a report factory; defaults to the current working
+#'   directory
+#'
+#' @param quiet a logical indicating if the function should throw a message if
+#'   content gets removed; defaults to `FALSE`
+
+clean_report_sources <- function(factory = getwd(), quiet = FALSE) {
+
+  ## The approach is is:
+  
+  ## 1. list all content of report_sources/
+  ## 2. define regexp for protected content
+  ## 3. identify protected files from regexp
+  ## 4. diff with all content to identify what to remove
+  ## 5. remove stuff that needs to be, with a message if needed
+
+  ## set working directory
+  validate_factory(factory, warnings = FALSE)
+
+  odir <- getwd()
+  on.exit(setwd(odir))
+  setwd(factory)
+
+
+  ## 1. list all content of report_sources/
+  folder_content <- dir("report_sources",
+                        all.files = TRUE,
+                        full.names = TRUE,
+                        include.dirs = TRUE)
+
+  ## 2. define regexp for protected content
+  protected <- c("report_sources/.$",
+                 "report_sources/..$",
+                 "report_sources/cache$",
+                 "report_sources/cache/.*$",
+                 "report_sources/_archive$",
+                 "report_sources/_archive/.*$",
+                 "report_sources/README.*$",
+                 "report_sources/.*[.][rR][Mm][Dd]$"
+                 )
+
+  ## 3. identify protected files from regexp
+  to_keep <- lapply(protected, grep, folder_content, value = TRUE)
+  to_keep <- unlist(to_keep)
+
+  ## 4. diff with all content to identify what to remove
+  to_remove <- setdiff(folder_content, to_keep)  
+
+  ## 5. remove stuff that needs to be, with a message if needed
+
+  if (length(to_remove) > 0) {
+    if (!quiet) {
+      to_remove_txt <- paste(to_remove, collapse = "\n")
+      msg <- paste0("The following files in `report_sources/` ",
+                   "are not rmarkdown sources and will be removed:\n",
+                   to_remove_txt)
+      message(msg)
+    }
+    
+    unlink(to_remove, recursive = TRUE)
+  }
+
+  invisible(NULL)
+  
+}
