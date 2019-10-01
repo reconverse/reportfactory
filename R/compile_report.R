@@ -23,11 +23,22 @@
 #' @param factory the path to a report factory; defaults to the current working
 #'   directory
 #'
+#' @param clean_report_sources a logical indicating if indesirable files and
+#'   folders in the `report_sources` folder should be cleaned before
+#'   compilation; defaults to `FALSE` (no cleanup)
+#'
+#' @param remove_cache a logical passed to `clean_report_sources`, indicating if
+#'   the `cache` folder should be considered as undesirable in `report_sources`;
+#'   defaults to `TRUE`, in which case `cache` will also be removed if
+#'   `clean_report_sources` is `TRUE`
+#'
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 
 compile_report <- function(file, quiet = FALSE, factory = getwd(),
-                           encoding = "UTF-8", ...) {
+                           encoding = "UTF-8",
+                           clean_report_sources = FALSE,
+                           remove_cache = TRUE, ...) {
 
   validate_factory(factory)
 
@@ -35,6 +46,10 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   on.exit(setwd(odir))
   setwd(factory)
 
+  if (clean_report_sources) {
+    clean_report_sources(quiet = quiet, remove_cache = remove_cache)
+  }
+  
   if (length(file) > 1L) {
     stop("more than one report asked from 'compile_report'")
   }
