@@ -5,7 +5,8 @@
 \title{Compile reports within the factory}
 \usage{
 update_reports(factory = getwd(), all = FALSE, quiet = TRUE,
-  encoding = "UTF-8", ignore_archive = TRUE, ...)
+  encoding = "UTF-8", ignore_archive = TRUE,
+  clean_report_sources = FALSE, remove_cache = TRUE, ...)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working
@@ -24,6 +25,15 @@ non-ascii characters work across different systems}
 
 \item{ignore_archive}{when \code{TRUE}, any reports within an `_archive` 
 sub-directory are ignored. Set to \code{FALSE} to list these reports.}
+
+\item{clean_report_sources}{a logical indicating if indesirable files and
+folders in the `report_sources` folder should be cleaned before
+compilation; defaults to `FALSE` (no cleanup)}
+
+\item{remove_cache}{a logical passed to `clean_report_sources`, indicating if
+the `cache` folder should be considered as undesirable in `report_sources`;
+defaults to `TRUE`, in which case `cache` will also be removed if
+`clean_report_sources` is `TRUE`}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }
