@@ -28,7 +28,22 @@
 
 compile_report <- function(file, quiet = FALSE, factory = getwd(),
                            encoding = "UTF-8", ...) {
+  
+  # ================
+    # Start log code
+  if (!file.exists(paste0(factory, ".compile_log.csv"))) {
+    write.csv(data.frame(test = c(1)), paste0(factory, "/.compile_log.csv"))
+  }
 
+  
+  aargs <- as.list(c(as.list(environment()), list(...)))
+  aargs$timestamp <- Sys.time()
+  log_file <- 
+  write.csv(as.data.frame(log_file), ".compile_log.csv",
+            append = TRUE)
+
+    # Start log code
+  # ================
   validate_factory(factory)
 
   odir <- getwd()
