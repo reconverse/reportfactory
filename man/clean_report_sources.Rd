@@ -23,6 +23,38 @@ except for:
 * `README*` files
 * `cache/` (unless `remove_cache` is `FALSE`)
 }
+\examples{
+
+ setwd(tempdir())
+ random_factory(include_examples = FALSE)
+
+dir.create(file.path("report_sources", "_archive"))
+
+## check initial content
+dir("report_sources", all.files = TRUE)
+
+## add crap
+crap_files <- c("toto.txt",
+                "#toto.Rmd#",
+                "toto.Rmd~",
+                "some_file.html",
+                ".hidden")
+crap_folders <- c("figures",
+                  "cache",
+                  "outputs_xlsx")
+
+file.create(file.path("report_sources", crap_files))
+sapply(file.path("report_sources", crap_folders), dir.create)
+
+## check content with all crap
+dir("report_sources", all.files = TRUE)
+
+clean_report_sources()
+
+## check content after cleanup
+dir("report_sources", all.files = TRUE)
+
+}
 \author{
 Thibaut Jombart
 }

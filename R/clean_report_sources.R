@@ -18,6 +18,8 @@
 #' @param remove_cache a logical indicating if `cache` folder should be kept
 #'
 #' @export
+#'
+#' @examples
 #' 
 #'  setwd(tempdir())
 #'  random_factory(include_examples = FALSE)
