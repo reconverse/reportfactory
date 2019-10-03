@@ -5,7 +5,8 @@
 \title{Compile an rmarkdown report}
 \usage{
 compile_report(file, quiet = FALSE, factory = getwd(),
-  encoding = "UTF-8", ...)
+  encoding = "UTF-8", clean_report_sources = FALSE,
+  remove_cache = TRUE, ...)
 }
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
@@ -20,6 +21,15 @@ directory}
 \item{encoding}{a character string indicating which encoding should be used
 when compiling the document; defaults to `"UTF-8"`, which ensures that
 non-ascii characters work across different systems}
+
+\item{clean_report_sources}{a logical indicating if indesirable files and
+folders in the `report_sources` folder should be cleaned before
+compilation; defaults to `FALSE` (no cleanup)}
+
+\item{remove_cache}{a logical passed to `clean_report_sources`, indicating if
+the `cache` folder should be considered as undesirable in `report_sources`;
+defaults to `TRUE`, in which case `cache` will also be removed if
+`clean_report_sources` is `TRUE`}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }
