@@ -28,7 +28,24 @@
 
 compile_report <- function(file, quiet = FALSE, factory = getwd(),
                            encoding = "UTF-8", ...) {
+  
+  # ================
+    # Start log code
+  if (!file.exists(paste0(factory, ".compile_log.csv"))) {
+    write.csv(data.frame(initialize = TRUE), paste0(factory, "/.compile_log.csv"))
+  }
 
+  
+  aargs <- as.list(c(as.list(environment()), list(...)))
+  aargs$timestamp <- Sys.time()
+  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
+    # can reimplement dplyr::bind_rows so we aren't relying on the package
+    # https://github.com/tidyverse/dplyr/blob/4ce2a78a52d349b17d64e9bc9d107cae5805ed6c/R/bind.r
+  log_file <- do.call("bind_rows", list(log_file, as.list(as.data.frame(aargs))))
+  write.csv(log_file, ".compile_log.csv", append = TRUE)
+
+    # Start log code
+  # ================
   validate_factory(factory)
 
   odir <- getwd()
