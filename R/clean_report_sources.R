@@ -20,9 +20,9 @@
 #' @export
 #'
 #' @examples
-#' 
-#'  setwd(tempdir())
-#'  random_factory(include_examples = FALSE)
+#'
+#' odir <- getwd()
+#' new_factory(tempdir(), include_examples = FALSE)
 #'
 #' dir.create(file.path("report_sources", "_archive"))
 #'
@@ -49,6 +49,8 @@
 #'
 #' ## check content after cleanup
 #' dir("report_sources", all.files = TRUE)
+#'
+#' setwd(odir)
 #' 
 
 clean_report_sources <- function(factory = getwd(), quiet = FALSE,
