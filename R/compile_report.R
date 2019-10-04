@@ -27,7 +27,7 @@
 #'
 
 compile_report <- function(file, quiet = FALSE, factory = getwd(),
-                           encoding = "UTF-8", ...) {
+                           encoding = "UTF-8", render_params, ...) {
 
   ## This function will:
   
@@ -87,14 +87,13 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   
   dots <- list(...)
   has_params <- FALSE
-  if ("params" %in% names(dots)) {
-    params <- dots$params
+  if (length(render_params) > 0) {
     
     ## remove unnamed parameters
-    named <- names(params) != ""
-    params <- params[named]
+    named <- names(render_params) != ""
+    render_params <- render_params[named]
     
-    if (length(params) > 0) {
+    if (length(render_params) > 0) {
       has_params <- TRUE
 
       ## convert the parameter values to txt and abbreviate them for display to
@@ -105,8 +104,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
         out
       }
 
-      params_as_txt_console <- lapply(params, turn_to_character, sep = " ")
-      params_as_txt <- lapply(params, turn_to_character)
+      params_as_txt_console <- lapply(render_params, turn_to_character, sep = " ")
+      params_as_txt <- lapply(render_params, turn_to_character)
       
       long_values <- nchar(params_as_txt) > 8
       params_as_txt_console <- lapply(params_as_txt_console, substr, 1, 8)
@@ -116,14 +115,14 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
       
 
       ## create character strings to be displayed to the console
-      txt_display <- paste(names(params),
+      txt_display <- paste(names(render_params),
                            params_as_txt_console,
                            sep = ": ")
       txt_display[long_values] <- paste0(txt_display[long_values], "...")
       txt_display <- paste(txt_display, collapse = "\n")
 
       ## create character strings to be used for file naming
-      txt_name_folder <- paste(names(params), params_as_txt,
+      txt_name_folder <- paste(names(render_params), params_as_txt,
                                sep = "_", collapse = "_")
       txt_name_folder <- sub("_$", "", txt_name_folder)
 
@@ -137,7 +136,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
                                    quiet = quiet,
                                    encoding = encoding,
                                    envir = new.env(), # force clean environment
-                                   ...) # params can be passed here
+                                   params = render_params) # params can be passed here
   if (has_params) {
     message(sprintf("// using params: \n%s",
                     txt_display))
