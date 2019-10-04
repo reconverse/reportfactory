@@ -5,8 +5,8 @@ test_that("Compilation can handle multiple outputs", {
   skip_on_cran()
   odir <- getwd()
   on.exit(setwd(odir))
-  setwd(tempdir())
   
+  setwd(tempdir())
   random_factory(include_examples = TRUE)
 
   compile_report(list_reports(pattern = "foo")[1], quiet = TRUE)

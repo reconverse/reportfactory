@@ -27,7 +27,7 @@
 #'
 
 compile_report <- function(file, quiet = FALSE, factory = getwd(),
-                           encoding = "UTF-8", render_params, ...) {
+                           encoding = "UTF-8", render_params = list(), ...) {
 
   ## This function will:
   
