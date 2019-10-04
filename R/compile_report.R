@@ -41,7 +41,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## 4. move all outputs identified in 3. to a dedicated folder in
   ## report_outputs/
   
-  
   validate_factory(factory)
 
   odir <- getwd()
@@ -89,13 +88,12 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   dots <- list(...)
   has_params <- FALSE
   if ("params" %in% names(dots)) {
-    ##browser()
     params <- dots$params
     
     ## remove unnamed parameters
     named <- names(params) != ""
     params <- params[named]
-
+    
     if (length(params) > 0) {
       has_params <- TRUE
 
@@ -114,6 +112,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
       params_as_txt_console <- lapply(params_as_txt_console, substr, 1, 8)
       params_as_txt <- lapply(params_as_txt, substr, 1, 8)
       params_as_txt <- sub("-$", "", params_as_txt)
+      params_as_txt <- sub("_$", "", params_as_txt)
+      
 
       ## create character strings to be displayed to the console
       txt_display <- paste(names(params),
