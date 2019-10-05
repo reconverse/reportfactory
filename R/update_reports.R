@@ -57,7 +57,7 @@ update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE,
   report_sources <- list_reports(ignore_archive = ignore_archive)
   dates <- extract_date(report_sources)
   types <- extract_base(report_sources)
-
+  
   if (all) {
     lapply(report_sources,
            compile_report,

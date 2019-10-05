@@ -25,9 +25,11 @@ except for:
 }
 \examples{
 
+## create new random factory in temp folder
 odir <- getwd()
 new_factory(tempdir(), include_examples = FALSE)
 
+## add content
 dir.create(file.path("report_sources", "_archive"))
 
 ## check initial content
@@ -49,6 +51,7 @@ sapply(file.path("report_sources", crap_folders), dir.create)
 ## check content with all crap
 dir("report_sources", all.files = TRUE)
 
+## clean the crap
 clean_report_sources()
 
 ## check content after cleanup

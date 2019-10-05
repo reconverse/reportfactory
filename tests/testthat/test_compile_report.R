@@ -2,9 +2,10 @@ context("Test report compilation")
 
 
 test_that("Compilation can handle multiple outputs", {
-
   skip_on_cran()
-
+  odir <- getwd()
+  on.exit(setwd(odir))
+  
   setwd(tempdir())
   random_factory(include_examples = TRUE)
 
@@ -17,7 +18,23 @@ test_that("Compilation can handle multiple outputs", {
            "figures/violins-1.pdf", "figures/violins-1.png",
            "foo_2018-06-29.html", "outputs_base.csv" )
 
-
   expect_identical(ref, outputs)
+})
 
+test_that("Compilation can take params and pass to markdown::render", {
+  skip_on_cran()
+  odir <- getwd()
+  on.exit(setwd(odir))
+
+  setwd(tempdir())
+  factory <- random_factory(include_examples = TRUE)
+  report <- list_reports(pattern = "foo")[1]
+  
+  foo_value <- "testzfoo"
+  update_reports(render_params = 
+                   list(foo = foo_value, show_stuff = TRUE, bar = letters))
+  
+  testthat::expect_match(
+    list_outputs()[length(list_outputs())],
+    paste("foo", foo_value, "show_stuff_TRUE_bar_a_b_c_d", sep = "_"))
 })

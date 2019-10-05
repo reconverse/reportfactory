@@ -5,8 +5,8 @@
 \title{Compile an rmarkdown report}
 \usage{
 compile_report(file, quiet = FALSE, factory = getwd(),
-  encoding = "UTF-8", clean_report_sources = FALSE,
-  remove_cache = TRUE, ...)
+  clean_report_sources = FALSE, remove_cache = TRUE,
+  encoding = "UTF-8", render_params = list(), ...)
 }
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
@@ -18,10 +18,6 @@ should be displayed; \code{TRUE} by default.}
 \item{factory}{the path to a report factory; defaults to the current working
 directory}
 
-\item{encoding}{a character string indicating which encoding should be used
-when compiling the document; defaults to `"UTF-8"`, which ensures that
-non-ascii characters work across different systems}
-
 \item{clean_report_sources}{a logical indicating if indesirable files and
 folders in the `report_sources` folder should be cleaned before
 compilation; defaults to `FALSE` (no cleanup)}
@@ -30,6 +26,17 @@ compilation; defaults to `FALSE` (no cleanup)}
 the `cache` folder should be considered as undesirable in `report_sources`;
 defaults to `TRUE`, in which case `cache` will also be removed if
 `clean_report_sources` is `TRUE`}
+
+\item{encoding}{a character string indicating which encoding should be used
+when compiling the document; defaults to `"UTF-8"`, which ensures that
+non-ascii characters work across different systems}
+
+\item{render_params}{a list that is passed to the `params` argument in
+`rmarkdown::render`, which are accessed in the `.Rmd` file with
+`params$...`; for instance, if `list(foo = 1:3)` is passed, then the
+compilation environment will define an object `params$foo` with value
+`1:3`; if defined, the subdirectory name in report-outputs will indicate
+the names and first values of `params`; default is an empty list}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }
