@@ -22,6 +22,11 @@
 #'
 #' @param factory the path to a report factory; defaults to the current working
 #'   directory
+#'   
+#' @param render_params a list that is passed to the params argument in
+#'   `rmarkdown::render`, which are accessed in the .Rmd file with params$foo, and 
+#'   is used to create the subdirectory name in report-outputs;
+#'   default is an empty list
 #'
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'

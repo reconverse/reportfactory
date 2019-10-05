@@ -5,7 +5,7 @@
 \title{Compile an rmarkdown report}
 \usage{
 compile_report(file, quiet = FALSE, factory = getwd(),
-  encoding = "UTF-8", ...)
+  encoding = "UTF-8", render_params = list(), ...)
 }
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
@@ -20,6 +20,11 @@ directory}
 \item{encoding}{a character string indicating which encoding should be used
 when compiling the document; defaults to `"UTF-8"`, which ensures that
 non-ascii characters work across different systems}
+
+\item{render_params}{a list that is passed to the params argument in
+`rmarkdown::render`, which are accessed in the .Rmd file with params$foo, and 
+is used to create the subdirectory name in report-outputs;
+default is an empty list}
 
 \item{...}{further arguments passed to \code{rmarkdown::render}.}
 }
