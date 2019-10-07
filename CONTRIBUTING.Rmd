@@ -11,7 +11,7 @@ Contributions are welcomed by pull request from everybody.
 
 # How to contribute
 
-Third-party patches are essential for keeping recon great. We want to keep it as easy as possible to contribute changes that get things working in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
+Third-party patches are essential for keeping RECON great. We want to keep it as easy as possible to contribute changes that get things working in your environment. There are a few guidelines that we need contributors to follow so that we can have a chance of keeping on top of things.
 
 ## Getting Started
 * Make sure you have a [GitHub account](https://github.com/signup/free).
@@ -55,7 +55,7 @@ respectively.
 ## Submitting Changes
 
 * Push your changes to a topic branch in your fork of the repository.
-* Submit a pull request to the repository in the recon organization.
+* Submit a pull request to the repository in the RECON organization.
 * Update your issue and indicate that it is ready for review
 * The core team looks at Pull Requests on a regular basis
 * After feedback has been given we expect responses within two weeks. After two
@@ -82,6 +82,8 @@ The original contributor will be notified of the revert. A reference to the test
 
 * Changes resulting in test pipeline failures will be reverted if they cannot
   be resolved within one business day.
+  
+## Semantic Versioning
 
 ## Additional Resources
 
