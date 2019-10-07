@@ -85,6 +85,39 @@ The original contributor will be notified of the revert. A reference to the test
   
 ## Semantic Versioning
 
+See [here](https://semver.org) and [here](https://medium.com/@jameshamann/a-brief-guide-to-semantic-versioning-c6055d87c90e) for semantic versioning guidelines in full.
+
+*0 — Pre-MVP/Alpha*
+At this stage, you’re developing your app and still building towards an MVP. There’s no real point differentating between versions here because it’s not a useable product yet. During this period, the version will remain at 0.
+
+*Major.Minor.Patch — Alpha/Beta*
+Once you reach your MVP, you might iterate over this and create Alpha/Beta releases for users to test and supply feedback on. When creating your first release, you’ll want to start versioning. This helps you keep track of your app and creates a timeline of what features were added when and what bugs have and have not been fixed yet. You might be wondering, what exactly constitutes a major, minor or patch release.
+_Major Release_ — Increment the first digit by 1 if the new features break backwards compatibility/current features
+_Minor Release_ — Increment the middle digit by 1 if the new features don’t break any existing features and are compatible with the app in it’s current state.
+_Patch Release_ — Increment the last digit by 1 if you’re publishing bug/patch fixes to your app.
+
+Before publishing your first, useable version, you might find yourself incrementing the middle and the last digit to keep track of Alpha/Beta releases. Only once you’re ready for a proper, first release, should you start versioning from 1.0.0.
+
+## Changelog 
+The NEWS.md file should be updated using the guiding principles to include the following information on each version:
+
+_Guiding Principles_
+- Changelogs are for humans, not machines.
+- There should be an entry for every single version.
+- The same types of changes should be grouped.
+- Versions and sections should be linkable.
+- The latest version comes first.
+- The release date of each version is displayed.
+- Mention whether you follow Semantic Versioning.
+
+_Types of changes_
+- Added for new features.
+- Changed for changes in existing functionality.
+- Deprecated for soon-to-be removed features.
+- Removed for now removed features.
+- Fixed for any bug fixes.
+- Security in case of vulnerabilities.
+
 ## Additional Resources
 
 * [General GitHub documentation](https://help.github.com/)
