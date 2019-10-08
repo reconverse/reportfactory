@@ -58,12 +58,11 @@
 
 clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                                  remove_cache = TRUE) {
-
   ## The approach is is:
   
   ## 1. list all content of report_sources/
   ## 2. define regexp for protected content
-  ## 3. identify protected files from regexp
+  ## 3. identify protected files from regexp and protect directories containing them
   ## 4. diff with all content to identify what to remove
   ## 5. remove stuff that needs to be, with a message if needed
 
@@ -79,8 +78,9 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
   folder_content <- dir("report_sources",
                         all.files = TRUE,
                         full.names = TRUE,
-                        include.dirs = TRUE)
-
+                        include.dirs = TRUE,
+                        recursive = TRUE)
+  
   ## 2. define regexp for protected content
   protected <- c("report_sources/.$",
                  "report_sources/..$",
@@ -89,34 +89,49 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                  "report_sources/README.*$",
                  "report_sources/.*[.][rR][Mm][Dd]$"
                  )
-
+  
   if (!remove_cache) {
     protected <- c(protected,
                    "report_sources/cache$",
                    "report_sources/cache/.*$")
   }
 
-  ## 3. identify protected files from regexp
+  ## 3a. identify protected files from regexp
   to_keep <- lapply(protected, grep, folder_content, value = TRUE)
   to_keep <- unlist(to_keep)
+  ## identify the directories of protected files
+  protected_dirs <- lapply(to_keep, strsplit, "/[^\\/]+$")
 
+  protected_dirs <- unique(unlist(protected_dirs))
+
+  to_keep <- c(to_keep, protected_dirs)
+  
   ## 4. diff with all content to identify what to remove
-  to_remove <- setdiff(folder_content, to_keep)  
-
+  to_remove <- setdiff(folder_content, to_keep) 
+  # Order to_remove so that files are removed from directory first
+  to_remove <- to_remove[order(nchar(to_remove), to_remove, decreasing = TRUE)]
+  
   ## 5. remove stuff that needs to be, with a message if needed
   if (length(to_remove) > 0) {
-    if (!quiet) {
-      to_remove_txt <- paste(to_remove, collapse = "\n")
-      msg <- paste0("The following files in `report_sources/` ",
-                   "are not rmarkdown sources \nand will be removed:\n\n",
-                   to_remove_txt,
-                   "\n")
-      message(msg)
+    for (remove in to_remove) {
+      ## Last check that directories are empty before removing 
+      ##    (unlink = FALSE fails to remove dir)
+      if (length(list.files(remove)) == 0) {
+        unlink(remove, recursive = TRUE)
+      }else{
+        to_remove <- setdiff(to_remove, remove)
+      }
     }
-    
-    unlink(to_remove, recursive = TRUE)
   }
 
+  if (!quiet) {
+    to_remove_txt <- paste(to_remove, collapse = "\n")
+    msg <- paste0("The following files in `report_sources/` ",
+                  "are not rmarkdown sources \nand were removed:\n\n",
+                  to_remove_txt,
+                  "\n")
+    message(msg)
+  }
   invisible(NULL)
 
 }
