@@ -62,9 +62,13 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
   
   ## 1. list all content of report_sources/
   ## 2. define regexp for protected content
-  ## 3. identify protected files from regexp and protect directories containing them
+  ## 3. identify protected files from regexp
   ## 4. diff with all content to identify what to remove
-  ## 5. remove stuff that needs to be, with a message if needed
+  ## 5. order files to remove in order of char length (directories after files)
+  ## 6. remove files that do not match the regexp and are not directories
+        # that contain files (This is important because it prevents the
+        # directories of nested "protected" files from removal, and safegaurds 
+        # against unlink = TRUE)
 
   ## set working directory
   validate_factory(factory, warnings = FALSE)
@@ -96,29 +100,23 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                    "report_sources/cache/.*$")
   }
 
-  ## 3a. identify protected files from regexp
+  ## 3. identify protected files from regexp
   to_keep <- lapply(protected, grep, folder_content, value = TRUE)
   to_keep <- unlist(to_keep)
-  ## identify the directories of protected files
-  protected_dirs <- lapply(to_keep, strsplit, "/[^\\/]+$")
-
-  protected_dirs <- unique(unlist(protected_dirs))
-
-  to_keep <- c(to_keep, protected_dirs)
   
   ## 4. diff with all content to identify what to remove
   to_remove <- setdiff(folder_content, to_keep) 
-  # Order to_remove so that files are removed from directory first
+  ## 5. Order to_remove so that files are removed from directory first
   to_remove <- to_remove[order(nchar(to_remove), to_remove, decreasing = TRUE)]
   
-  ## 5. remove stuff that needs to be, with a message if needed
+  ## 6. remove stuff that needs to be, with a message if needed
   if (length(to_remove) > 0) {
     for (remove in to_remove) {
       ## Last check that directories are empty before removing 
       ##    (unlink = FALSE fails to remove dir)
       if (length(list.files(remove)) == 0) {
         unlink(remove, recursive = TRUE)
-      }else{
+      } else {
         to_remove <- setdiff(to_remove, remove)
       }
     }
