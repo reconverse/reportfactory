@@ -8,3 +8,11 @@ after_success:
   - Rscript -e 'covr::codecov()'
   - bash <(curl -s https://codecov.io/bash)
   - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash drat.sh
+  
+addons:
+  apt:
+    sources:
+      - sourceline: 'ppa:chris-lea/libsodium'
+    packages:
+      - libsodium-dev
+      - libicu-dev
