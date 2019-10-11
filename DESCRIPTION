@@ -19,7 +19,7 @@ Imports:
 Suggests:
     here,
     knitr,
-    testthat,
+    testthat (>= 2.1.0),
     dplyr,
     earlyR,
     epicontacts,
