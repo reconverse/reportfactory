@@ -23,7 +23,7 @@
 #' @param factory the path to a report factory; defaults to the current working
 #'   directory
 #'   
-#' @param render_params a list that is passed to the `params` argument in
+#' @param params a list that is passed to the `params` argument in
 #'   `rmarkdown::render`, which are accessed in the `.Rmd` file with
 #'   `params$...`; for instance, if `list(foo = 1:3)` is passed, then the
 #'   compilation environment will define an object `params$foo` with value
@@ -46,7 +46,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
                            clean_report_sources = FALSE,
                            remove_cache = TRUE, 
                            encoding = "UTF-8",
-                           render_params = list(), ...) {
+                           params = list(), ...) {
 
   ## This function will:
   
@@ -120,19 +120,19 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   files_before <- unique(sub("~$", "", files_before))
 
 
-  ## handle optional parameters passed `render_params`:
+  ## handle optional parameters passed `params`:
   ## we display some information to the console on parameters used, and generate
   ## some text that will be used to name the output folder
   
   dots <- list(...)
   has_params <- FALSE
-  if (length(render_params) > 0) {
+  if (length(params) > 0) {
     
     ## remove unnamed parameters
-    named <- names(render_params) != ""
-    render_params <- render_params[named]
+    named <- names(params) != ""
+    params <- params[named]
     
-    if (length(render_params) > 0) {
+    if (length(params) > 0) {
       has_params <- TRUE
 
       ## convert the parameter values to txt and abbreviate them for display to
@@ -143,8 +143,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
         out
       }
 
-      params_as_txt_console <- lapply(render_params, turn_to_character, sep = " ")
-      params_as_txt <- lapply(render_params, turn_to_character)
+      params_as_txt_console <- lapply(params, turn_to_character, sep = " ")
+      params_as_txt <- lapply(params, turn_to_character)
 
       ## this bit shortens param values which will be used for file names; usual
       ## filesystems (incl. ext3, ext4, NTFS, FAT32) hava a cap of 255
@@ -160,14 +160,14 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
       
 
       ## create character strings to be displayed to the console
-      txt_display <- paste(names(render_params),
+      txt_display <- paste(names(params),
                            params_as_txt_console,
                            sep = ": ")
       txt_display[long_values] <- paste0(txt_display[long_values], "...")
       txt_display <- paste(txt_display, collapse = "\n")
 
       ## create character strings to be used for file naming
-      txt_name_folder <- paste(names(render_params), params_as_txt,
+      txt_name_folder <- paste(names(params), params_as_txt,
                                sep = "_", collapse = "_")
       txt_name_folder <- substr(txt_name_folder, 1, 100)
       txt_name_folder <- sub("_$", "", txt_name_folder)
@@ -178,15 +178,21 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
   ## display messages to the console
   message(sprintf("\n/// compiling report: '%s'", shorthand))
-  output_file <- rmarkdown::render(rmd_path,
-                                   quiet = quiet,
-                                   encoding = encoding,
-                                   envir = new.env(), # force clean environment
-                                   params = render_params) # params can be passed here
   if (has_params) {
     message(sprintf("// using params: \n%s",
                     txt_display))
   }
+
+  ## construct the compilation environment: as 'params' seems underliable, we
+  ## pass this info by creating a new clean environment, in which we add a
+  ## `params` variable
+  compile_env <- new.env()
+  compile_env$params <- params
+  output_file <- rmarkdown::render(rmd_path,
+                                   quiet = quiet,
+                                   encoding = encoding,
+                                   envir = compile_env) # force clean environment
+
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
   

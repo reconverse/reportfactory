@@ -31,10 +31,10 @@ test_that("Compilation can take params and pass to markdown::render", {
   report <- list_reports(pattern = "foo")[1]
   
   foo_value <- "testzfoo"
-  update_reports(render_params = 
+  update_reports(params = 
                    list(foo = foo_value, show_stuff = TRUE, bar = letters))
   
-  testthat::expect_match(
+  expect_match(
     list_outputs()[length(list_outputs())],
     paste("foo", foo_value, "show_stuff_TRUE_bar_a_b_c_d", sep = "_"))
 })
@@ -85,8 +85,8 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   removed <- setdiff(orig_source_files, clean_source_files)
   removed <- paste0("report_sources/", removed)
   to_remove <- c(nested_dir, csv2_filename, empty_dirname,  csv1_filename)
-  testthat::expect_equal(length(removed), length(to_remove))
-  testthat::expect_setequal(to_remove, removed)
-  testthat::expect_equal(file.exists(protected_filename), TRUE)
+  expect_equal(length(removed), length(to_remove))
+  expect_setequal(to_remove, removed)
+  expect_equal(file.exists(protected_filename), TRUE)
 })
 
