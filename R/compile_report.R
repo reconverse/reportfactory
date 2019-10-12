@@ -178,10 +178,16 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
   ## display messages to the console
   message(sprintf("\n/// compiling report: '%s'", shorthand))
+
+  ## construct the compilation environment: as 'params' seems underliable, we
+  ## pass this info by creating a new clean environment, in which we add a
+  ## `params` variable
+  compile_env <- new.env()
+  compile_env$params <- render_params
   output_file <- rmarkdown::render(rmd_path,
                                    quiet = quiet,
                                    encoding = encoding,
-                                   envir = new.env(), # force clean environment
+                                   envir = compile_env, # force clean environment
                                    params = render_params) # params can be passed here
   if (has_params) {
     message(sprintf("// using params: \n%s",
