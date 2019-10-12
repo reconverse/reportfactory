@@ -187,8 +187,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   output_file <- rmarkdown::render(rmd_path,
                                    quiet = quiet,
                                    encoding = encoding,
-                                   envir = compile_env, # force clean environment
-                                   params = render_params) # params can be passed here
+                                   envir = compile_env) # force clean environment
+
   if (has_params) {
     message(sprintf("// using params: \n%s",
                     txt_display))
