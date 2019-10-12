@@ -6,7 +6,7 @@
 \usage{
 compile_report(file, quiet = FALSE, factory = getwd(),
   clean_report_sources = FALSE, remove_cache = TRUE,
-  encoding = "UTF-8", render_params = list(), ...)
+  encoding = "UTF-8", params = list(), ...)
 }
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
@@ -31,7 +31,7 @@ defaults to `TRUE`, in which case `cache` will also be removed if
 when compiling the document; defaults to `"UTF-8"`, which ensures that
 non-ascii characters work across different systems}
 
-\item{render_params}{a list that is passed to the `params` argument in
+\item{params}{a list that is passed to the `params` argument in
 `rmarkdown::render`, which are accessed in the `.Rmd` file with
 `params$...`; for instance, if `list(foo = 1:3)` is passed, then the
 compilation environment will define an object `params$foo` with value

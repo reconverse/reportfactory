@@ -31,7 +31,7 @@ test_that("Compilation can take params and pass to markdown::render", {
   report <- list_reports(pattern = "foo")[1]
   
   foo_value <- "testzfoo"
-  update_reports(render_params = 
+  update_reports(params = 
                    list(foo = foo_value, show_stuff = TRUE, bar = letters))
   
   expect_match(
