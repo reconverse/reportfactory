@@ -76,42 +76,31 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
   ## provided (see point 3).
 
-  # ================
-    # Start log code
-  if (sum(file.exists(".compile_log.xlsx", hidden.files = TRUE)) == 0) {
-    rio::export(data.frame(initialize = TRUE), ".compile_log.xlsx")
-  }
-
-  aargs <- as.list(c(as.list(environment()), list(...)))
-  aargs$timestamp <- Sys.time()
-  log_file <- rio::import(".compile_log.xlsx")
-
-  log_df <- as.data.frame(t(unlist(aargs)))
-    # can reimplement dplyr::bind_rows so we aren't relying on the package
-    # https://github.com/tidyverse/dplyr/blob/4ce2a78a52d349b17d64e9bc9d107cae5805ed6c/R/bind.r
-  log_file <- do.call("dplyr::bind_rows", list(log_file, as.data.frame(log_df)))
-  rio::export(log_file, ".compile_log.xlsx", overwrite = TRUE)
-
-  # ================
-    # Start log code
-  if (!file.exists(paste0(factory, ".compile_log.csv"))) {
-    write.csv(data.frame(initialize = TRUE), paste0(factory, "/.compile_log.csv"))
-  }
-
-  
-  aargs <- as.list(c(as.list(environment()), list(...)))
-  aargs$timestamp <- Sys.time()
-  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
-    # can reimplement dplyr::bind_rows so we aren't relying on the package
-    # https://github.com/tidyverse/dplyr/blob/4ce2a78a52d349b17d64e9bc9d107cae5805ed6c/R/bind.r
-  log_file <- do.call("bind_rows", list(log_file, as.list(as.data.frame(aargs))))
-  write.csv(log_file, ".compile_log.csv", append = TRUE)
-
-    # End log code
-  # ================
-
   validate_factory(factory)
-
+  
+  # ================
+  ## Logging approach: 
+  ## 1. Combine all env variables and args into a list and add timestamp
+  ## 2. Read exising log file into a dataframe
+  ## 3. Add row to log dataframe and write new csv
+  
+  
+  ## Start log code
+  if (sum(file.exists(".compile_log.csv", hidden.files = TRUE)) == 0) {
+    write.csv(
+      data.frame(initialize = TRUE, timestamp = Sys.time()), ".compile_log.csv")
+  }
+  
+  args_list <- as.list(c(as.list(environment()), list(...)))
+  args_list$timestamp <- Sys.time()
+  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
+  new_row <- as.data.frame(t(unlist(args_list)))
+  new_log <- base_bind_rows(log_file, new_row)
+  write.csv(new_log, ".compile_log.csv", row.names = FALSE)
+  
+  # End log code
+  # ================
+  
   odir <- getwd()
   on.exit(setwd(odir))
   setwd(factory)
