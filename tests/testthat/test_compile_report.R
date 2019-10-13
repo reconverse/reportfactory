@@ -90,7 +90,7 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   expect_equal(file.exists(protected_filename), TRUE)
 })
 
-test_that("Logging can handle multiple outputs", {
+test_that("Compile logs activity in a csv file", {
   
   skip_on_cran()
   
@@ -99,18 +99,19 @@ test_that("Logging can handle multiple outputs", {
   compile_report(list_reports(
     pattern = "foo")[1], quiet = TRUE, params = list("other" = "test"))
   
-  log_file <- rio::import(".compile_log.xlsx")
+  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
   
-  expect_equal(log_file$params.other[nrow(log_file)], "test")
-  expect_equal(log_file$quiet[nrow(log_file)], "TRUE")
+  expect_equal(log_file$params_other[nrow(log_file)], "test")
+  expect_equal(log_file$quiet[nrow(log_file)], TRUE)
   expect_equal(nrow(log_file), 2)
   
   # compiling another report to be sure the log does not remove data
-  compile_report(list_reports(
-    pattern = "foo")[1], quiet = FALSE, params = list("other" = "test", "more" = list("things", "foo")))
+  compile_report(list_reports(pattern = "foo")[1], 
+                 quiet = FALSE, 
+                 params = list("other" = "two", "more" = list("thing", "foo")))
   
-  log_file <- rio::import(".compile_log.xlsx")
+  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
   
-  expect_equal(log_file$params.other[nrow(log_file)], "test")
+  expect_equal(log_file$params_other[nrow(log_file)], "two")
   expect_equal(nrow(log_file), 3)
 })
