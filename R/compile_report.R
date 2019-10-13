@@ -75,7 +75,41 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## report_outputs/; this folder will be named after the input report,
   ## e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
   ## provided (see point 3).
+
+  # ================
+    # Start log code
+  if (sum(file.exists(".compile_log.xlsx", hidden.files = TRUE)) == 0) {
+    rio::export(data.frame(initialize = TRUE), ".compile_log.xlsx")
+  }
+
+  aargs <- as.list(c(as.list(environment()), list(...)))
+  aargs$timestamp <- Sys.time()
+  log_file <- rio::import(".compile_log.xlsx")
+
+  log_df <- as.data.frame(t(unlist(aargs)))
+    # can reimplement dplyr::bind_rows so we aren't relying on the package
+    # https://github.com/tidyverse/dplyr/blob/4ce2a78a52d349b17d64e9bc9d107cae5805ed6c/R/bind.r
+  log_file <- do.call("dplyr::bind_rows", list(log_file, as.data.frame(log_df)))
+  rio::export(log_file, ".compile_log.xlsx", overwrite = TRUE)
+
+  # ================
+    # Start log code
+  if (!file.exists(paste0(factory, ".compile_log.csv"))) {
+    write.csv(data.frame(initialize = TRUE), paste0(factory, "/.compile_log.csv"))
+  }
+
   
+  aargs <- as.list(c(as.list(environment()), list(...)))
+  aargs$timestamp <- Sys.time()
+  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
+    # can reimplement dplyr::bind_rows so we aren't relying on the package
+    # https://github.com/tidyverse/dplyr/blob/4ce2a78a52d349b17d64e9bc9d107cae5805ed6c/R/bind.r
+  log_file <- do.call("bind_rows", list(log_file, as.list(as.data.frame(aargs))))
+  write.csv(log_file, ".compile_log.csv", append = TRUE)
+
+    # End log code
+  # ================
+
   validate_factory(factory)
 
   odir <- getwd()

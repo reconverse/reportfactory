@@ -9,7 +9,7 @@ test_that("Compilation can handle multiple outputs", {
   setwd(tempdir())
   random_factory(include_examples = TRUE)
 
-  compile_report(list_reports(pattern = "foo")[1], quiet = TRUE)
+  compile_report(list_reports(pattern = "foo")[1], quiet = TRUE, other = "test")
   outputs <- sub("([[:alnum:]_-]+/){2}", "",
                      list_outputs())
 
@@ -90,3 +90,27 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   expect_equal(file.exists(protected_filename), TRUE)
 })
 
+test_that("Logging can handle multiple outputs", {
+  
+  skip_on_cran()
+  
+  setwd(tempdir())
+  random_factory(include_examples = TRUE)
+  compile_report(list_reports(
+    pattern = "foo")[1], quiet = TRUE, params = list("other" = "test"))
+  
+  log_file <- rio::import(".compile_log.xlsx")
+  
+  expect_equal(log_file$params.other[nrow(log_file)], "test")
+  expect_equal(log_file$quiet[nrow(log_file)], "TRUE")
+  expect_equal(nrow(log_file), 2)
+  
+  # compiling another report to be sure the log does not remove data
+  compile_report(list_reports(
+    pattern = "foo")[1], quiet = FALSE, params = list("other" = "test", "more" = list("things", "foo")))
+  
+  log_file <- rio::import(".compile_log.xlsx")
+  
+  expect_equal(log_file$params.other[nrow(log_file)], "test")
+  expect_equal(nrow(log_file), 3)
+})
