@@ -95,7 +95,6 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
 })
 
 test_that("Compile logs activity in a csv file", {
-  
   skip_on_cran()
   
   setwd(tempdir())
@@ -109,7 +108,8 @@ test_that("Compile logs activity in a csv file", {
   expect_equal(log_file$quiet[nrow(log_file)], TRUE)
   expect_equal(nrow(log_file), 2)
   
-  # compiling another report to be sure the log does not remove data
+  # compiling another report to be sure the log does not remove data 
+    # or have merge issues
   compile_report(list_reports(pattern = "foo")[1], 
                  quiet = FALSE, 
                  params = list("other" = "two", "more" = list("thing", "foo"),

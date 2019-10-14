@@ -87,12 +87,12 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   
   ## Start log code
   if (sum(file.exists(".compile_log.csv", hidden.files = TRUE)) == 0) {
-    write.csv(
-      data.frame(initialize = TRUE, timestamp = Sys.time()), ".compile_log.csv")
+    initialize_log <- data.frame(initialize = TRUE, timestamp = Sys.time())
+    write.csv(initialize_log, ".compile_log.csv", row.names = FALSE)
   }
   
   args_list <- as.list(c(as.list(environment()), list(...)))
-  args_list$timestamp <- Sys.time()
+  args_list$timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
   log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
   new_row <- as.data.frame(t(unlist(args_list)))
   new_log <- base_bind_rows(log_file, new_row)
