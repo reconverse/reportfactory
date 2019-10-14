@@ -78,28 +78,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
   validate_factory(factory)
   
-  # ================
-  ## Logging approach: 
-  ## 1. Combine all env variables and args into a list and add timestamp
-  ## 2. Read exising log file into a dataframe
-  ## 3. Add row to log dataframe and write new csv
-  
-  
-  ## Start log code
-  if (sum(file.exists(".compile_log.csv", hidden.files = TRUE)) == 0) {
-    initialize_log <- data.frame(initialize = TRUE, timestamp = Sys.time())
-    write.csv(initialize_log, ".compile_log.csv", row.names = FALSE)
-  }
-  
-  args_list <- as.list(c(as.list(environment()), list(...)))
-  args_list$timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
-  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
-  new_row <- as.data.frame(t(unlist(args_list)))
-  new_log <- base_bind_rows(log_file, new_row)
-  write.csv(new_log, ".compile_log.csv", row.names = FALSE)
-  
-  # End log code
-  # ================
+  # This is used for loggin later in the function 
+  log_list <- as.list(c(as.list(environment()), list(...)))
   
   odir <- getwd()
   on.exit(setwd(odir))
@@ -254,15 +234,43 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   }
 
   dir.create(output_dir, FALSE, TRUE)
-
+  
   for (file in new_files) {
     destination <- file.path(output_dir, file)
     move_file(file, destination)
+    i <- match(file, new_files) #gets index
+    log_colname <- paste0("output_filename_",i)
+    
+    log_list[[log_colname]] <- destination
   }
-
+  
   ## remove empty directories
   to_remove <- file.path(new_dirs)
   file.remove(to_remove)
+  
+  
+  # ================
+  ## Logging approach: 
+  ## 1. Combine all env variables and args into a list and add timestamp
+  ## 2. Read exising log file into a dataframe
+  ## 3. Add row to log dataframe and write new csv
+  
+  
+  ## Start log code
+  setwd(odir)
+  if (sum(file.exists(".compile_log.csv", hidden.files = TRUE)) == 0) {
+    initialize_log <- data.frame(initialize = TRUE, timestamp = Sys.time())
+    write.csv(initialize_log, ".compile_log.csv", row.names = FALSE)
+  }
+  log_list$timestamp <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
+  log_list[["output_report_file"]] <- c("name" <- output_file)
+  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
+  new_row <- as.data.frame(t(unlist(log_list)))
+  new_log <- base_bind_rows(log_file, new_row)
+  write.csv(new_log, ".compile_log.csv", row.names = FALSE)
+  
+  # End log code
+  # ================
 
   return(invisible(NULL))
 }
