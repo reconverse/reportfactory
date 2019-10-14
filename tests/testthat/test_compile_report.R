@@ -76,9 +76,15 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
                                  all.files = TRUE, recursive = TRUE)
   
   report <- list_reports(pattern = "foo")[1]
-  compile_report(report, clean_report_sources = TRUE)
-  # compile_report(report)
   
+  warning_message <- "the following files in 'report_sources/' are not .Rmd"
+  
+  expect_warning(
+    compile_report(report, clean_report_sources = TRUE, quiet = TRUE), 
+    regexp = warning_message)
+  
+  
+
   clean_source_files <- list.files("report_sources", include.dirs = TRUE,
                                       all.files = TRUE, recursive = TRUE)
   clean_source_files
@@ -108,7 +114,8 @@ test_that("Compile logs activity in a csv file", {
   # compiling another report to be sure the log does not remove data
   compile_report(list_reports(pattern = "foo")[1], 
                  quiet = FALSE, 
-                 params = list("other" = "two", "more" = list("thing", "foo")))
+                 params = list("other" = "two", "more" = list("thing", "foo"),
+                 quiet = TRUE))
   
   log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
   
