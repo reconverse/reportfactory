@@ -74,11 +74,9 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   
   orig_source_files <- list.files("report_sources", include.dirs = TRUE,
                                  all.files = TRUE, recursive = TRUE)
-  
   report <- list_reports(pattern = "foo")[1]
   
   warning_message <- "the following files in 'report_sources/' are not .Rmd"
-  
   expect_warning(
     compile_report(report, clean_report_sources = TRUE, quiet = TRUE), 
     regexp = warning_message)
