@@ -94,7 +94,7 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   expect_equal(file.exists(protected_filename), TRUE)
 })
 
-test_that("Compile logs activity in a csv file", {
+test_that("Compile logs activity in an rds file", {
   skip_on_cran()
   
   setwd(tempdir())
@@ -102,21 +102,23 @@ test_that("Compile logs activity in a csv file", {
   compile_report(list_reports(
     pattern = "foo")[1], quiet = TRUE, params = list("other" = "test"))
   
-  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
+  log_file <- readRDS(".compile_log.rds")
   
-  expect_equal(log_file$params_other[nrow(log_file)], "test")
-  expect_equal(log_file$quiet[nrow(log_file)], TRUE)
-  expect_equal(nrow(log_file), 2)
+  other_param <- log_file$foo[[1]]$params$other
+  expect_equal(other_param, "test")
+  quiet_arg <- log_file$foo[[1]]$quiet
+  expect_equal(quiet_arg, TRUE)
   
   # compiling another report to be sure the log does not remove data 
     # or have merge issues
   compile_report(list_reports(pattern = "foo")[1], 
                  quiet = FALSE, 
-                 params = list("other" = "two", "more" = list("thing", "foo"),
+                 params = list("other" = "two", "more" = list("thing" = "foo"),
                  quiet = TRUE))
   
-  log_file <- read.csv(".compile_log.csv", stringsAsFactors = FALSE)
+  log_file <- readRDS(".compile_log.rds")
   
-  expect_equal(log_file$params_other[nrow(log_file)], "two")
-  expect_equal(nrow(log_file), 3)
+  other_param <- log_file$foo[[2]]$params$other
+  expect_equal(other_param, "two")
+  expect_equal(length(log_file$foo), 2)
 })
