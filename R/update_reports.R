@@ -61,7 +61,11 @@ update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE,
   if (all) {
     lapply(report_sources,
            compile_report,
-           quiet = quiet, encoding = encoding, ...)
+           quiet = quiet,
+           encoding = encoding,
+           clean_report_sources = clean_report_sources,
+           remove_cache = remove_cache,
+           ...)
   } else {
     sources_by_type <- split(report_sources, types)
     for (e in sources_by_type) {
@@ -69,6 +73,8 @@ update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE,
       compile_report(e[index_latest],
                      quiet = quiet,
                      encoding = encoding,
+                     clean_report_sources = clean_report_sources,
+                     remove_cache = remove_cache,
                      ...)
     }
   }
