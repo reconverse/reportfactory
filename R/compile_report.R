@@ -79,8 +79,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   validate_factory(factory)
   
   # This is used for loggin later in the function 
-  log_entry <- as.list(c(as.list(environment()), list(...)))
-  
+  log_entry <- as.list(c(as.list(environment())))
+
   odir <- getwd()
   on.exit(setwd(odir))
   setwd(factory)
