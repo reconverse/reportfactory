@@ -114,7 +114,7 @@ test_that("Compile logs activity in an rds file", {
   compile_report(list_reports(pattern = "foo")[1], 
                  quiet = FALSE, 
                  params = list("other" = "two", "more" = list("thing" = "foo"),
-                 quiet = TRUE))
+                 dots_args = list("lots" = data.frame(a = c(10,20)))))
   
   log_file <- readRDS(".compile_log.rds")
   
