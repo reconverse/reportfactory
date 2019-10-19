@@ -259,7 +259,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
         ## output filenames, and other relevant data
   
   ## Start log code
-  setwd(odir)
   has_log_file <- sum(file.exists(".compile_log.rds", hidden.files = TRUE)) == 0
   if (has_log_file) {
     initialize_log <- list(initialize = TRUE, timestamp = Sys.time())
