@@ -78,7 +78,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   
   
   # This is used for logging later in the function 
-  log_entry <- as.list(c(as.list(environment()), list(...)))
+  log_entry <- as.list(environment())
+  log_entry$dots <- list(...)
   log_entry$timestamp <- Sys.time()
   
   validate_factory(factory)

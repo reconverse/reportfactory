@@ -119,13 +119,13 @@ test_that("Compile logs activity in an rds file", {
                  quiet = FALSE, 
                  params = list("other" = "two",
                                "more" = list("thing" = "foo")),
-                dots_args = dots_args)
+                extra = dots_args)
   
   log_file <- readRDS(".compile_log.rds")
   
   other_param <- log_file$foo[[2]]$params$other
   expect_equal(other_param, "two")
-  log_dots_args <- log_file$foo[[2]]$dots_args
+  log_dots_args <- log_file$foo[[2]]$dots$extra
   expect_equal(is.data.frame(log_dots_args$lots), TRUE)
   expect_equal(length(log_file$foo), 2)
 })
