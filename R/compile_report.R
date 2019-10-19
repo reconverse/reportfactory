@@ -75,7 +75,9 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## report_outputs/; this folder will be named after the input report,
   ## e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
   ## provided (see point 3).
-
+  log_entry <- as.list(c(as.list(environment())))
+  log_entry$timestamp <- Sys.time()
+  
   validate_factory(factory)
   
   # This is used for loggin later in the function 
@@ -235,11 +237,11 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
   dir.create(output_dir, FALSE, TRUE)
   
-  output_files <- list()
-  for (file in new_files) {
+  output_files <- vector(length(new_files), mode = "list")
+  for (i in seq_along(new_files)) {
+    file <- new_files[i]
     destination <- file.path(output_dir, file)
     move_file(file, destination)
-    i <- match(file, new_files) #gets index
     output_files[[i]] <- destination
   }
   
@@ -251,22 +253,23 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   # ================
   ### ! KEEP AT END OF FUNCTION ! ###
   ## Logging approach: 
-  ## 1. Combine all env variables and args into a list and add timestamp
-  ## 2. Read exising log file into a dataframe
-  ## 3. Add row to log dataframe and write new csv
-  
+  ## 1. Combine all env variables and args into a list, and add timestamp 
+  ## 2. Read exising log rds file (a list of lists)
+  ## 3. Add new entry to dataframe with env() on compile_report call
+        ## output filenames, and other relevant data
   
   ## Start log code
   setwd(odir)
-  if (sum(file.exists(".compile_log.rds", hidden.files = TRUE)) == 0) {
+  has_log_file <- sum(file.exists(".compile_log.rds", hidden.files = TRUE)) == 0
+  if (has_log_file) {
     initialize_log <- list(initialize = TRUE, timestamp = Sys.time())
     saveRDS(initialize_log, ".compile_log.rds")
   }
-  log_entry$timestamp <- Sys.time()
-  log_entry$report_file <- c("name" <- output_file)
+  # report_source_file <- c("name" <- output_file)
+  log_entry$report_file <- report_source_file
   log_entry$output_files <- output_files 
   current_log <- readRDS(".compile_log.rds")
-  if (is.null(current_log[["foo"]])) current_log[[base_name]]
+  if (is.null(current_log[[base_name]])) current_log[[base_name]]
   
   string_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
   current_log[[base_name]][[eval(string_time)]] <- log_entry
