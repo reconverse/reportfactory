@@ -97,6 +97,9 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
 test_that("Compile logs activity in an rds file", {
   skip_on_cran()
   
+  odir <- getwd()
+  on.exit(setwd(odir))
+  
   setwd(tempdir())
   random_factory(include_examples = TRUE)
   compile_report(list_reports(
@@ -115,14 +118,14 @@ test_that("Compile logs activity in an rds file", {
   compile_report(list_reports(pattern = "foo")[1], 
                  quiet = FALSE, 
                  params = list("other" = "two",
-                               "more" = list("thing" = "foo"),
-                               dots_args = dots_args))
+                               "more" = list("thing" = "foo")),
+                dots_args = dots_args)
   
   log_file <- readRDS(".compile_log.rds")
   
   other_param <- log_file$foo[[2]]$params$other
   expect_equal(other_param, "two")
-  log_dots_args <- log_file$foo[[2]]$params$dots_args
+  log_dots_args <- log_file$foo[[2]]$dots_args
   expect_equal(is.data.frame(log_dots_args$lots), TRUE)
   expect_equal(length(log_file$foo), 2)
 })

@@ -75,13 +75,13 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## report_outputs/; this folder will be named after the input report,
   ## e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
   ## provided (see point 3).
-  log_entry <- as.list(c(as.list(environment())))
+  
+  
+  # This is used for logging later in the function 
+  log_entry <- as.list(c(as.list(environment()), list(...)))
   log_entry$timestamp <- Sys.time()
   
   validate_factory(factory)
-  
-  # This is used for loggin later in the function 
-  log_entry <- as.list(c(as.list(environment())))
 
   odir <- getwd()
   on.exit(setwd(odir))
@@ -259,20 +259,21 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
         ## output filenames, and other relevant data
   
   ## Start log code
-  has_log_file <- sum(file.exists(".compile_log.rds", hidden.files = TRUE)) == 0
-  if (has_log_file) {
+  log_file_path <- paste(factory, ".compile_log.rds", sep = "/")
+  no_log_file <- sum(file.exists(log_file_path, hidden.files = TRUE)) == 0
+  if (no_log_file) {
     initialize_log <- list(initialize = TRUE, timestamp = Sys.time())
-    saveRDS(initialize_log, ".compile_log.rds")
+    saveRDS(initialize_log, log_file_path)
   }
-  # report_source_file <- c("name" <- output_file)
+  report_source_file <- c("name" <- output_file)
   log_entry$report_file <- report_source_file
   log_entry$output_files <- output_files 
-  current_log <- readRDS(".compile_log.rds")
+  current_log <- readRDS(log_file_path)
   if (is.null(current_log[[base_name]])) current_log[[base_name]]
   
   string_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
   current_log[[base_name]][[eval(string_time)]] <- log_entry
-  saveRDS(current_log, ".compile_log.rds")
+  saveRDS(current_log, log_file_path)
   
   # End log code
   # ================
