@@ -111,14 +111,18 @@ test_that("Compile logs activity in an rds file", {
   
   # compiling another report to be sure the log does not remove data 
     # or have merge issues
+  dots_args <- list("lots" = data.frame(a = c(10,20)))
   compile_report(list_reports(pattern = "foo")[1], 
                  quiet = FALSE, 
-                 params = list("other" = "two", "more" = list("thing" = "foo"),
-                 dots_args = list("lots" = data.frame(a = c(10,20)))))
+                 params = list("other" = "two",
+                               "more" = list("thing" = "foo"),
+                               dots_args = dots_args))
   
   log_file <- readRDS(".compile_log.rds")
   
   other_param <- log_file$foo[[2]]$params$other
   expect_equal(other_param, "two")
+  log_dots_args <- log_file$foo[[2]]$params$dots_args
+  expect_equal(is.data.frame(log_dots_args$lots), TRUE)
   expect_equal(length(log_file$foo), 2)
 })
