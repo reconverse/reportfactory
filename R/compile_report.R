@@ -267,7 +267,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
     saveRDS(initialize_log, log_file_path)
   }
   report_source_file <- c("name" <- output_file)
-  log_entry$report_file <- report_source_file
+  log_entry$report_source_file <- report_source_file
   log_entry$output_files <- output_files 
   current_log <- readRDS(log_file_path)
   if (is.null(current_log[[base_name]])) current_log[[base_name]]
