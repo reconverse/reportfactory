@@ -273,7 +273,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   if (is.null(current_log[[base_name]])) current_log[[base_name]]
   
   string_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
-  current_log[[base_name]][[eval(string_time)]] <- log_entry
+  current_log[[base_name]][[string_time]] <- log_entry
   saveRDS(current_log, log_file_path)
   
   # End log code
