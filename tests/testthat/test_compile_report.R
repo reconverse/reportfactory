@@ -101,18 +101,21 @@ test_that("Compile logs activity in an rds file", {
   on.exit(setwd(odir))
   
   setwd(tempdir())
+  factory_name <- "foo"
   random_factory(include_examples = TRUE)
   compile_report(list_reports(
-    pattern = "foo")[1],
+    pattern = factory_name)[1],
     quiet = TRUE,
     params = list(other = "test"))
   
   log_file <- readRDS(".compile_log.rds")
+  expect_equal(attr(log_file, "factory_name"), factory_name)
+  
   
   log_entry <- log_file[[length(log_file)]]
   other_param <- log_entry$compile_init_env$params$other
   expect_equal(other_param, "test")
-  quiet_arg <- log_file$foo[[1]]$quiet
+  quiet_arg <- log_entry$compile_init_env$quiet
   expect_equal(quiet_arg, TRUE)
   
   # compiling another report to be sure the log does not remove data 
