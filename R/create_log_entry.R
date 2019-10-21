@@ -4,7 +4,7 @@
 ##    the logging logic in one place.
 ## Notes:
 ##   - `compile_init_env` should be set at the beginning of the `compile_function`
-##      to record the arguments and environment when the `compile_reprots` function 
+##      to record the arguments and environment when the `compile_reports` function 
 ##      is called
 ##   - `dots` and `timestamp` variables should be set at the beginning of the 
 ##      compile function, so that they are only called once and used as-needed
