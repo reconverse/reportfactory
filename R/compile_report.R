@@ -77,10 +77,13 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## provided (see point 3).
   
   
-  # This is used for logging later in the function 
-  log_entry <- as.list(environment())
-  log_entry$dots <- list(...)
-  log_entry$timestamp <- Sys.time()
+  ## These are sed to create log entry, passed in with the env (not called directly in the code)
+  compile_init_env <- as.list(environment())
+  dots <- list(...)
+  
+  ## This is used in several places throughout the function, and should be used for all times
+  timestamp <- sub(" ", "_", as.character(Sys.time()))
+  datetime <- gsub(":", "-", timestamp)
   
   validate_factory(factory)
 
@@ -218,8 +221,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
     dir.create(find_file("report_outputs"), FALSE, TRUE)
   }
 
-  datetime <- sub(" ", "_", as.character(Sys.time()))
-  datetime <- gsub(":", "-", datetime)
+  
   report_dir <- file.path(find_file("report_outputs"),
                           paste(base_name, date, sep = "_"))
   dir.create(report_dir, FALSE, TRUE)
@@ -251,33 +253,16 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   file.remove(to_remove)
   
   
-  # ================
-  ### ! KEEP AT END OF FUNCTION ! ###
-  ## Logging approach: 
-  ## 1. Combine all env variables and args into a list, and add timestamp 
-  ## 2. Read exising log rds file (a list of lists)
-  ## 3. Add new entry to dataframe with env() on compile_report call
-        ## output filenames, and other relevant data
-  
+  ## ================
   ## Start log code
-  log_file_path <- paste(factory, ".compile_log.rds", sep = "/")
-  no_log_file <- sum(file.exists(log_file_path, hidden.files = TRUE)) == 0
-  if (no_log_file) {
-    initialize_log <- list(initialize = TRUE, timestamp = Sys.time())
-    saveRDS(initialize_log, log_file_path)
-  }
-  report_source_file <- c("name" <- output_file)
-  log_entry$report_source_file <- report_source_file
-  log_entry$output_files <- output_files 
-  current_log <- readRDS(log_file_path)
-  if (is.null(current_log[[base_name]])) current_log[[base_name]]
+  log_file_path <- file.path(factory, ".compile_log.rds")
+  current_log <- current_compile_log(log_file_path)
+  env_list <- as.list(environment())
+  log_entry <- create_log_entry(env_list)
+  add_to_log(current_log, log_entry, log_file_path, datetime)
+  ## End log code
+  # #================
   
-  string_time <- format(Sys.time(), "%Y-%m-%d %H:%M:%S")
-  current_log[[base_name]][[string_time]] <- log_entry
-  saveRDS(current_log, log_file_path)
-  
-  # End log code
-  # ================
 
   return(invisible(NULL))
 }
