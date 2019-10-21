@@ -256,8 +256,10 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## ================
   ## Start log code
   log_file_path <- file.path(factory, ".compile_log.rds")
-  current_log <- current_compile_log(log_file_path, base_name)
+  current_log <- current_compile_log(log_file_path, base_name, datetime)
   env_list <- as.list(environment())
+  ## Pass the current env to `create_log_entry` (inculdes `compile_init_env`,
+  ## `timestamp`, `dots`, output file paths, and other relevant variables)
   log_entry <- create_log_entry(env_list)
   add_to_log(current_log, log_entry, log_file_path, datetime)
   ## End log code
