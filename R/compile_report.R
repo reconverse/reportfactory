@@ -76,6 +76,15 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
   ## provided (see point 3).
   
+  
+  ## These are sed to create log entry, passed in with the env (not called directly in the code)
+  compile_init_env <- as.list(environment())
+  dots <- list(...)
+  
+  ## This is used in several places throughout the function, and should be used for all times
+  timestamp <- sub(" ", "_", as.character(Sys.time()))
+  datetime <- gsub(":", "-", timestamp)
+  
   validate_factory(factory)
 
   odir <- getwd()
@@ -212,8 +221,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
     dir.create(find_file("report_outputs"), FALSE, TRUE)
   }
 
-  datetime <- sub(" ", "_", as.character(Sys.time()))
-  datetime <- gsub(":", "-", datetime)
+  
   report_dir <- file.path(find_file("report_outputs"),
                           paste(base_name, date, sep = "_"))
   dir.create(report_dir, FALSE, TRUE)
@@ -231,15 +239,32 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   }
 
   dir.create(output_dir, FALSE, TRUE)
-
-  for (file in new_files) {
+  
+  output_files <- vector(length(new_files), mode = "list")
+  for (i in seq_along(new_files)) {
+    file <- new_files[i]
     destination <- file.path(output_dir, file)
     move_file(file, destination)
+    output_files[[i]] <- destination
   }
-
+  
   ## remove empty directories
   to_remove <- file.path(new_dirs)
   file.remove(to_remove)
+  
+  
+  ## ================
+  ## Start log code
+  log_file_path <- file.path(factory, ".compile_log.rds")
+  current_log <- current_compile_log(log_file_path, base_name, datetime)
+  env_list <- as.list(environment())
+  ## Pass the current env to `create_log_entry` (inculdes `compile_init_env`,
+  ## `timestamp`, `dots`, output file paths, and other relevant variables)
+  log_entry <- create_log_entry(env_list)
+  add_to_log(current_log, log_entry, log_file_path, datetime)
+  ## End log code
+  # #================
+  
 
   return(invisible(NULL))
 }
