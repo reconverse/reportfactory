@@ -103,11 +103,14 @@ test_that("Compile logs activity in an rds file", {
   setwd(tempdir())
   random_factory(include_examples = TRUE)
   compile_report(list_reports(
-    pattern = "foo")[1], quiet = TRUE, params = list("other" = "test"))
+    pattern = "foo")[1],
+    quiet = TRUE,
+    params = list(other = "test"))
   
   log_file <- readRDS(".compile_log.rds")
   
-  other_param <- log_file$foo[[1]]$params$other
+  log_entry <- log_file[[length(log_file)]]
+  other_param <- log_entry$compile_init_env$params$other
   expect_equal(other_param, "test")
   quiet_arg <- log_file$foo[[1]]$quiet
   expect_equal(quiet_arg, TRUE)
@@ -123,9 +126,11 @@ test_that("Compile logs activity in an rds file", {
   
   log_file <- readRDS(".compile_log.rds")
   
-  other_param <- log_file$foo[[2]]$params$other
+  log_entry <- log_file[[length(log_file)]]
+  other_param <- log_entry$compile_init_env$params$other
   expect_equal(other_param, "two")
-  log_dots_args <- log_file$foo[[2]]$dots$extra
+  log_dots_args <- log_entry$dots$extra
   expect_equal(is.data.frame(log_dots_args$lots), TRUE)
-  expect_equal(length(log_file$foo), 2)
+  # Expect to have the two initalize values plus two log entries
+  expect_equal(length(log_file), 4)
 })
