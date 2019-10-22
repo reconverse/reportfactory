@@ -1,66 +1,94 @@
 context("Test filter_list")
+odir <- getwd()
+on.exit(setwd(odir))
 
-# sample_log <- list(
-#   `2019_10_22_090403` = list(
-#     compile_init_env = list(factory = "contacts", quiet = TRUE, params = list(light = TRUE))
-#   ),
-#   timestamp = "2019_10_22_090403",
-#   dots = list(extra = "things"),
-#   `2019_10_22_090403` = list(
-#     compile_init_env = list(factory = "contacts", params = list(sc = "beni"))
-#   ),
-#   timestamp = "2019_10_22_090403",
-#   dots = list(more = "args_string")
-# )
-# attr(sample_log, "factory") = "contacts"
+setwd(tempdir())
+random_factory(include_examples = TRUE)
+factory_name <- "contacts"
+compile_report(list_reports(
+  pattern = factory_name)[1],
+  quiet = TRUE,
+  params = list(other = "test"))
 
-
-filter_log <- function(log_file, ...) {
-  conds <- unlist(...)
-  
-  ul <- unlist(log_file)
-  n <- names(ul)
-  matches_key <- ul[grep("file", n)]
-  matches_value <- unname("contacts_2017-10-29.Rmd" == matches_key)
-  full_match <- matches_key[matches_value]
-  full_match_names <- names(full_match)
-  list_keys <- lapply(full_match_names, function(x) gsub("\\..*","",x))
-  keys <- unlist(list_keys)
-  
-  results <- log_file[keys]
-  return(results)
-}
+dots_args <- list("lots" = data.frame(a = c(10,20)))
+compile_report(list_reports(
+  pattern = factory_name)[1], 
+  quiet = FALSE, 
+  params = list("other" = "two",
+                "more" = list("thing" = "foo")),
+  extra = dots_args)
 
 
+log_file <- readRDS(".compile_log.rds")
+length(log_file)
 
-
-test_that("Filtering a list returns the root list in which it is contained", {
+test_that("Filtering returns only exact matches on EXACT parameters", {
   skip_on_cran()
   
-  odir <- getwd()
-  on.exit(setwd(odir))
+  # ids missing dots arguments so should return an empty list
+  missing_params_filtered <- filter_log(
+    match_exact = c("params"),
+    log_file = log_file,
+    params = list("other" = "two")
+  )
+  # missing_params_filtered
+  expect_equal(length(missing_params_filtered), 0)
   
-  setwd(tempdir())
-  random_factory(include_examples = TRUE)
-  
-  factory_name <- "contacts"
-  compile_report(list_reports(
-    pattern = factory_name)[1],
-    quiet = TRUE,
-    params = list(other = "test"))
-  compile_report(list_reports(
-    pattern = factory_name)[1], 
-    quiet = FALSE, 
+  missing_dots_filtered <- filter_log(
+    match_exact = c("params", "dots"),
+    log_file = log_file,
     params = list("other" = "two",
-                   "more" = list("thing" = "foo")),
-    extra = dots_args)
+                  "more" = list("thing" = "foo")))
+  # missing_dots_filtered
+  expect_equal(length(missing_dots_filtered), 0)
   
-  
-  log_file <- readRDS(".compile_log.rds")
+  non_missing_filtered <- filter_log(
+    match_exact = c("params"),
+    log_file = log_file,
+    params = list("other" = "two",
+                  "more" = list("thing" = "foo")),
+    dots = dots_args)
+  # non_missing_filtered
+  expect_equal(non_missing_filtered, log_file[-c(1,2,3)])
+ 
+})
+
+
+test_that("Filtering a list with string values returns the root list in which it is contained", {
+  skip_on_cran()
   
   filtered <- filter_log(log_file, file = "contacts_2017-10-29.Rmd")
   
   ## Expect the filtered list to be the same as the log entries of log_file
      ## (both entries match the filter)
   expect_equal(filtered, log_file[-c(1,2)])
+  
+  filtered <- filter_log(log_file, params = list("other" = "two"))
+  
+  expect_equal(filtered, log_file[-c(1,2,3)])
+  
 })
+
+test_that("Filtering with non-string values returns the matching lists", {
+  skip_on_cran()
+
+  filtered <- filter_log(
+    log_file = log_file,
+    params = list("other" = "two"),
+    dots = dots_args)
+  filtered
+  expect_equal(filtered, log_file[-c(1,2,3)])
+  
+})
+
+test_that("Filtering with non-string values returns the matching lists", {
+  skip_on_cran()
+  
+  filtered <- filter_log(
+    log_file = log_file,
+    params = list("other" = "two"),
+    dots = dots_args)
+   # filtered
+  expect_equal(filtered, log_file[-c(1,2,3)])
+})
+
