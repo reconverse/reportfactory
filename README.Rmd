@@ -23,30 +23,22 @@ knitr::opts_chunk$set(
 
 ```
 
-# Welcome to the report factory!
+# Welcome to reportfactory!
 
-## The report factory in a nutshell 
+## reportfactory in a nutshell 
 
-The report factory is an R package providing a lightweight infrastructure for
-compiling multiple `.Rmd` reports stored in a dedicated folder, with naming
-conventions enforcing the date of the report to be part of the file name. Each
-compiled report is rendered using `rmarkdown::render()`, and newly created files
-are stored into a dedicated, time-stamped folder. Several functions facilitate
-this workflow, and allow to compile all documents, or only the most recent
-reports.
+reportfactory is an R package which facilitates a workflow for compiling multiple `.Rmd` reports using `rmarkdown::render()` within a folder. It enforces time-stamped naming conventions and newly generated outputs are stored in dedicated time-stamped folders. It provides functions for doing so to all documents, or only the most recent. 
 
+In essence a factory is a structured folder to empower version control in projects with a need for repeated analysis over time. 
 
 ### Motivation
 
 Some projects may require different types of analyses to be run repeatedly over
 time, for instance due to updates in data and inputs. 
 
-While `rmkardown::render` is becoming a standard for compiling a single analysis
-document, a number of issues remain: one needs to keep track of different
-version of the data/inputs, of the analysis code itself, and of different
-versions of the ouputs.
+While `rmkardown::render` is becoming a standard for compiling a single analysis document, a number of issues remain: one needs to keep track of different version of the data/inputs, of the analysis code itself, and of different versions of the ouputs.
 
-The *report factory* aims to facilitate these tasks by:
+*reportfactory* aims to facilitate these tasks by:
 
 - defining a report as an explicitely dated `.Rmd` file
 - providing functions to compile all reports, using by default the most recent
@@ -61,7 +53,7 @@ The *report factory* aims to facilitate these tasks by:
   produced outputs being ignored by git
 
 
-### Components of the factory
+### Components of a factory
 
 A report factory is a folder with the following structure (see next section for
 creating new factories):
@@ -78,9 +70,7 @@ creating new factories):
   `[report_base_name]_[yyyy-mm-dd]/compiled_[timestamp]/`
 
 
-
-
-# The `reportfactory` in practice
+# `reportfactory` in practice
 
 ## Installing the package
 
@@ -154,15 +144,14 @@ We start by creating a new factory in the temporary folder:
 ```{r creation}
 library(reportfactory)
 
-destination <- file.path(tempdir(), "new_factory")
+destination <- file.path(tempdir(), "new_factory") # In practise, one should not use a temporary directory else all will be lost.
 destination
 new_factory(destination)
 dir()
 
 ```
 
-By default, examples of reports (using simulated epidemiological data) are added
-to the factory; these can be listed by:
+By default, examples of reports (using simulated epidemiological data) are added to the factory; these can be listed by:
 
 ```{r listing, echo = -1}
 setwd(destination)
@@ -170,14 +159,18 @@ list_reports()
 list_outputs()
 list_deps() # list all needed packages
 list_deps(missing = TRUE) # list only missing ones
+
+fs::dir_tree() # Clarity - show directory tree
 ```
 
 To compile a single report, one can use:
 
 ```{r compile_one, echo = -1}
 setwd(destination)
-compile_report("contacts_2017-10-29", quiet = TRUE)
+compile_report("example_report_2019-01-31.Rmd", quiet = TRUE)
 list_outputs()
+
+fs::dir_tree() # Clarity - show how directory tree changes after commpilation
 ```
 
 To compile all reports (only most recent versions), use:
