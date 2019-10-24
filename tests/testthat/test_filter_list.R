@@ -92,3 +92,14 @@ test_that("Filtering with non-string values returns the matching lists", {
   expect_equal(filtered, log_file[-c(1,2,3)])
 })
 
+
+test_that("Filtering with for most recent returns only last match", {
+  most_recent_filtered <- filter_log(log_file, 
+                         file = "contacts_2017-10-29.Rmd",
+                         most_recent = TRUE)
+  
+  ## Expect the filtered list to be the same as the log entries of log_file
+  ## (both entries match the filter)
+  expect_equal(most_recent_filtered, log_file[-c(1,2,3)])
+
+})

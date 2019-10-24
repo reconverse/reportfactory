@@ -1,9 +1,7 @@
-filter_log <- function(log_file, match_exact_type = NULL, ...) {
-  # match_exact_type = c("dots", "file", "params")
-  
+filter_log <- function(log_file, match_exact_type = NULL,
+                       most_recent = FALSE, ...) {
+
   conds <- list(...)
-  # params <- conds$par ams
-  # dots <- conds$dots
   conds <- unlist(conds)
   
   ul <- unlist(log_file)
@@ -62,6 +60,11 @@ filter_log <- function(log_file, match_exact_type = NULL, ...) {
         results[[i]] <- NULL
       }
     }
+  }
+  
+  if (most_recent == TRUE) {
+    # Assign all but the last result to NULL to remove from list
+    results[-length(results)] <- NULL
   }
 
   return(results)
