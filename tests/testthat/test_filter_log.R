@@ -109,3 +109,4 @@ test_that("Filtering can return outputs only", {
   expect_equal(names(outputs_only_filtered[[1]]), c("output_files"))
 })
 
+setwd(odir)
