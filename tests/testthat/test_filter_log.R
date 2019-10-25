@@ -4,15 +4,16 @@ on.exit(setwd(odir))
 
 setwd(tempdir())
 random_factory(include_examples = TRUE)
-factory_name <- "contacts"
-compile_report(list_reports(
-  pattern = factory_name)[1],
+factory_name <- "foo"
+report_source_file_name <- list_reports(pattern = factory_name)[1]
+compile_report(
+  report_source_file_name,
   quiet = TRUE,
   params = list(other = "test"))
 
 dots_args <- list("lots" = data.frame(a = c(10,20)))
-compile_report(list_reports(
-  pattern = factory_name)[1], 
+compile_report(
+  report_source_file_name, 
   quiet = FALSE, 
   params = list("other" = "two",
                 "more" = list("thing" = "foo")),
@@ -51,14 +52,13 @@ test_that("Filtering returns only exact matches on EXACT parameters", {
     dots = dots_args)
   
   expect_equal(non_missing_filtered, log_file[-c(1,2,3)])
- 
 })
 
 
 test_that("Filtering a list with string values returns the root list in which it is contained", {
   skip_on_cran()
   
-  filtered <- filter_log(log_file, file = "contacts_2017-10-29.Rmd")
+  filtered <- filter_log(log_file, file = report_source_file_name)
   
   ## Expect the filtered list to be the same as the log entries of log_file
      ## (both entries match the filter)
@@ -94,7 +94,7 @@ test_that("Filtering with non-string values returns the matching lists", {
 
 test_that("Filtering with for most recent returns only last match", {
   most_recent_filtered <- filter_log(log_file, 
-                         file = "contacts_2017-10-29.Rmd",
+                         file = report_source_file_name,
                          most_recent = TRUE)
   
   # Without `most_recent = TRUE` this would be equal to log_file[-c(1,2)]
@@ -103,7 +103,7 @@ test_that("Filtering with for most recent returns only last match", {
 
 test_that("Filtering can return outputs only", {
   outputs_only_filtered <- filter_log(log_file, 
-                                     file = "contacts_2017-10-29.Rmd",
+                                     file = report_source_file_name,
                                      outputs_only = TRUE)
   
   expect_equal(names(outputs_only_filtered[[1]]), c("output_files"))
