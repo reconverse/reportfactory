@@ -124,7 +124,7 @@ test_that("Filtering can return specific outputs only", {
   removed <- lapply(remove, function(r) grep(r, outputs_only_entry))
   results <- outputs_only_entry[unlist(removed)]
   
-  expect_identical(length(results), 0)
+  expect_equal(length(results), 0)
 })
 
 setwd(odir)

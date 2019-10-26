@@ -25,18 +25,17 @@ filter_log <- function(log_file, match_exact_type = NULL,
   if (length(filter_output_types) > 0) {
     for (l in 1:length(results)) {
       result <- results[[l]]
+      output_files <- result$output_files
       
-      output_files <- unlist(result$output_files)
-      
-      filtered_outputs <- lapply(output_files, function(f) {
-        if (grepl("csv", f) == FALSE) { 
-          f <- NULL
-        } else{
-          f
-        }
-      })
-      
-      results[[1]]$output_files <- filtered_outputs
+      to_keep <- list()
+      for (t in 1:length(filter_output_types)) {
+        type <- filter_output_types[t]
+        to_keep[[t]] <- lapply(1:length(output_files), function(f) {
+          if (grepl(type,  output_files[[f]])) return(f)
+        })
+      }
+     results[[l]]$output_files <- NULL
+     results[[l]]$output_files <- output_files[unlist(to_keep)]
     }
   }
 
