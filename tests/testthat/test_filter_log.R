@@ -109,4 +109,22 @@ test_that("Filtering can return outputs only", {
   expect_equal(names(outputs_only_filtered[[1]]), c("output_files"))
 })
 
+test_that("Filtering can return specific outputs only", {
+  output_types <- c("png", "csv")
+  outputs_only_filtered <- filter_log(log_file, 
+                                      file = report_source_file_name,
+                                      outputs_only = TRUE,
+                                      filter_output_types = output_types)
+  
+  
+  remove <- c(".html", ".jpeg", ".pdf", ".rds", ".rmd", ".xls", ".xlsx")
+  
+  outputs_only_entry <- outputs_only_filtered[[1]]
+  outputs_only_entry <- unlist(outputs_only_entry)
+  removed <- lapply(remove, function(r) grep(r, outputs_only_entry))
+  results <- outputs_only_entry[unlist(removed)]
+  
+  expect_identical(length(results), 0)
+})
+
 setwd(odir)
