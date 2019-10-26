@@ -114,7 +114,7 @@ test_that("Filtering can return specific outputs only", {
   outputs_only_filtered <- filter_log(log_file, 
                                       file = report_source_file_name,
                                       outputs_only = TRUE,
-                                      filter_output_types = output_types)
+                                      output_file_types = output_types)
   
   
   remove <- c(".html", ".jpeg", ".pdf", ".rds", ".rmd", ".xls", ".xlsx")
