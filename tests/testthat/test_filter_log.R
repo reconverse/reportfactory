@@ -4,8 +4,8 @@ on.exit(setwd(odir))
 
 setwd(tempdir())
 random_factory(include_examples = TRUE)
-factory_name <- "foo"
-report_source_file_name <- list_reports(pattern = factory_name)[1]
+source_name <- "foo"
+report_source_file_name <- list_reports(pattern = source_name)[1]
 compile_report(
   report_source_file_name,
   quiet = TRUE,
@@ -35,17 +35,20 @@ test_that("Filtering returns only exact matches on EXACT parameters", {
   
   expect_equal(length(missing_params_filtered), 0)
   
-  # ids missing some dots arguments so should return an empty list
+  # conds missing some dots arguments so should return an empty list
+  alt_dots_args <- list("lots" = data.frame(a = c(10)))
   missing_dots_filtered <- filter_log(
     match_exact = c("params", "dots"),
     log_file = log_file,
     params = list("other" = "two",
-                  "more" = list("thing" = "foo")))
+                  "more" = list("thing" = "foo")),
+    dots = alt_dots_args)
   
   expect_equal(length(missing_dots_filtered), 0)
   
+  # dots args and params args match and should return exactly one log entry
   non_missing_filtered <- filter_log(
-    match_exact = c("params"),
+    match_exact = c("params", "dots"),
     log_file = log_file,
     params = list("other" = "two",
                   "more" = list("thing" = "foo")),
@@ -55,10 +58,12 @@ test_that("Filtering returns only exact matches on EXACT parameters", {
 })
 
 
-test_that("Filtering a list with string values returns the root list in which it is contained", {
+test_that("Filtering a list with string values returns log entries", {
   skip_on_cran()
   
-  filtered <- filter_log(log_file, file = report_source_file_name)
+  filtered <- filter_log(log_file, 
+                         file = report_source_file_name,
+                         most_recent = FALSE)
   
   ## Expect the filtered list to be the same as the log entries of log_file
      ## (both entries match the filter)
@@ -69,16 +74,6 @@ test_that("Filtering a list with string values returns the root list in which it
   expect_equal(filtered, log_file[-c(1,2,3)])
 })
 
-test_that("Filtering with non-string values returns the matching lists", {
-  skip_on_cran()
-
-  filtered <- filter_log(
-    log_file = log_file,
-    params = list("other" = "two"),
-    dots = dots_args)
- 
-  expect_equal(filtered, log_file[-c(1,2,3)])
-})
 
 test_that("Filtering with non-string values returns the matching lists", {
   skip_on_cran()
@@ -86,25 +81,35 @@ test_that("Filtering with non-string values returns the matching lists", {
   filtered <- filter_log(
     log_file = log_file,
     params = list("other" = "two"),
-    dots = dots_args)
+    dots = dots_args, 
+    most_recent = FALSE)
 
   expect_equal(filtered, log_file[-c(1,2,3)])
 })
 
 
-test_that("Filtering with for most recent returns only last match", {
+test_that("Filtering for most recent returns only last match for each source", {
+  source_name <- "contacts"
+  report_source_file_name <- list_reports(pattern = source_name)[1]
+  compile_report(
+    report_source_file_name,
+    quiet = TRUE,
+    params = list(other = "test"))
+  log_file <- readRDS(".compile_log.rds")
+  
   most_recent_filtered <- filter_log(log_file, 
-                         file = report_source_file_name,
                          most_recent = TRUE)
   
-  # Without `most_recent = TRUE` this would be equal to log_file[-c(1,2)]
-  expect_equal(most_recent_filtered, log_file[-c(1,2,3)])
+  
+  # Without `most_recent = TRUE` this would be equal to log_file[-c(3,4,5)]
+  expect_equal(most_recent_filtered, log_file[c(4,5)])
 })
 
 test_that("Filtering can return outputs only", {
   outputs_only_filtered <- filter_log(log_file, 
                                      file = report_source_file_name,
-                                     outputs_only = TRUE)
+                                     outputs_only = TRUE,
+                                     most_recent = FALSE)
   
   expect_equal(names(outputs_only_filtered[[1]]), c("output_files"))
 })
@@ -114,7 +119,8 @@ test_that("Filtering can return specific outputs only", {
   outputs_only_filtered <- filter_log(log_file, 
                                       file = report_source_file_name,
                                       outputs_only = TRUE,
-                                      output_file_types = output_types)
+                                      output_file_types = output_types, 
+                                      most_recent = FALSE)
   
   
   remove <- c(".html", ".jpeg", ".pdf", ".rds", ".rmd", ".xls", ".xlsx")

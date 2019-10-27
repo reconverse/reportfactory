@@ -1,7 +1,7 @@
 ## Takes a log list and a vector of "types" of conditions (which can include
   ## file (report source file name), params, or dots. Returns list of log
   ## entries that match conditions for the required types.
-     ## WHen `match_exact_type` is set to `c("params"):
+     ## When `match_exact_type` is set to `c("params"):
      ## - if searched params are `quiet = TRUE`, and `light = TRUE`, only
      ##    only log entries that include BOTH params will be returned when
      ## - log entries with any matching dots params will be returned, but
@@ -10,6 +10,7 @@
 require_log_type <- function(log_list, match_exact_type = NULL, ...) {
   conds <- unlist(...)
 
+    to_remove <- c()
   if (length(match_exact_type) > 0) {
     for (i in 1:length(log_list)) {
       
@@ -36,12 +37,15 @@ require_log_type <- function(log_list, match_exact_type = NULL, ...) {
       
       # ensure length of required conditions equals length of matched conditions
       if (!(length(matches_type_ul) == length(required_conds))) {
-        # message("No log entries match the specified exact parameters")
-        ## if not all match, remove from log_list list
-        log_list[[i]] <- NULL
-      }
+        ## if not all match, add to vector remove from log_list list
+        to_remove <- c(to_remove, i)
+      } else { browser() }
     }
   }
+  
+  
+  ## Remove entries by index using the to_remove vector
+  if (length(to_remove) > 1) log_list <- log_list[-to_remove]
   
   return(log_list)
 }

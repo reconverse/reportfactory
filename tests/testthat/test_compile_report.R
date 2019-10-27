@@ -134,6 +134,7 @@ test_that("Compile logs activity in an rds file", {
   expect_equal(other_param, "two")
   log_dots_args <- log_entry$dots$extra
   expect_equal(is.data.frame(log_dots_args$lots), TRUE)
+  log_output_dir <- log_entry$output_dir
   ## Expect to have the two initalize values plus two log entries
   expect_equal(length(log_file), 4)
 })
