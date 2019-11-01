@@ -73,25 +73,7 @@ filter_log <- function(log_file, match_exact_type = NULL,
   }
   
   if (most_recent == TRUE & length(results) > 1) {
-    ## Assign all but the last result to NULL to remove from list
-    ul_results <- unlist(results)
-    ul_results_names <- names(ul_results)
-    
-    name_keys <- grep("compile_init_env.file", ul_results_names, value = TRUE)
-    unique_source_files <- unique(ul_results[name_keys])
-    
-    timestamps_list <- list()
-    for (i in 1:length(ul_results)) {
-      source_file_name <- unique_source_files[i]
-      source_names <- match(ul_results, source_file_name, nomatch = 0)
-      source_results <- ul_results[as.logical(source_names)]
-      most_recent_result = tail(source_results, n = 1)
-      timestamp <- gsub("\\..*","", names(most_recent_result))
-      timestamps_list[[source_file_name]] <- timestamp
-    }
-    
-    most_recent_results <- unlist(timestamps_list)
-    results <- results[most_recent_results]
+    results <- filter_log_most_recent(results)
   }
   
   if (outputs_only == TRUE) {

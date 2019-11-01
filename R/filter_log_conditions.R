@@ -1,3 +1,10 @@
+# Filters a log list using args passed from `filter_log`, which
+# match args used in `compile_report`. This approaches list filtering
+# by unlisting to a vector, and matching by vector names and values.
+# Then the results of the filter are again filtered if `match_exact_type`
+# is specified. This could probably use a refactor to do all of this in
+# one step instead of two, but it works.
+
 filter_log_conditions <- function(log_list, match_exact_type, ...) {
   
   conds <- list(...)
@@ -56,11 +63,6 @@ filter_log_conditions <- function(log_list, match_exact_type, ...) {
   
   # ===========
   to_remove <- c()
-  
-  for (ts in timestamps) {
-    result_ul <- grep(ul_names, ts)
-    browser()
-  }
   if (length(results) > 0) {
     for (j in 1:length(results)) {
       result <- results[[j]]
@@ -82,5 +84,6 @@ filter_log_conditions <- function(log_list, match_exact_type, ...) {
   
   ## Remove results from `to_remove` vector by list index 
   if (length(to_remove) > 0) results <- results[-to_remove]
+  
   return(results)
 }
