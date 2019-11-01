@@ -61,29 +61,7 @@ filter_log_conditions <- function(log_list, match_exact_type, ...) {
   matched_keys <- Reduce(intersect, timestamps_list)
   results <- log_list[matched_keys]
   
-  # ===========
-  to_remove <- c()
-  if (length(results) > 0) {
-    for (j in 1:length(results)) {
-      result <- results[[j]]
-      result_ul <- unlist(result)
-      ## Remove "compile_init_env" nesting from ul names (for matching)
-      names(result_ul) <- gsub("compile_init_env.", "", names(result_ul))
-      ## Create list conds in the result that should match the given required conds
-      result_required_conds <- lapply(
-        match_exact_type, 
-        function(type) { result_ul[grep(type, names(result_ul), value = TRUE)] })
-
-      required_diff <- base::setdiff(unlist(result_required_conds), required_conds)
-      
-      ## Identify index of results to remove if required conditions are not met
-      if (length(required_diff) > 0) to_remove <- c(to_remove, j)
-    }
-  }
-  # ===========
-  
-  ## Remove results from `to_remove` vector by list index 
-  if (length(to_remove) > 0) results <- results[-to_remove]
+  results <- filter_log_require_by_type(results, match_exact_type, required_conds)
   
   return(results)
 }

@@ -66,7 +66,6 @@ filter_log <- function(log_file, match_exact_type = NULL,
   
   if (!is.null(names(conds))) {
     results <- filter_log_conditions(log_file, match_exact_type, ...)
-    # results <- require_log_type(results, match_exact_type, conds)
   } else {
     ## return all log entries if no conds (remove initialize and timestamp)
     results <- log_file[-c(1,2)]
