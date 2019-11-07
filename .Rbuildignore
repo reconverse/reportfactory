@@ -20,4 +20,4 @@ bug_reports/*
 artwork/*
 ^CONTRIBUTING\.Rmd$
 CONTRIBUTING.md
-*\.github/*
+\.github/
