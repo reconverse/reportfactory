@@ -9,7 +9,7 @@ test_that("list reports returns equal values in new_factory", {
   destination
   new_factory(destination)
   
-  expected <- 8
+  expected <- 1
   actual <- length(list_reports(destination))
 
   expect_equal(expected, actual)  
