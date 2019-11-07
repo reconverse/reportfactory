@@ -1,5 +1,5 @@
 
-Context("Extract dates")
+context("Extract dates")
 
 test_that("The date is extracted from a string",{
   x <- "contacts_2017-10-29"
