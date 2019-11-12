@@ -181,21 +181,6 @@ update_reports()
 list_outputs()
 ```
 
-## Additional functionality
-
-- **`extract_string()`**: will list available outputs
-```{r extract_string, echo = -1}
-
-x <- "RECON rules"
-pattern <- "[A-Z]{5}"
-
-extract_string(x, pattern)
-
-
-```
-
-# Details
-
 ### Referring external files in reports
 
 In the `Rmd` reports, all file paths should be referred to using `here()`,
