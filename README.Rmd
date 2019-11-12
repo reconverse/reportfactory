@@ -144,7 +144,7 @@ We start by creating a new factory in the temporary folder:
 ```{r creation}
 library(reportfactory)
 
-destination <- file.path(tempdir(), "new_factory") # In practise, one should not use a temporary directory else all will be lost.
+destination <- file.path(tempdir(), "new_factory") # In practise one should not use a temporary directory else all will be lost.
 destination
 new_factory(destination)
 dir()
