@@ -1,7 +1,7 @@
 
-context("Test removal of undesirable files and folders present report_sources/")
+context("Test clean_report_sources")
 
-test_that("Undesirable files and folders get removed in report_sources", {
+test_that("Undesirable files and folders get removed in report_sources/", {
   odir <- getwd()
   skip_on_cran()
 
