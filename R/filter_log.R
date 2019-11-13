@@ -78,7 +78,7 @@ filter_log <- function(log_file, match_exact_type = NULL,
   if (outputs_only == TRUE) {
     # Assign all but the output_files in entries to NULL to remove other data
     to_remove <- c("compile_init_env", "dots", "timestamp", "output_dir")
-    for (k in 1:length(results)) {
+    for (k in seq_along(results)) {
       results[[k]][to_remove] <- NULL
     }
   }

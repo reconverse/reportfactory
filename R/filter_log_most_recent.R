@@ -9,7 +9,7 @@ filter_log_most_recent <- function(log_list) {
   unique_source_files <- unique(ul_log[name_keys])
   
   timestamps_list <- list()
-  for (i in 1:length(unique_source_files)) {
+  for (i in seq_along(unique_source_files)) {
     ## get source filenames
     source_file_name <- unique_source_files[i]
     source_names <- match(ul_log, source_file_name, nomatch = 0)

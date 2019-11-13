@@ -6,7 +6,7 @@ filter_log_require_by_type <- function(log_list, match_exact_type, required_cond
   results <- log_list
   to_remove <- c()
   if (length(results) > 0) {
-    for (j in 1:length(results)) {
+    for (j in seq_along(results)) {
       result <- results[[j]]
       result_ul <- unlist(result)
       ## Remove "compile_init_env" nesting from ul names (for matching)

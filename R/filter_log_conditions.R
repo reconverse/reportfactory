@@ -24,7 +24,7 @@ filter_log_conditions <- function(log_list, match_exact_type, ...) {
   required_conds <- unlist(required_conds)
   # ==================
   
-  for (i in 1:length(conds)) {
+  for (i in seq_along(conds)) {
     cond <- conds[i]
     key <- names(cond)
     value <- cond[[key]]

@@ -1,6 +1,6 @@
 filter_log_output_types <- function(log_list, output_file_types = c()) {
   if (length(output_file_types) > 0) {
-    for (l in 1:length(log_list)) {
+    for (l in seq_along(log_list)) {
       result <- log_list[[l]]
       output_files <- result$output_files
       
