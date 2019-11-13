@@ -1,7 +1,7 @@
-#' #' Ship Reports
+#' #' Collect and ship compiled markdown reports to a single folder
 #'
 #' Copies output files for log entries that match given conditions to a dated
-#' `shipped_[YYYY-mm-dd]` folder
+#' `shipped_[yyyy-mm-dd]` folder
 #'     
 #' @param factory The path the factory directory, defaults to current directory
 #'
@@ -10,16 +10,16 @@
 #' (no entries with missing components of the specified type will be returned)
 #' 
 #' @param most_recent a logical indicating passed to `filter_log` if only the 
-#' last log entry should be returned; \code{FALSE} by default.
+#' last log entry should be returned; `FALSE` by default.
 #' 
 #' @param outputs_only a logical indicating if only the outputs of a log entry 
-#'   should be returned passed to `filter_log`; \code{FALSE} by default.
+#'   should be returned passed to `filter_log`; `FALSE` by default.
 #' 
 #' @param output_file_types  a vector containing the file types that are to be
 #'   returned for each entry passed to `filter_log`
 #' 
 #' @param ... the arguments that will be used to match and return log entries, 
-#'   which should match the structure of the \code{reportfactory::compile_reports}
+#'   which should match the structure of the [compile_reports()]
 #'   method - passed to `filter_log`
 #'
 #' @export

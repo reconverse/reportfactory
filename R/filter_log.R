@@ -1,6 +1,7 @@
-#' Filter Log
+#' Filter reportfactory logs by factory, source file name, parameters,
+#' dots arguments, output file types, or other logged data
 #'
-#' By default the function returns all matches - even if some conditions are 
+#' By default the function returns all matches --- even if some conditions are 
 #'     missing, or there are other log conditions present
 #'
 #' @export
