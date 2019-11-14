@@ -31,7 +31,7 @@
 #'
 #' @examples
 #' ## This filters a compile log with a set of conditions, which would 
-#' ## match the call of the \code{reportfactory::compile_report} function. 
+#' ## match the call of the `reportfactory::compile_report` function. 
 #' 
 #' 
 #' ## new random factory in temp folder

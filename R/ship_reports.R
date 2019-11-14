@@ -22,13 +22,51 @@
 #'   which should match the structure of the [compile_reports()]
 #'   method - passed to `filter_log`
 #'
+#' @examples
+#' 
+#' odir <- getwd()
+#' 
+#' setwd(tempdir())
+#' random_factory(include_examples = TRUE)
+#' source_name <- "foo"
+#' report_source_file_name <- list_reports(pattern = source_name)[1]
+#' 
+#' dots_args <- list("lots" = data.frame(a = c(10,20)))
+#' compile_report(
+#'   report_source_file_name, 
+#'   quiet = FALSE, 
+#'   params = list("other" = "two",
+#'                 "more" = list("thing" = "foo")),
+#'   extra = dots_args)
+#' 
+#' compile_report(
+#'   report_source_file_name,
+#'   quiet = TRUE,
+#'   params = list(other = "test"))
+#' 
+#' compile_report(
+#'   report_source_file_name, 
+#'   quiet = FALSE, 
+#'   params = list("other" = "two",
+#'                 "more" = list("thing" = "foo")),
+#'   extra = dots_args)
+#' 
+#' log_file <- readRDS(".compile_log.rds")
+#'
+#' ship_reports(
+#'   params = list("other" = "two"), 
+#'   most_recent = TRUE
+#' )
+#' 
+#' setwd(odir)
+#'
 #' @export
 #' 
 ship_reports <- function(factory = getwd(), match_exact_type = NULL,
                          most_recent = TRUE, outputs_only = FALSE,
                          output_file_types = c(), ...) {
   
-  # validate_factory(factory)
+  validate_factory(factory)
   
   odir <- getwd()
   on.exit(setwd(odir))
@@ -50,23 +88,22 @@ ship_reports <- function(factory = getwd(), match_exact_type = NULL,
     timestamp <- sub(" ", "_", as.character(Sys.time()))
     datetime <- gsub(":", "-", timestamp)
     shipped_dir <- paste0("shipped_", datetime)
-    
-    if (!dir.exists((shipped_dir))) dir.create(shipped_dir)
+    dir.create(shipped_dir)
     
     for (result in results) {
-      ## Create factory sub-directory
+      ## Create source file (sf) sub-directory
       outputs <- unlist(result$output_files)
-      factory_pattern = ".*report_outputs/(.*?)/.*"
-      factory_repl <- "\\1"
-      factory_dir <- gsub(factory_pattern, factory_repl, result$output_dir)
-      factory_dir <- file.path(shipped_dir, factory_dir)
-      if (!dir.exists((factory_dir))) dir.create(factory_dir)
+      sf_pattern = ".*report_outputs/(.*?)/.*"
+      sf_repl <- "\\1"
+      sf_dir <- gsub(sf_pattern, sf_repl, result$output_dir)
+      sf_dir <- file.path(shipped_dir, sf_dir)
+      if (!dir.exists((sf_dir))) dir.create(sf_dir)
       
       ## Create compile sub-directory
       compile_pattern =  ".*\\/"
       compile_repl <- ""
       compile_dir <- gsub(compile_pattern, compile_repl, result$output_dir)
-      compile_dir <- file.path(factory_dir, compile_dir)
+      compile_dir <- file.path(sf_dir, compile_dir)
       if (!dir.exists((compile_dir))) dir.create(compile_dir)
       
       for (output in outputs) {
@@ -81,8 +118,8 @@ ship_reports <- function(factory = getwd(), match_exact_type = NULL,
         }
       }
       ## Print shipped outputs to console
-      factory <- gsub(".*report_outputs/(.*?)/.*", "\\1", outputs[[1]])
-      msg_header <- paste0("\n/// Shipping ", factory, " outputs: \n")
+      sf <- gsub(".*report_outputs/(.*?)/.*", "\\1", outputs[[1]])
+      msg_header <- paste0("\n/// Shipping ", sf, " outputs: \n")
       outputs_pattern = ".*\\/"
       outputs_repl <- "\\1"
       short_outputs <- lapply(

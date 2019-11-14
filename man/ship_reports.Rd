@@ -2,7 +2,7 @@
 % Please edit documentation in R/ship_reports.R
 \name{ship_reports}
 \alias{ship_reports}
-\title{#' Ship Reports}
+\title{#' Collect and ship compiled markdown reports to a single folder}
 \usage{
 ship_reports(factory = getwd(), match_exact_type = NULL,
   most_recent = TRUE, outputs_only = FALSE, output_file_types = c(),
@@ -16,19 +16,58 @@ ship_reports(factory = getwd(), match_exact_type = NULL,
 (no entries with missing components of the specified type will be returned)}
 
 \item{most_recent}{a logical indicating passed to `filter_log` if only the 
-last log entry should be returned; \code{FALSE} by default.}
+last log entry should be returned; `FALSE` by default.}
 
 \item{outputs_only}{a logical indicating if only the outputs of a log entry 
-should be returned passed to `filter_log`; \code{FALSE} by default.}
+should be returned passed to `filter_log`; `FALSE` by default.}
 
 \item{output_file_types}{a vector containing the file types that are to be
 returned for each entry passed to `filter_log`}
 
 \item{...}{the arguments that will be used to match and return log entries, 
-which should match the structure of the \code{reportfactory::compile_reports}
+which should match the structure of the [compile_reports()]
 method - passed to `filter_log`}
 }
 \description{
 Copies output files for log entries that match given conditions to a dated
-`shipped_[YYYY-mm-dd]` folder
+`shipped_[yyyy-mm-dd]` folder
+}
+\examples{
+
+odir <- getwd()
+
+setwd(tempdir())
+random_factory(include_examples = TRUE)
+source_name <- "foo"
+report_source_file_name <- list_reports(pattern = source_name)[1]
+
+dots_args <- list("lots" = data.frame(a = c(10,20)))
+compile_report(
+  report_source_file_name, 
+  quiet = FALSE, 
+  params = list("other" = "two",
+                "more" = list("thing" = "foo")),
+  extra = dots_args)
+
+compile_report(
+  report_source_file_name,
+  quiet = TRUE,
+  params = list(other = "test"))
+
+compile_report(
+  report_source_file_name, 
+  quiet = FALSE, 
+  params = list("other" = "two",
+                "more" = list("thing" = "foo")),
+  extra = dots_args)
+
+log_file <- readRDS(".compile_log.rds")
+
+ship_reports(
+  params = list("other" = "two"), 
+  most_recent = TRUE
+)
+
+setwd(odir)
+
 }

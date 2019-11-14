@@ -2,7 +2,8 @@
 % Please edit documentation in R/filter_log.R
 \name{filter_log}
 \alias{filter_log}
-\title{Filter Log}
+\title{Filter reportfactory logs by factory, source file name, parameters,
+dots arguments, output file types, or other logged data}
 \usage{
 filter_log(log_file, match_exact_type = NULL, most_recent = FALSE,
   outputs_only = FALSE, output_file_types = c(), ...)
@@ -16,29 +17,29 @@ that are to be matched EXACTLY to the log entry (no entries with missing
 components of the specified type will be returned)}
 
 \item{most_recent}{a logical indicating if only the last log entry should
-be returned; \code{FALSE} by default.}
+be returned; `FALSE` by default.}
 
 \item{outputs_only}{a logical indicating if only the outputs of a log entry 
-should be returned; \code{FALSE} by default.}
+should be returned; `FALSE` by default.}
 
 \item{output_file_types}{a vector containing the file types that are to be
 returned for each entry}
 
 \item{...}{the arguments that will be used to match and return log entries, 
-which should match the structure of the \code{reportfactory::compile_reports}
+which should match the structure of the `reportfactory::compile_reports`
 method}
 }
 \value{
-a list of log entries which match the \code{...} arguments and other
+a list of log entries which match the `...` arguments and other
   parameter input
 }
 \description{
-By default the function returns all matches - even if some conditions are 
+By default the function returns all matches --- even if some conditions are 
     missing, or there are other log conditions present
 }
 \examples{
 ## This filters a compile log with a set of conditions, which would 
-## match the call of the \\code{reportfactory::compile_report} function. 
+## match the call of the `reportfactory::compile_report` function. 
 
 
 ## new random factory in temp folder

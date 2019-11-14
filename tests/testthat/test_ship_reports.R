@@ -56,10 +56,20 @@ test_that("Report outputs are copied into a folder at factory root", {
   
   shipped_files <- list.files(destination_dir, recursive = TRUE)
   
-  expect_equal(length(shipped_files), 6)
+  expected_files <- c("boxplots-1.pdf", "boxplots-1.png", "foo_2018-06-29.html", 
+    "outputs_base.csv", "violins-1.pdf", "violins-1.png")
+  
+  for (expected in expected_files) {
+    expect_equal(expected %in% shipped_files, TRUE)
+  }
 })
 
-test_that("displays a message if there are no matches", {
-  expect_message(ship_reports(file = "test"),
-                 "No entries match the given arguments")
+test_that("ships matches of source file name", {
+  ship_reports(file = report_source_file_name)
+  
+  shipped_dirs <- grep("shipped_", list.files(), value = TRUE)
+  newest_dir <- shipped_dirs[length(shipped_dirs)]
+  source_name_dir <- grep(source_name, list.files(newest_dir), value = TRUE)
+  
+  expect_equal(dir.exists(file.path(newest_dir, source_name_dir)), TRUE)            
 })
