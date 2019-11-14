@@ -14,19 +14,19 @@
 #'   components of the specified type will be returned)
 #'   
 #' @param most_recent a logical indicating if only the last log entry should
-#'   be returned; \code{FALSE} by default.
+#'   be returned; `FALSE` by default.
 #'   
 #' @param outputs_only a logical indicating if only the outputs of a log entry 
-#'   should be returned; \code{FALSE} by default.
+#'   should be returned; `FALSE` by default.
 #'   
 #' @param output_file_types a vector containing the file types that are to be
 #'   returned for each entry
 #'   
 #' @param ... the arguments that will be used to match and return log entries, 
-#'   which should match the structure of the \code{reportfactory::compile_reports}
+#'   which should match the structure of the `reportfactory::compile_reports`
 #'   method
 #'
-#' @return a list of log entries which match the \code{...} arguments and other
+#' @return a list of log entries which match the `...` arguments and other
 #'   parameter input
 #'
 #' @examples
