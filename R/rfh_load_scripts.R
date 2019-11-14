@@ -11,11 +11,36 @@
 #'
 #' @param quiet A logical indicating whether messages should be displayed to the
 #'   console (`TRUE`, default), or not.
+#'
+#' @examples
+#'
+#' ## create random factory
+#' odir <- getwd()
+#' random_factory()
+#'
+#' ## load scripts - nothing to load
+#' rfh_load_scripts()
+#'
+#' ## create toy script, try again
+#' dir.create("src/")
+#' cat("toto <- 1:10", file = "src/toto.R")
+#' rfh_load_scripts()
+#'
+#' ## check that toto exists and is 1:10
+#' toto
+#'
+#' ## restore original working directory
+#' setwd(odir)
 
 rfh_load_scripts <- function(quiet = FALSE) {
 
   ## Approach: we list all .R files in /scripts/ and in /src/, and load all of
-  ## them in alphanumeric order
+  ## them in alphanumeric order; we need to make sure all objects are loaded in
+  ## the parent environment. This is achieved using `sys.source` rather than
+  ## `source`.
+
+  ## get parent environment
+  parent <- parent.frame()
 
   ## process .R files in scripts/
   path_to_scripts <- find_file("scripts")
@@ -33,10 +58,10 @@ rfh_load_scripts <- function(quiet = FALSE) {
                    scripts_txt)
     message(msg)
     } else {
-      message("\nNo .R files in `scripts/`")
+      message("\nNo `.R` files in `scripts/`")
     }
   }
-  for (file in scripts_files) source(file, local = TRUE)
+  for (file in scripts_files) sys.source(file, envir = parent)
 
   
   ## process .R files in scr/
@@ -57,11 +82,13 @@ rfh_load_scripts <- function(quiet = FALSE) {
                      src_txt)
       message(msg)
     } else {
-      message("\nNo .R files in `src/`")
+      message("\nNo `.R` files in `src/`")
     }
   }
-  for (file in src_files) source(file, local = TRUE)
+  for (file in src_files) sys.source(file, envir = parent)
 
+
+  ## nothing to return, bye everyone
   return(invisible(NULL))
   
 }
