@@ -128,7 +128,7 @@ ship_reports <- function(factory = getwd(), match_exact_type = NULL,
       message(sprintf(message_display)) 
     }
   } else {
-    message(sprintf("\n/// No entries match the given arguments"))
+    message("\n/// No entries match the given arguments")
   }
   
   return(invisible(NULL))

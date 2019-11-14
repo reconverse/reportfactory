@@ -21,12 +21,11 @@ compile_report(
 
 
 log_file <- readRDS(".compile_log.rds")
-length(log_file)
 
 test_that("Filtering returns only exact matches on EXACT parameters", {
   skip_on_cran()
   
-  # entries missing some params arguments so should return an empty list
+  ## entries missing some params arguments so should return an empty list
   missing_params_filtered <- filter_log(
     match_exact = c("params"),
     log_file = log_file,
@@ -35,7 +34,7 @@ test_that("Filtering returns only exact matches on EXACT parameters", {
   
   expect_equal(length(missing_params_filtered), 0)
   
-  # conds missing some dots arguments so should return an empty list
+  ## conds missing some dots arguments so should return an empty list
   alt_dots_args <- list("lots" = data.frame(a = c(10)))
   missing_dots_filtered <- filter_log(
     match_exact = c("params", "dots"),
@@ -46,7 +45,7 @@ test_that("Filtering returns only exact matches on EXACT parameters", {
   
   expect_equal(length(missing_dots_filtered), 0)
   
-  # dots args and params args match and should return exactly one log entry
+  ## dots args and params args match and should return exactly one log entry
   non_missing_filtered <- filter_log(
     match_exact = c("params", "dots"),
     log_file = log_file,
@@ -97,11 +96,9 @@ test_that("Filtering for most recent returns only last match for each source", {
     params = list(other = "test"))
   log_file <- readRDS(".compile_log.rds")
   
-  most_recent_filtered <- filter_log(log_file, 
-                         most_recent = TRUE)
+  most_recent_filtered <- filter_log(log_file, most_recent = TRUE)
   
-  
-  # Without `most_recent = TRUE` this would be equal to log_file[-c(3,4,5)]
+  ## Without `most_recent = TRUE` this would be equal to log_file[-c(3,4,5)]
   expect_equal(most_recent_filtered, log_file[c(4,5)])
 })
 
@@ -111,7 +108,7 @@ test_that("Filtering can return outputs only", {
                                      outputs_only = TRUE,
                                      most_recent = FALSE)
   
-  expect_equal(names(outputs_only_filtered[[1]]), c("output_files"))
+  expect_equal(names(outputs_only_filtered[[1]]), "output_files")
 })
 
 test_that("Filtering can return specific outputs only", {
