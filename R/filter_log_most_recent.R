@@ -15,7 +15,7 @@ filter_log_most_recent <- function(log_list) {
     source_names <- match(ul_log, source_file_name, nomatch = 0)
     source_log <- ul_log[as.logical(source_names)]
     ## get most recent
-    most_recent_result = tail(source_log, n = 1)
+    most_recent_result = utils::tail(source_log, n = 1)
     timestamp <- gsub("\\..*","", names(most_recent_result))
     timestamps_list[[source_file_name]] <- timestamp
   }

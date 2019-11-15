@@ -112,12 +112,14 @@ test_that("Filtering can return outputs only", {
 })
 
 test_that("Filtering can return specific outputs only", {
+  source_name <- "foo"
+  report_source_file_name <- list_reports(pattern = source_name)[1]
   output_types <- c("png", "csv")
   outputs_only_filtered <- filter_log(log_file, 
                                       file = report_source_file_name,
                                       outputs_only = TRUE,
-                                      output_file_types = output_types, 
-                                      most_recent = FALSE)
+                                      output_file_types = output_types,
+                                      most_recent = TRUE)
   
   
   remove <- c(".html", ".jpeg", ".pdf", ".rds", ".rmd", ".xls", ".xlsx")
