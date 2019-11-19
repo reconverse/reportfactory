@@ -62,16 +62,14 @@ rfh_load_scripts <- function(quiet = FALSE) {
     }
   }
   for (file in scripts_files) sys.source(file, envir = parent)
-
   
-  ## process .R files in scr/
+  
+  ## process .R files in src/
   path_to_src <- find_file("src")
   src_files <- dir(path_to_src,
                        pattern = "[.]R$",
                        recursive = TRUE,
                        full.names = TRUE)
-
-  for (file in src_files) source(file, local = TRUE)
   if (!quiet) {
     if (length(src_files)) {
       src_txt <- dir(path_to_src,
