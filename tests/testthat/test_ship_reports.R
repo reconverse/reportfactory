@@ -34,15 +34,15 @@ length(log_file)
 test_that("Report outputs are copied into a folder at factory root", {
   skip_on_cran()
   
-  # entries missing some params arguments so should return an empty list
+  ## entries missing some params arguments so should return an empty list
   ship_reports(
     params = list("other" = "two"), 
     most_recent = TRUE
   )
   
-  factory_pattern = ".*report_outputs/(.*?)/.*"
+  factory_pattern <- ".*report_outputs/(.*?)/.*"
   factory_repl <- "\\1"
-  compile_pattern =  ".*\\/"
+  compile_pattern <- ".*\\/"
   compile_repl <- ""
   
   entry_output_dir <- log_file[[length(log_file)]]$output_dir

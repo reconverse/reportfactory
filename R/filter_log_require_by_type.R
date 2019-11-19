@@ -16,7 +16,7 @@ filter_log_require_by_type <- function(log_list, match_exact_type, required_cond
         match_exact_type, 
         function(type) { result_ul[grep(type, names(result_ul), value = TRUE)] })
       
-      required_diff <- base::setdiff(unlist(result_required_conds), required_conds)
+      required_diff <- setdiff(unlist(result_required_conds), required_conds)
       
       ## Identify index of results to remove if required conditions are not met
       if (length(required_diff) > 0) to_remove <- c(to_remove, j)

@@ -5,7 +5,7 @@ filter_log_output_types <- function(log_list, output_file_types = c()) {
       result <- log_list[[i]]
       output_files <- result$output_files
       
-      # get index of output files that have a match to the given file extensions
+      ## get index of output files that have a match to the given file extensions
       file_ext_patterns <- paste(output_file_types, collapse = "|")
       to_keep  <- grep(file_ext_patterns, unlist(output_files))
       

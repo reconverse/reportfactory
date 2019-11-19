@@ -93,14 +93,14 @@ ship_reports <- function(factory = getwd(), match_exact_type = NULL,
     for (result in results) {
       ## Create source file (sf) sub-directory
       outputs <- unlist(result$output_files)
-      sf_pattern = ".*report_outputs/(.*?)/.*"
+      sf_pattern <- ".*report_outputs/(.*?)/.*"
       sf_repl <- "\\1"
       sf_dir <- gsub(sf_pattern, sf_repl, result$output_dir)
       sf_dir <- file.path(shipped_dir, sf_dir)
       if (!dir.exists((sf_dir))) dir.create(sf_dir)
       
       ## Create compile sub-directory
-      compile_pattern =  ".*\\/"
+      compile_pattern <- ".*\\/"
       compile_repl <- ""
       compile_dir <- gsub(compile_pattern, compile_repl, result$output_dir)
       compile_dir <- file.path(sf_dir, compile_dir)
@@ -120,7 +120,7 @@ ship_reports <- function(factory = getwd(), match_exact_type = NULL,
       ## Print shipped outputs to console
       sf <- gsub(".*report_outputs/(.*?)/.*", "\\1", outputs[[1]])
       msg_header <- paste0("\n/// Shipping ", sf, " outputs: \n")
-      outputs_pattern = ".*\\/"
+      outputs_pattern <- ".*\\/"
       outputs_repl <- "\\1"
       short_outputs <- lapply(
         outputs, function(output) gsub(outputs_pattern, outputs_repl, output))
