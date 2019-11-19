@@ -1,5 +1,5 @@
 current_compile_log <- function(log_file_path = getwd(), base_name, date_string) {
-  no_log_file <- !file.exists(log_file_path, hidden.files = TRUE)
+  no_log_file <- !any(file.exists(log_file_path, hidden.files = TRUE))
   if (no_log_file) {
     initialize_log <- list(initialize = TRUE, timestamp = date_string)
     attr(initialize_log, "factory_name") <- base_name
