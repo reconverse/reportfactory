@@ -4,10 +4,12 @@ Title: Report factory
 Version: 0.0.4
 Authors@R: c(person("Thibaut", "Jombart", role = c("aut", "cre"), email =
   "thibautjombart@gmail.com"),
-  person("Zhian N.", "Kamvar", role = "ctb", email = "zkamvar@gmail.com"))
+  person("Zhian N.", "Kamvar", role = "ctb", email = "zkamvar@gmail.com"),
+  person("Amy", "Gimma", role = "ctb", email = "amyg225@gmail.com"))
 Description: Lightweight infrastructure for handling multiple dated reports using \code{rmarkdown::render}.
 License: MIT + file LICENSE
 URL: https://github.com/reconhub/reportfactory
+Encoding: UTF-8
 BugReports: https://github.com/reconhub/reportfactory/issues
 RoxygenNote: 6.1.1
 Imports:

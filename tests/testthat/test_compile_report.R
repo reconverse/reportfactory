@@ -118,10 +118,10 @@ test_that("Compile logs activity in an rds file", {
   quiet_arg <- log_entry$compile_init_env$quiet
   expect_equal(quiet_arg, TRUE)
   
-  # compiling another report to be sure the log does not remove data 
-    # or have merge issues
+  ## compiling another report to be sure the log does not remove data 
+    ## or have merge issues
   dots_args <- list("lots" = data.frame(a = c(10,20)))
-  compile_report(list_reports(pattern = "foo")[1], 
+  compile_report(list_reports(pattern = factory_name)[1], 
                  quiet = FALSE, 
                  params = list("other" = "two",
                                "more" = list("thing" = "foo")),
@@ -134,6 +134,7 @@ test_that("Compile logs activity in an rds file", {
   expect_equal(other_param, "two")
   log_dots_args <- log_entry$dots$extra
   expect_equal(is.data.frame(log_dots_args$lots), TRUE)
-  # Expect to have the two initalize values plus two log entries
+  log_output_dir <- log_entry$output_dir
+  ## Expect to have the two initalize values plus two log entries
   expect_equal(length(log_file), 4)
 })
