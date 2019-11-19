@@ -2,7 +2,7 @@
 % Please edit documentation in R/ship_reports.R
 \name{ship_reports}
 \alias{ship_reports}
-\title{#' Collect and ship compiled markdown reports to a single folder}
+\title{Collect and ship compiled markdown reports to a single folder}
 \usage{
 ship_reports(factory = getwd(), match_exact_type = NULL,
   most_recent = TRUE, outputs_only = FALSE, output_file_types = c(),
@@ -70,4 +70,7 @@ ship_reports(
 
 setwd(odir)
 
+}
+\author{
+Amy Gimma (\email{amy.gimma@lshtm.ac.uk})
 }

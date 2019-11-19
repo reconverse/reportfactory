@@ -1,4 +1,4 @@
-#' #' Collect and ship compiled markdown reports to a single folder
+#' Collect and ship compiled markdown reports to a single folder
 #'
 #' Copies output files for log entries that match given conditions to a dated
 #' `shipped_[yyyy-mm-dd]` folder
@@ -21,6 +21,8 @@
 #' @param ... the arguments that will be used to match and return log entries, 
 #'   which should match the structure of the [compile_reports()]
 #'   method - passed to `filter_log`
+#'
+#' @author Amy Gimma (\email{amy.gimma@@lshtm.ac.uk})
 #'
 #' @examples
 #' 

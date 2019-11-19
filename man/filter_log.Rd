@@ -67,3 +67,6 @@ filter_log(log_file = log_file,
        
 setwd(odir)
 }
+\author{
+Amy Gimma (\email{amy.gimma@lshtm.ac.uk})
+}

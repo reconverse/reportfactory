@@ -5,6 +5,8 @@
 #'     missing, or there are other log conditions present
 #'
 #' @export
+#'
+#' @author Amy Gimma (\email{amy.gimma@@lshtm.ac.uk})
 #' 
 #' @param log_file the compile log list (which is located in the root of the 
 #'   factory and saved as a .rds file)
