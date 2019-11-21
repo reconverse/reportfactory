@@ -53,7 +53,7 @@ test_that("Filtering returns only exact matches on EXACT parameters", {
                   "more" = list("thing" = "foo")),
     dots = dots_args)
   
-  expect_equal(non_missing_filtered, log_file[-c(1,2,3)])
+  expect_equal(non_missing_filtered, log_file[-c(1)])
 })
 
 
@@ -66,11 +66,11 @@ test_that("Filtering a list with string values returns log entries", {
   
   ## Expect the filtered list to be the same as the log entries of log_file
      ## (both entries match the filter)
-  expect_equal(filtered, log_file[-c(1,2)])
+  expect_equal(names(filtered), names(log_file))
   
   filtered <- filter_log(log_file, params = list("other" = "two"))
   
-  expect_equal(filtered, log_file[-c(1,2,3)])
+  expect_equal(filtered, log_file[-c(1)])
 })
 
 
@@ -83,7 +83,7 @@ test_that("Filtering with non-string values returns the matching lists", {
     dots = dots_args, 
     most_recent = FALSE)
 
-  expect_equal(filtered, log_file[-c(1,2,3)])
+  expect_equal(filtered, log_file[-c(1)])
 })
 
 
@@ -98,8 +98,8 @@ test_that("Filtering for most recent returns only last match for each source", {
   
   most_recent_filtered <- filter_log(log_file, most_recent = TRUE)
   
-  ## Without `most_recent = TRUE` this would be equal to log_file[-c(3,4,5)]
-  expect_equal(most_recent_filtered, log_file[c(4,5)])
+  ## Without `most_recent = TRUE` this would be equal to log_file[c(1,2,3)]
+  expect_equal(most_recent_filtered, log_file[c(2,3)])
 })
 
 test_that("Filtering can return outputs only", {

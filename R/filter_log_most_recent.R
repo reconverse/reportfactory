@@ -7,7 +7,7 @@ filter_log_most_recent <- function(log_list) {
   
   name_keys <- grep("compile_init_env.file", ul_log_names, value = TRUE)
   unique_source_files <- unique(ul_log[name_keys])
-  
+
   timestamps_list <- list()
   for (i in seq_along(unique_source_files)) {
     ## get source filenames
