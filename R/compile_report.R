@@ -211,7 +211,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
   files_after <- unique(ignore_tilde(files_after))
   new_files <- setdiff(files_after, files_before)
-  new_files <- c(new_files, sub(file_dir, "", output_file))
   new_files <- unique(new_files)
   new_dirs <- unique(basename(setdiff(dirs_after, dirs_before)))
 
@@ -241,6 +240,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   dir.create(output_dir, FALSE, TRUE)
   
   output_files <- vector(length(new_files), mode = "list")
+  
   for (i in seq_along(new_files)) {
     file <- new_files[i]
     destination <- file.path(output_dir, file)

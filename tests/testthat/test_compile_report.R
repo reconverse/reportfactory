@@ -16,9 +16,14 @@ test_that("Compilation can handle multiple outputs", {
   outputs <- sort(outputs)
   ref <- c("figures/boxplots-1.pdf", "figures/boxplots-1.png",
            "figures/violins-1.pdf", "figures/violins-1.png",
-           "foo_2018-06-29.html", "outputs_base.csv" )
+           "foo_2018-06-29.html", "outputs_base.csv")
 
   expect_identical(ref, outputs)
+  
+  base_refs <- unlist(lapply(ref, basename))
+  log_entry <- readRDS(".compile_log.rds")[[1]]
+  log_outputs <- unlist(lapply(log_entry$output_files, basename))
+  expect_identical(base_refs, log_outputs)
 })
 
 test_that("Compilation can take params and pass to markdown::render", {
