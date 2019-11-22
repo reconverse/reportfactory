@@ -16,9 +16,14 @@ test_that("Compilation can handle multiple outputs", {
   outputs <- sort(outputs)
   ref <- c("figures/boxplots-1.pdf", "figures/boxplots-1.png",
            "figures/violins-1.pdf", "figures/violins-1.png",
-           "foo_2018-06-29.html", "outputs_base.csv" )
+           "foo_2018-06-29.html", "outputs_base.csv")
 
   expect_identical(ref, outputs)
+  
+  base_refs <- unlist(lapply(ref, basename))
+  log_entry <- readRDS(".compile_log.rds")[[1]]
+  log_outputs <- unlist(lapply(log_entry$output_files, basename))
+  expect_identical(base_refs, log_outputs)
 })
 
 test_that("Compilation can take params and pass to markdown::render", {
@@ -110,9 +115,10 @@ test_that("Compile logs activity in an rds file", {
   
   log_file <- readRDS(".compile_log.rds")
   expect_equal(attr(log_file, "factory_name"), factory_name)
+  init_time <- attr(log_file, "initialized_at")
+  expect_equal(as.Date(init_time), Sys.Date())
   
-  
-  log_entry <- log_file[[length(log_file)]]
+  log_entry <- log_file[[1]]
   other_param <- log_entry$compile_init_env$params$other
   expect_equal(other_param, "test")
   quiet_arg <- log_entry$compile_init_env$quiet
@@ -129,12 +135,12 @@ test_that("Compile logs activity in an rds file", {
   
   log_file <- readRDS(".compile_log.rds")
   
-  log_entry <- log_file[[length(log_file)]]
+  log_entry <- log_file[[2]]
   other_param <- log_entry$compile_init_env$params$other
   expect_equal(other_param, "two")
   log_dots_args <- log_entry$dots$extra
   expect_equal(is.data.frame(log_dots_args$lots), TRUE)
   log_output_dir <- log_entry$output_dir
   ## Expect to have the two initalize values plus two log entries
-  expect_equal(length(log_file), 4)
+  expect_equal(length(log_file), 2)
 })

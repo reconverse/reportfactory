@@ -67,14 +67,12 @@ filter_log <- function(log_file, match_exact_type = NULL,
   
   conds <- list(...)
   
+  results <- log_file
   if (!is.null(names(conds))) {
-    results <- filter_log_conditions(log_file, match_exact_type, ...)
-  } else {
-    ## return all log entries if no conds (remove initialize and timestamp)
-    results <- log_file[-c(1,2)]
+    results <- filter_log_conditions(results, match_exact_type, ...)
   }
-  
-  if (most_recent == TRUE & length(results) > 1) {
+
+    if (most_recent == TRUE & length(results) > 1) {
     results <- filter_log_most_recent(results)
   }
   
