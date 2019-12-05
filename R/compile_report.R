@@ -5,6 +5,34 @@
 #' expected to be inside the \code{report_sources} folder (or any subfolder
 #' within). Outputs will be generated in a named and time-stamped directory
 #' within \code{report_outputs}.
+#' 
+#' ## This function will:
+#'
+#' 1. perform cleaning of `report_sources/` if `clean_report_sources = TRUE`;
+#' this will remove pretty much anything that's not an `Rmd` file or a
+#' `README`; this is externalised in the function `clean_report_sources`
+#'
+#' 2. check that input file exists; identify all files in `report_sources/`
+#' prior to the compilation, used later to diff post-compilation to identify
+#' new files
+#'
+#' 3. compile the user-provided report `foo_date[].Rmd` file stored in
+#' `report_sources/`; compilation parameters are passed to
+#' `rmarkdown::render`'s argument `params` through `render_param`; parameters
+#' will also be used to form the output file name, which will display the
+#' parameter names and first values, so the output folder will look like:
+#' `compiled_foo_[foo-values]_bar_[bar-values]_[date]_[time]/`
+#'
+#' 4. identify all files in report_sources; new ones are those which where not
+#' around at step 1; this can cause problems when there are left-over outputs
+#' from previous manual compilations inside `report_sources/`; it will be
+#' often safest to use `clean_report_sources = TRUE` so that these left-overs
+#' are removed before step 3
+#'
+#' 5. move all outputs identified in step 3 to a dedicated folder in
+#' report_outputs/; this folder will be named after the input report,
+#' e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
+#' provided (see point 3).
 #'
 #' @export
 #'
@@ -22,7 +50,7 @@
 #'
 #' @param factory the path to a report factory; defaults to the current working
 #'   directory
-#'   
+#' 
 #' @param params a list that is passed to the `params` argument in
 #'   `rmarkdown::render`, which are accessed in the `.Rmd` file with
 #'   `params$...`; for instance, if `list(foo = 1:3)` is passed, then the
@@ -44,47 +72,11 @@
 
 compile_report <- function(file, quiet = FALSE, factory = getwd(),
                            clean_report_sources = FALSE,
-                           remove_cache = TRUE, 
+                           remove_cache = TRUE,
                            encoding = "UTF-8",
                            params = list(), ...) {
 
-  ## This function will:
-  
-  ## 1. perform cleaning of `report_sources/` if `clean_report_sources = TRUE`;
-  ## this will remove pretty much anything that's not an `Rmd` file or a
-  ## `README`; this is externalised in the function `clean_report_sources`
 
-  ## 2. check that input file exists; identify all files in `report_sources/`
-  ## prior to the compilation, used later to diff post-compilation to identify
-  ## new files
-  
-  ## 3. compile the user-provided report `foo_date[].Rmd` file stored in
-  ## `report_sources/`; compilation parameters are passed to
-  ## `rmarkdown::render`'s argument `params` through `render_param`; parameters
-  ## will also be used to form the output file name, which will display the
-  ## parameter names and first values, so the output folder will look like:
-  ## `compiled_foo_[foo-values]_bar_[bar-values]_[date]_[time]/`
-
-  ## 4. identify all files in report_sources; new ones are those which where not
-  ## around at step 1; this can cause problems when there are left-over outputs
-  ## from previous manual compilations inside `report_sources/`; it will be
-  ## often safest to use `clean_report_sources = TRUE` so that these left-overs
-  ## are removed before step 3
-
-  ## 5. move all outputs identified in step 3 to a dedicated folder in
-  ## report_outputs/; this folder will be named after the input report,
-  ## e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
-  ## provided (see point 3).
-  
-  
-  ## These are sed to create log entry, passed in with the env (not called directly in the code)
-  compile_init_env <- as.list(environment())
-  dots <- list(...)
-  
-  ## This is used in several places throughout the function, and should be used for all times
-  timestamp <- sub(" ", "_", as.character(Sys.time()))
-  datetime <- gsub(":", "-", timestamp)
-  
   validate_factory(factory)
 
   odir <- getwd()
@@ -204,7 +196,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
-  
+
   ## 4. identify all files in report_sources
   files_after <- list.files(recursive = TRUE)
   dirs_after <- list.dirs(recursive = TRUE)
@@ -214,7 +206,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   new_files <- unique(new_files)
   new_dirs <- unique(basename(setdiff(dirs_after, dirs_before)))
 
-  
+
   ## 5. move all outputs identified in step 3 to a dedicated folder
   if (!dir.exists(find_file("report_outputs"))) {
     dir.create(find_file("report_outputs"), FALSE, TRUE)
