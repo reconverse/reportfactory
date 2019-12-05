@@ -22,4 +22,3 @@ random_factory <- function(n = 12, ...) {
   destination <- paste("factory", id, sep = "_")
   new_factory(destination, ...)
 }
-

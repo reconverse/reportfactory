@@ -9,13 +9,15 @@
 #'
 #' @param pattern an optional regular expression used to look for specific
 #'   patterns in report names
-#' @param ignore_archive when \code{TRUE}, any reports within an `_archive` 
+#' @param ignore_archive when \code{TRUE}, any reports within an `_archive`
 #'   sub-directory are ignored. Set to \code{FALSE} to list these reports.
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
 
-list_reports <- function(factory = getwd(), pattern = NULL, ignore_archive = TRUE) {
+list_reports <- function(factory = getwd(),
+                         pattern = NULL,
+                         ignore_archive = TRUE) {
 
   odir <- getwd()
   on.exit(setwd(odir))

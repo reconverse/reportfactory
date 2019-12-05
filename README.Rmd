@@ -36,11 +36,11 @@ In essence a factory is a structured folder to empower version control in projec
 Some projects may require different types of analyses to be run repeatedly over
 time, for instance due to updates in data and inputs. 
 
-While `rmkardown::render` is becoming a standard for compiling a single analysis document, a number of issues remain: one needs to keep track of different version of the data/inputs, of the analysis code itself, and of different versions of the ouputs.
+While `rmkardown::render` is becoming a standard for compiling a single analysis document, a number of issues remain: one needs to keep track of different version of the data/inputs, of the analysis code itself, and of different versions of the outputs.
 
 *reportfactory* aims to facilitate these tasks by:
 
-- defining a report as an explicitely dated `.Rmd` file
+- defining a report as an explicitly dated `.Rmd` file
 - providing functions to compile all reports, using by default the most recent
   versions
 - storing each report output in a separate, time-stamped folder
@@ -49,7 +49,7 @@ While `rmkardown::render` is becoming a standard for compiling a single analysis
   one should make sure to remove the outputs afterwards)
 - keeping things simple: no configuration files, no handling of potential
   dependencies between reports, no caching
-- git-friendly: the factory is compatible with git-based workflows, it keeps core code versioned but saves copies of outputs     locally, making it lightweight, but also keeps improvements distributable. 
+- git-friendly: the factory is compatible with git-based workflows, it keeps core code versioned but saves copies of outputs locally, making it lightweight, but also keeps improvements distributable. 
 
 
 
@@ -80,7 +80,7 @@ To install the development version of the package, use:
 devtools::install_github("reconhub/reportfactory")
 ```
 
-Note that this requires the package *devtools* installed.
+Note that this requires the package `devtools` installed.
 
 
 ## What does it do?

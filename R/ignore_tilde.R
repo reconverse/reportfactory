@@ -4,17 +4,17 @@
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
-#' 
-#' @param x A vector of characters 
-#' 
-#' 
+#'
+#' @param x A vector of characters
+#'
+#'
 #' @noRd
 #' @keywords internal
 #'
 #' @example
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' x <- c("contacts_2017-10-29~", "example_2017-10-29")
 #' check <- ignore_tilde(x)
 #' print(check)

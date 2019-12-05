@@ -7,13 +7,13 @@
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
-#' 
+#'
 #' @param from
-#' 
-#' 
+#'
+#'
 #' @param to
-#' 
-#' 
+#'
+#'
 #' @noRd
 #' @keywords internal
 #'

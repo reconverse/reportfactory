@@ -1,22 +1,22 @@
 
 #' Extract the base name of a report, i.e. keep anything before the date
 #'
-#' This function is used to extract the base names of reports 
+#' This function is used to extract the base names of reports
 #'
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
-#' 
-#' @param x filenames 
-#' 
-#' 
+#'
+#' @param x filenames
+#'
+#'
 #' @noRd
 #' @keywords internal
 #'
 #' @example
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' x <- "contacts_2017-10-29.Rmd"
 #' check <- extract_base(x)
 #' print(check)

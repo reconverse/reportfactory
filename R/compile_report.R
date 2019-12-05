@@ -1,11 +1,11 @@
-#' Compile an rmarkdown report
+#' Compile an R Markdown report
 #'
 #' This function can be used to compile a report using its name, or a partial
 #' match for its name. The full path needs not be specified, but reports are
-#' expected to be inside the \code{report_sources} folder (or any subfolder
+#' expected to be inside the \code{report_sources} folder (or any sub-folder
 #' within). Outputs will be generated in a named and time-stamped directory
 #' within \code{report_outputs}.
-#' 
+#'
 #' ## This function will:
 #'
 #' 1. perform cleaning of `report_sources/` if `clean_report_sources = TRUE`;
@@ -41,7 +41,7 @@
 #' @param file the full path, or a partial, unambiguous match for the Rmd
 #'   report to be compiled.
 #'
-#' @param quiet a logical indicating if messages from rmarkdown compilation
+#' @param quiet a logical indicating if messages from R Markdown compilation
 #'   should be displayed; \code{TRUE} by default.
 #'
 #' @param encoding a character string indicating which encoding should be used
@@ -50,7 +50,7 @@
 #'
 #' @param factory the path to a report factory; defaults to the current working
 #'   directory
-#' 
+#'
 #' @param params a list that is passed to the `params` argument in
 #'   `rmarkdown::render`, which are accessed in the `.Rmd` file with
 #'   `params$...`; for instance, if `list(foo = 1:3)` is passed, then the
@@ -58,7 +58,7 @@
 #'   `1:3`; if defined, the subdirectory name in report-outputs will indicate
 #'   the names and first values of `params`; default is an empty list
 #'
-#' @param clean_report_sources a logical indicating if indesirable files and
+#' @param clean_report_sources a logical indicating if undesirable files and
 #'   folders in the `report_sources` folder should be cleaned before
 #'   compilation; defaults to `FALSE` (no cleanup)
 #'
@@ -83,7 +83,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   on.exit(setwd(odir))
   setwd(factory)
 
-  ## 1. perform cleaning of `report_sources/` 
+  ## 1. perform cleaning of `report_sources/`
   if (clean_report_sources) {
     clean_report_sources(quiet = quiet, remove_cache = remove_cache)
   }
@@ -124,15 +124,15 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## handle optional parameters passed `params`:
   ## we display some information to the console on parameters used, and generate
   ## some text that will be used to name the output folder
-  
+
   dots <- list(...)
   has_params <- FALSE
   if (length(params) > 0) {
-    
+
     ## remove unnamed parameters
     named <- names(params) != ""
     params <- params[named]
-    
+
     if (length(params) > 0) {
       has_params <- TRUE
 
@@ -152,13 +152,13 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
       ## characters for file names; can also have capts on paths (e.g. 4096
       ## characters for ext4) but we only handle the filename bit here. As a
       ## conservative measure, we allow up to 100 characters for params
-      
+
       long_values <- nchar(params_as_txt) > 8
       params_as_txt_console <- lapply(params_as_txt_console, substr, 1, 8)
       params_as_txt <- lapply(params_as_txt, substr, 1, 8)
       params_as_txt <- sub("-$", "", params_as_txt)
       params_as_txt <- sub("_$", "", params_as_txt)
-      
+
 
       ## create character strings to be displayed to the console
       txt_display <- paste(names(params),
@@ -192,7 +192,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   output_file <- rmarkdown::render(rmd_path,
                                    quiet = quiet,
                                    encoding = encoding,
-                                   envir = compile_env) # force clean environment
+                                   envir = compile_env) # force clean envir
 
   message(sprintf("\n/// '%s' done!\n", shorthand))
 

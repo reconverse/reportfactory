@@ -46,7 +46,7 @@ archive_reports <- function(factory = getwd(), before = NULL) {
                  mode = "0755")
     })
     res <- file.copy(from = file.path(factory, "report_sources", arc),
-                     to   = file.path(factory, "report_sources", "_archive", arc)
+                     to = file.path(factory, "report_sources", "_archive", arc)
                      )
 
     if (res) wins[arc] <- TRUE
