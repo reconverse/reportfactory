@@ -1,6 +1,7 @@
 #' Clean the folder report_sources
 #'
-#' This function removes undesirable files and folders present in `report_sources`
+#' This function removes undesirable files
+#' and folders present in `report_sources`
 #' except for:
 #' * `Rmd` files
 #' * `README*` files

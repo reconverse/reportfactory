@@ -27,8 +27,8 @@
 #'
 #' @param destination the name of the report factory folder to be created
 #'
-#' @param include_template a logical indicating if a template of report and folders
-#'   structure shoud be added to the factory; defaults to \code{TRUE}
+#' @param include_template a logical indicating if a template of report
+#' and folders structure shoud be added to the factory; defaults to \code{TRUE}
 #'
 #' @param include_examples a logical indicating if examples of reports shoud be
 #'   added to the factory; defaults to \code{FALSE}
@@ -74,7 +74,7 @@ new_factory <- function(destination = "new_factory",
 
   ## factory with example data and reports is not the default, but will override
   ## the template if requested
-  
+
   if (include_examples) {
     zip_path <- system.file("factory_template_with_examples.zip",
                             package = "reportfactory")

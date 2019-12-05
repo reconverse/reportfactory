@@ -6,7 +6,8 @@
 #' function returns a list of error and warning messages.
 #'
 #' @details
-#' Checks ran on the factory include (the result of a failure is indicated in brackets):
+#' Checks ran on the factory include
+#' (the result of a failure is indicated in brackets):
 #'
 #' \itemize{
 #'
@@ -28,12 +29,12 @@
 #'
 #' @inheritParams compile_report
 #'
-#' @param warnings A logical indicating if warnings should be issued; defaults to \code{TRUE}.
+#' @param warnings A logical indicating if warnings should be issued;
+#' defaults to \code{TRUE}.
 #'
-#' @param errors A logical indicating if errors should be issued; defaults to \code{TRUE}.
+#' @param errors A logical indicating if errors should be issued;
+#' defaults to \code{TRUE}.
 #'
-## #' @param quiet A logical indicating if messages should be hidden (\code{FALSE}, default)
-## #'   or shown on the console (\code{TRUE})
 #'
 
 validate_factory <- function(factory = getwd(),
@@ -90,7 +91,7 @@ validate_factory <- function(factory = getwd(),
     is_duplicated <- duplicated(files)
 
     if (any(is_duplicated)) {
-      if (errors){
+      if (errors) {
         culprits <- files[is_duplicated]
         msg <- sprintf("the following reports are duplicated:\n%s",
                        paste(culprits, collapse = "\n"))

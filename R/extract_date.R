@@ -6,17 +6,17 @@
 #'
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
-#' 
-#' @param x A string containing a date 
-#' 
-#' 
+#'
+#' @param x A string containing a date
+#'
+#'
 #' @noRd
 #' @keywords internal
 #'
 #' @example
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' x <- "contacts_2017-10-29"
 #' check <- extract_date(x)
 #' print(check)
