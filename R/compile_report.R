@@ -75,8 +75,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
                            remove_cache = TRUE,
                            encoding = "UTF-8",
                            params = list(), ...) {
-
-
+  
   validate_factory(factory)
 
   odir <- getwd()
@@ -203,7 +202,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
   files_after <- unique(ignore_tilde(files_after))
   new_files <- setdiff(files_after, files_before)
-  new_files <- c(new_files, sub(file_dir, "", output_file))
   new_files <- unique(new_files)
   new_dirs <- unique(basename(setdiff(dirs_after, dirs_before)))
 
@@ -213,8 +211,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
     dir.create(find_file("report_outputs"), FALSE, TRUE)
   }
 
-  datetime <- sub(" ", "_", as.character(Sys.time()))
-  datetime <- gsub(":", "-", datetime)
+  
   report_dir <- file.path(find_file("report_outputs"),
                           paste(base_name, date, sep = "_"))
   dir.create(report_dir, FALSE, TRUE)
@@ -232,15 +229,33 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   }
 
   dir.create(output_dir, FALSE, TRUE)
-
-  for (file in new_files) {
+  
+  output_files <- vector(length(new_files), mode = "list")
+  
+  for (i in seq_along(new_files)) {
+    file <- new_files[i]
     destination <- file.path(output_dir, file)
     move_file(file, destination)
+    output_files[[i]] <- destination
   }
-
+  
   ## remove empty directories
   to_remove <- file.path(new_dirs)
   file.remove(to_remove)
+  
+  
+  ## ================
+  ## Start log code
+  log_file_path <- file.path(factory, ".compile_log.rds")
+  current_log <- current_compile_log(log_file_path, base_name, datetime)
+  env_list <- as.list(environment())
+  ## Pass the current env to `create_log_entry` (inculdes `compile_init_env`,
+  ## `timestamp`, `dots`, output file paths, and other relevant variables)
+  log_entry <- create_log_entry(env_list)
+  add_to_log(current_log, log_entry, log_file_path, datetime)
+  ## End log code
+  # #================
+  
 
   return(invisible(NULL))
 }
