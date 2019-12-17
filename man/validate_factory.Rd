@@ -10,9 +10,11 @@ validate_factory(factory = getwd(), warnings = TRUE, errors = TRUE)
 \item{factory}{the path to a report factory; defaults to the current working
 directory}
 
-\item{warnings}{A logical indicating if warnings should be issued; defaults to \code{TRUE}.}
+\item{warnings}{A logical indicating if warnings should be issued;
+defaults to \code{TRUE}.}
 
-\item{errors}{A logical indicating if errors should be issued; defaults to \code{TRUE}.}
+\item{errors}{A logical indicating if errors should be issued;
+defaults to \code{TRUE}.}
 }
 \description{
 This function can be used to inspect the content of a factory and make sure
@@ -20,7 +22,8 @@ it looks fine. This includes various sanity checks listed in details. The
 function returns a list of error and warning messages.
 }
 \details{
-Checks ran on the factory include (the result of a failure is indicated in brackets):
+Checks ran on the factory include
+(the result of a failure is indicated in brackets):
 
 \itemize{
 
