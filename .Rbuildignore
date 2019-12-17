@@ -18,6 +18,8 @@ README.html
 ^appveyor\.yml$
 bug_reports/*
 artwork/*
-^CONTRIBUTING\.Rmd$
-CONTRIBUTING.md
-\.github/
+^CONTRIBUTING.Rmd$
+^CONTRIBUTING.md$
+^.github$
+^.history$
+
