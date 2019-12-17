@@ -2,7 +2,7 @@
 % Please edit documentation in R/compile_report.R
 \name{compile_report}
 \alias{compile_report}
-\title{Compile an rmarkdown report}
+\title{Compile an R Markdown report}
 \usage{
 compile_report(file, quiet = FALSE, factory = getwd(),
   clean_report_sources = FALSE, remove_cache = TRUE,
@@ -12,13 +12,13 @@ compile_report(file, quiet = FALSE, factory = getwd(),
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
 report to be compiled.}
 
-\item{quiet}{a logical indicating if messages from rmarkdown compilation
+\item{quiet}{a logical indicating if messages from R Markdown compilation
 should be displayed; \code{TRUE} by default.}
 
 \item{factory}{the path to a report factory; defaults to the current working
 directory}
 
-\item{clean_report_sources}{a logical indicating if indesirable files and
+\item{clean_report_sources}{a logical indicating if undesirable files and
 folders in the `report_sources` folder should be cleaned before
 compilation; defaults to `FALSE` (no cleanup)}
 
@@ -43,9 +43,38 @@ the names and first values of `params`; default is an empty list}
 \description{
 This function can be used to compile a report using its name, or a partial
 match for its name. The full path needs not be specified, but reports are
-expected to be inside the \code{report_sources} folder (or any subfolder
+expected to be inside the \code{report_sources} folder (or any sub-folder
 within). Outputs will be generated in a named and time-stamped directory
 within \code{report_outputs}.
+}
+\details{
+## This function will:
+
+1. perform cleaning of `report_sources/` if `clean_report_sources = TRUE`;
+this will remove pretty much anything that's not an `Rmd` file or a
+`README`; this is externalised in the function `clean_report_sources`
+
+2. check that input file exists; identify all files in `report_sources/`
+prior to the compilation, used later to diff post-compilation to identify
+new files
+
+3. compile the user-provided report `foo_date[].Rmd` file stored in
+`report_sources/`; compilation parameters are passed to
+`rmarkdown::render`'s argument `params` through `render_param`; parameters
+will also be used to form the output file name, which will display the
+parameter names and first values, so the output folder will look like:
+`compiled_foo_[foo-values]_bar_[bar-values]_[date]_[time]/`
+
+4. identify all files in report_sources; new ones are those which where not
+around at step 1; this can cause problems when there are left-over outputs
+from previous manual compilations inside `report_sources/`; it will be
+often safest to use `clean_report_sources = TRUE` so that these left-overs
+are removed before step 3
+
+5. move all outputs identified in step 3 to a dedicated folder in
+report_outputs/; this folder will be named after the input report,
+e.g. `foo_date/compiled_[date]_[time]/`, and will include `params` if
+provided (see point 3).
 }
 \author{
 Thibaut Jombart \email{thibautjombart@gmail.com}
