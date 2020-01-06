@@ -2,7 +2,7 @@
 % Please edit documentation in R/install_deps.R
 \name{install_deps}
 \alias{install_deps}
-\title{Install dependencies of reprots within}
+\title{Install dependencies of reports within}
 \usage{
 install_deps(update = FALSE, ...)
 }
@@ -14,8 +14,8 @@ installed; defaults to \code{FALSE}.}
 \item{...}{Arguments to be passed to \code{install.packages}.}
 }
 \description{
-This function can be used to install package dependencies based of the reports
-within the factory.
+This function can be used to install package dependencies
+based on the reports within the factory.
 }
 \seealso{
 \code{\link{list_deps}} to list dependencies of packages

@@ -1,3 +1,9 @@
+# reportfactory 0.0.5
+
+* `rfh_load_sripts()` is a helper function which can be used to load all scripts
+  inside directories called `scripts/` or `src/` into the current (calling)
+  environment
+
 # reportfactory 0.0.4
 
 * `archive_reports()` allows the user to move reports older than a given date

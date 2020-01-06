@@ -20,3 +20,8 @@ bug_reports/*
 artwork/*
 ^\.travis\.yml$
 ^drat\.sh$
+^CONTRIBUTING.Rmd$
+^CONTRIBUTING.md$
+^.github$
+^.history$
+
