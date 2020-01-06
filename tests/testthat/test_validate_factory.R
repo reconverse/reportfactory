@@ -1,23 +1,24 @@
 context("Validation of report factory")
 
+new_dir <- function() {
+  rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
+  file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
+}
 
 test_that("A new_factory is valid", {
 
   skip_on_cran()
-
-  new_dir <- function() {
-    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
-    file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
-  }
 
   new_factory(x <- new_dir(), move_in = FALSE, include_examples = TRUE)
 
   no_probs <- function(test) {
     length(test$errors) == 0L && length(test$warnings) == 0L
   }
-  expect_true(no_probs(validate_factory(x)))
-  update_reports(quiet = TRUE, factory = x)
-  expect_true(no_probs(validate_factory(x)))
+  
+  factory <- file.path(x, "factory_template_with_examples")
+  expect_true(no_probs(validate_factory(factory)))
+  update_reports(quiet = TRUE, factory = factory)
+  expect_true(no_probs(validate_factory(factory)))
 
 })
 
@@ -28,11 +29,6 @@ test_that("A new_factory is valid", {
 test_that("Broken factories are identified", {
 
   skip_on_cran()
-
-  new_dir <- function() {
-    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
-    file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
-  }
 
   expect_error(validate_factory("asd"),
                "the directory 'asd' does not exist")
@@ -102,3 +98,4 @@ test_that("Broken factories are identified", {
   expect_warning(validate_factory(x), exp_msg)
 
 })
+
