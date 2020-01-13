@@ -18,7 +18,6 @@ test_that("A new_factory is valid", {
   expect_true(no_probs(validate_factory(x)))
   test_report <- list_reports(pattern = "contacts")[1]
   compile_report(test_report, quiet = TRUE, factory = x)
-  
   expect_true(no_probs(validate_factory(x)))
 
 })
