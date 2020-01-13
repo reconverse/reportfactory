@@ -110,7 +110,8 @@ test_that("working directory unchanged", {
   ## new_factory with move_in = FALSE should not alter the working directory
   expect_identical(odir, getwd())
 
-  update_reports(quiet = TRUE, factory = x)
+  test_report <- grep(list_reports(x), pattern = "contacts", value = TRUE)[1]
+  compile_report(test_report, quiet = TRUE, factory = x)
 
 
   ## update_reports should not alter the working directory

@@ -16,7 +16,9 @@ test_that("A new_factory is valid", {
     length(test$errors) == 0L && length(test$warnings) == 0L
   }
   expect_true(no_probs(validate_factory(x)))
-  update_reports(quiet = TRUE, factory = x)
+  test_report <- grep(list_reports(x), pattern = "contacts", value = TRUE)[1]
+  compile_report(test_report, quiet = TRUE, factory = x)
+  
   expect_true(no_probs(validate_factory(x)))
 
 })
