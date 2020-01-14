@@ -81,6 +81,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## This is used to create log entry, passed in with the env (not called
   ## directly in the code)
   compile_init_env <- as.list(environment())
+  dots <- list(...)
 
   ## This is used in several places throughout the function, and should be used 
   ## for all timestamps

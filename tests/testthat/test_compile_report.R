@@ -10,7 +10,7 @@ test_that("Compilation can handle multiple outputs", {
   random_factory(include_examples = TRUE)
 
   compile_report(list_reports(pattern = "foo")[1], quiet = TRUE)
-  outputs <- sub("([[:alnum:]_-]+/) {2}", "",
+  outputs <- sub("([[:alnum:]_-]+/){2}", "",
                      list_outputs())
 
   outputs <- sort(outputs)
@@ -36,11 +36,7 @@ test_that("Compilation can take params and pass to markdown::render", {
   report <- list_reports(pattern = "foo")[1]
 
   foo_value <- "testzfoo"
-<<<<<<< HEAD
-  compile_report(report, params = 
-=======
-  update_reports(params =
->>>>>>> ade7448... Complete spellcheck
+  compile_report(report, params =
                    list(foo = foo_value, show_stuff = TRUE, bar = letters))
 
   expect_match(
@@ -83,7 +79,7 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
 
   orig_source_files <- list.files("report_sources", include.dirs = TRUE,
                                  all.files = TRUE, recursive = TRUE)
-<<<<<<< HEAD
+
   report <- list_reports(pattern = "foo")[1]
   
   warning_message <- "the following files in 'report_sources/' are not .Rmd"
@@ -92,12 +88,7 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
     regexp = warning_message)
   
   
-=======
-
-  report <- list_reports(pattern = "foo")[1]
   compile_report(report, clean_report_sources = TRUE)
-
->>>>>>> ade7448... Complete spellcheck
 
   clean_source_files <- list.files("report_sources", include.dirs = TRUE,
                                       all.files = TRUE, recursive = TRUE)
@@ -108,7 +99,6 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   expect_equal(length(removed), length(to_remove))
   expect_setequal(to_remove, removed)
   expect_equal(file.exists(protected_filename), TRUE)
-<<<<<<< HEAD
 })
 
 test_that("Compile logs activity in an rds file", {
@@ -156,6 +146,3 @@ test_that("Compile logs activity in an rds file", {
   ## Expect to have the two initalize values plus two log entries
   expect_equal(length(log_file), 2)
 })
-=======
-})
->>>>>>> ade7448... Complete spellcheck
