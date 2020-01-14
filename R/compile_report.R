@@ -17,10 +17,11 @@
 #' new files
 #'
 #' 3. compile the user-provided report `foo_date[].Rmd` file stored in
-#' `report_sources/`; compilation parameters are passed to
-#' `rmarkdown::render`'s argument `params` through `render_param`; parameters
-#' will also be used to form the output file name, which will display the
-#' parameter names and first values, so the output folder will look like:
+#' `report_sources/`; compilation parameters are saved to a new, concise env 
+#' object and passed to `rmarkdown::render`'s `envir` argument (the `render` 
+#' argument for `params` is unpredictable); `params` will also be used to 
+#' form the output file name, which will display theparameter names and first 
+#' values, so the output folder will look like:
 #' `compiled_foo_[foo-values]_bar_[bar-values]_[date]_[time]/`
 #'
 #' 4. identify all files in report_sources; new ones are those which where not
