@@ -75,7 +75,19 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
                            remove_cache = TRUE,
                            encoding = "UTF-8",
                            params = list(), ...) {
+  
+  ## <<< START DO NOT REMOVE >>>>
+  
+  ## This is used to create log entry, passed in with the env (not called
+  ## directly in the code)
+  compile_init_env <- as.list(environment())
 
+  ## This is used in several places throughout the function, and should be used 
+  ## for all timestamps
+  timestamp <- sub(" ", "_", as.character(Sys.time()))
+  datetime <- gsub(":", "-", timestamp)
+  
+  ## <<< END DO NOT REMOVE >>> 
 
   validate_factory(factory)
 
@@ -125,7 +137,6 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## we display some information to the console on parameters used, and generate
   ## some text that will be used to name the output folder
 
-  dots <- list(...)
   has_params <- FALSE
   if (length(params) > 0) {
 
@@ -247,6 +258,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   
   ## ================
   ## Start log code
+
   log_file_path <- file.path(factory, ".compile_log.rds")
   current_log <- current_compile_log(log_file_path, base_name, datetime)
   env_list <- as.list(environment())
