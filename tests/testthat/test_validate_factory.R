@@ -10,13 +10,14 @@ test_that("A new_factory is valid", {
     file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
   }
 
-  new_factory(x <- new_dir(), move_in = FALSE, include_examples = TRUE)
+  new_factory(x <- new_dir(), move_in = TRUE, include_examples = TRUE)
 
   no_probs <- function(test) {
     length(test$errors) == 0L && length(test$warnings) == 0L
   }
   expect_true(no_probs(validate_factory(x)))
-  update_reports(quiet = TRUE, factory = x)
+  test_report <- list_reports(pattern = "contacts")[1]
+  compile_report(test_report, quiet = TRUE, factory = x)
   expect_true(no_probs(validate_factory(x)))
 
 })
