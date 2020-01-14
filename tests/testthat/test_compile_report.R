@@ -28,7 +28,7 @@ test_that("Compilation can handle multiple outputs", {
   expect_identical(base_refs, log_outputs)
 })
 
-test_that("Compilation can take params and pass to markdown::render", {
+test_that("Compilation can take params and creates dynamic file name", {
   skip_on_cran()
   odir <- getwd()
   on.exit(setwd(odir))

@@ -17,10 +17,11 @@
 #' new files
 #'
 #' 3. compile the user-provided report `foo_date[].Rmd` file stored in
-#' `report_sources/`; compilation parameters are passed to
-#' `rmarkdown::render`'s argument `params` through `render_param`; parameters
-#' will also be used to form the output file name, which will display the
-#' parameter names and first values, so the output folder will look like:
+#' `report_sources/`; compilation parameters are saved to a new, concise env 
+#' object and passed to `rmarkdown::render`'s `envir` argument (the `render` 
+#' argument for `params` is unpredictable); `params` will also be used to 
+#' form the output file name, which will display theparameter names and first 
+#' values, so the output folder will look like:
 #' `compiled_foo_[foo-values]_bar_[bar-values]_[date]_[time]/`
 #'
 #' 4. identify all files in report_sources; new ones are those which where not
@@ -51,12 +52,12 @@
 #' @param factory the path to a report factory; defaults to the current working
 #'   directory
 #'
-#' @param params a list that is passed to the `params` argument in
-#'   `rmarkdown::render`, which are accessed in the `.Rmd` file with
-#'   `params$...`; for instance, if `list(foo = 1:3)` is passed, then the
-#'   compilation environment will define an object `params$foo` with value
-#'   `1:3`; if defined, the subdirectory name in report-outputs will indicate
-#'   the names and first values of `params`; default is an empty list
+#' @param params a list of parameters that is saved in an env object passed to
+#'   `rmarkdown::render`, which is accessed in the `.Rmd` file with
+#'   `compile_env$params$...`; for instance, if `list(foo = 1:3)` is passed, 
+#'   then the compilation environment will include an object `params$foo` with
+#'   value `1:3`; if defined, the subdirectory name in report-outputs will 
+#'   indicate the names and first values of `params`; default is an empty list
 #'
 #' @param clean_report_sources a logical indicating if undesirable files and
 #'   folders in the `report_sources` folder should be cleaned before
