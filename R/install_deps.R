@@ -1,8 +1,8 @@
 
-#' Install dependencies of reprots within
+#' Install dependencies of reports within
 #'
-#' This function can be used to install package dependencies based of the reports
-#' within the factory.
+#' This function can be used to install package dependencies
+#' based on the reports within the factory.
 #'
 #' @export
 #'

@@ -5,11 +5,11 @@ test_that("Compilation can handle multiple outputs", {
   skip_on_cran()
   odir <- getwd()
   on.exit(setwd(odir))
-  
+
   setwd(tempdir())
   random_factory(include_examples = TRUE)
 
-  compile_report(list_reports(pattern = "foo")[1], quiet = TRUE, other = "test")
+  compile_report(list_reports(pattern = "foo")[1], quiet = TRUE)
   outputs <- sub("([[:alnum:]_-]+/){2}", "",
                      list_outputs())
 
@@ -34,11 +34,11 @@ test_that("Compilation can take params and pass to markdown::render", {
   setwd(tempdir())
   factory <- random_factory(include_examples = TRUE)
   report <- list_reports(pattern = "foo")[1]
-  
+
   foo_value <- "testzfoo"
-  compile_report(report, params = 
+  compile_report(report, params =
                    list(foo = foo_value, show_stuff = TRUE, bar = letters))
-  
+
   expect_match(
     list_outputs()[length(list_outputs())],
     paste("foo", foo_value, "show_stuff_TRUE_bar_a_b_c_d", sep = "_"))
@@ -53,18 +53,18 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   skip_on_cran()
   odir <- getwd()
   on.exit(setwd(odir))
-  
+
   setwd(tempdir())
   random_factory(include_examples = TRUE)
-  
+
   csv1_filename <- "report_sources/other_stuff/bad_csv.csv"
   write.csv(data.frame(trash = "file"), csv1_filename)
-  
+
   nested_dir <- "report_sources/another_one"
   dir.create(nested_dir)
   csv2_filename <- "report_sources/another_one/bad_csv2.csv"
   write.csv(data.frame(another = "file"), csv2_filename)
-  
+
   protected_dir <- "report_sources/contacts/x"
   dir.create(protected_dir)
   protected_dir <- "report_sources/contacts/x/protected_dir"
@@ -76,9 +76,10 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
 
   empty_dirname <- "report_sources/empty_dir"
   empty_dir <- dir.create(empty_dirname)
-  
+
   orig_source_files <- list.files("report_sources", include.dirs = TRUE,
                                  all.files = TRUE, recursive = TRUE)
+
   report <- list_reports(pattern = "foo")[1]
   
   warning_message <- "the following files in 'report_sources/' are not .Rmd"
@@ -87,6 +88,7 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
     regexp = warning_message)
   
   
+  compile_report(report, clean_report_sources = TRUE)
 
   clean_source_files <- list.files("report_sources", include.dirs = TRUE,
                                       all.files = TRUE, recursive = TRUE)

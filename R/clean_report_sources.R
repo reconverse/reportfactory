@@ -1,6 +1,7 @@
 #' Clean the folder report_sources
 #'
-#' This function removes undesirable files and folders present in `report_sources`
+#' This function removes undesirable files
+#' and folders present in `report_sources`
 #' except for:
 #' * `Rmd` files
 #' * `README*` files
@@ -54,12 +55,12 @@
 #' dir("report_sources", all.files = TRUE)
 #'
 #' setwd(odir)
-#' 
+#'
 
 clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                                  remove_cache = TRUE) {
   ## The approach is is:
-  
+
   ## 1. list all content of report_sources/
   ## 2. define regexp for protected content
   ## 3. identify protected files from regexp
@@ -67,7 +68,7 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
   ## 5. order files to remove in order of char length (directories after files)
   ## 6. remove files that do not match the regexp and are not directories
         # that contain files (This is important because it prevents the
-        # directories of nested "protected" files from removal, and safegaurds 
+        # directories of nested "protected" files from removal, and safegaurds
         # against unlink = TRUE)
 
   ## set working directory
@@ -84,7 +85,7 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                         full.names = TRUE,
                         include.dirs = TRUE,
                         recursive = TRUE)
-  
+
   ## 2. define regexp for protected content
   protected <- c("report_sources/.$",
                  "report_sources/..$",
@@ -93,7 +94,7 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                  "report_sources/README.*$",
                  "report_sources/.*[.][rR][Mm][Dd]$"
                  )
-  
+
   if (!remove_cache) {
     protected <- c(protected,
                    "report_sources/cache$",
@@ -103,16 +104,16 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
   ## 3. identify protected files from regexp
   to_keep <- lapply(protected, grep, folder_content, value = TRUE)
   to_keep <- unlist(to_keep)
-  
+
   ## 4. diff with all content to identify what to remove
-  to_remove <- setdiff(folder_content, to_keep) 
+  to_remove <- setdiff(folder_content, to_keep)
   ## 5. Order to_remove so that files are removed from directory first
   to_remove <- to_remove[order(nchar(to_remove), to_remove, decreasing = TRUE)]
-  
+
   ## 6. remove stuff that needs to be, with a message if needed
   if (length(to_remove) > 0) {
     for (remove in to_remove) {
-      ## Last check that directories are empty before removing 
+      ## Last check that directories are empty before removing
       ##    (unlink = FALSE fails to remove dir)
       if (length(list.files(remove)) == 0) {
         unlink(remove, recursive = TRUE)

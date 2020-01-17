@@ -24,7 +24,7 @@ archive_reports <- function(factory = getwd(), before = NULL) {
   odir <- getwd()
   on.exit(setwd(odir))
   setwd(factory)
-  
+
 
   rmd_path <- grep(".Rmd",
                   dir(find_file("report_sources"),
@@ -41,12 +41,12 @@ archive_reports <- function(factory = getwd(), before = NULL) {
   names(wins) <- to_archive
   for (arc in to_archive) {
     suppressWarnings({
-      dir.create(file.path(factory, "report_sources", "_archive", dirname(arc)), 
-                 recursive = TRUE, 
+      dir.create(file.path(factory, "report_sources", "_archive", dirname(arc)),
+                 recursive = TRUE,
                  mode = "0755")
     })
-    res <- file.copy(from = file.path(factory, "report_sources", arc), 
-                     to   = file.path(factory, "report_sources", "_archive", arc)
+    res <- file.copy(from = file.path(factory, "report_sources", arc),
+                     to = file.path(factory, "report_sources", "_archive", arc)
                      )
 
     if (res) wins[arc] <- TRUE

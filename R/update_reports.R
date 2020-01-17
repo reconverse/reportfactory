@@ -1,7 +1,7 @@
 #' Compile reports within the factory
 #'
 #' This function is used to compile several reports stored in the factory,
-#' inside the \code{report_sources} folder (or any subfolder within). Outputs
+#' inside the \code{report_sources} folder (or any sub-folder within). Outputs
 #' will be generated in a named and time-stamped directory within
 #' \code{report_outputs}. By default, only the most recent version of each
 #' report is compiled, but an option permits to compile all reports. Reports are
@@ -19,16 +19,16 @@
 #'
 #' @param all a logical indicating if all reports should be compiled; it
 #'   defaults to \code{FALSE}, in which case only the latest versions of each
-#'   reports will be compuled.
+#'   reports will be compiled.
 #'
-#' @param quiet a logical indicating if messages from rmarkdown compilation
+#' @param quiet a logical indicating if messages from R Markdown compilation
 #'   should be displayed; \code{FALSE} by default.
 #'
 #' @param encoding a character string indicating which encoding should be used
 #'   when compiling the document; defaults to `"UTF-8"`, which ensures that
 #'   non-ascii characters work across different systems
 #'
-#' @param clean_report_sources a logical indicating if indesirable files and
+#' @param clean_report_sources a logical indicating if undesirable files and
 #'   folders in the `report_sources` folder should be cleaned before
 #'   compilation; defaults to `FALSE` (no cleanup)
 #'
@@ -36,7 +36,7 @@
 #'   the `cache` folder should be considered as undesirable in `report_sources`;
 #'   defaults to `TRUE`, in which case `cache` will also be removed if
 #'   `clean_report_sources` is `TRUE`
-#' 
+#'
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 #' @inheritParams compile_report
@@ -46,7 +46,7 @@ update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE,
                            encoding = "UTF-8",
                            ignore_archive = TRUE,
                            clean_report_sources = FALSE,
-                           remove_cache = TRUE,...) {
+                           remove_cache = TRUE, ...) {
 
   validate_factory(factory)
 
@@ -57,7 +57,7 @@ update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE,
   report_sources <- list_reports(ignore_archive = ignore_archive)
   dates <- extract_date(report_sources)
   types <- extract_base(report_sources)
-  
+
   if (all) {
     lapply(report_sources,
            compile_report,

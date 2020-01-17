@@ -10,8 +10,8 @@ new_factory(destination = "new_factory", include_template = TRUE,
 \arguments{
 \item{destination}{the name of the report factory folder to be created}
 
-\item{include_template}{a logical indicating if a template of report and folders
-structure shoud be added to the factory; defaults to \code{TRUE}}
+\item{include_template}{a logical indicating if a template of report
+and folders structure shoud be added to the factory; defaults to \code{TRUE}}
 
 \item{include_examples}{a logical indicating if examples of reports shoud be
 added to the factory; defaults to \code{FALSE}}

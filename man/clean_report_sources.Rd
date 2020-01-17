@@ -17,7 +17,8 @@ content gets removed; defaults to `FALSE`}
 \item{remove_cache}{a logical indicating if `cache` folder should be kept}
 }
 \description{
-This function removes undesirable files and folders present in `report_sources`
+This function removes undesirable files
+and folders present in `report_sources`
 except for:
 * `Rmd` files
 * `README*` files
