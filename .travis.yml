@@ -1,10 +1,12 @@
 language: r
 cache: packages
 warnings_are_errors: true
-
+r_packages:
+  - drat
 after_success:
   - Rscript -e 'covr::codecov()'
   - bash <(curl -s https://codecov.io/bash)
+  - test $TRAVIS_PULL_REQUEST == "false" && test $TRAVIS_BRANCH == "master" && bash drat.sh
   
 addons:
   apt:
