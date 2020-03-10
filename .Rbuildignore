@@ -22,3 +22,4 @@ artwork/*
 ^CONTRIBUTING.md$
 ^.github$
 ^.history$
+^drat\.sh$
