@@ -1,0 +1,8 @@
+pandoc: 2.7.2
+pkgdown: 1.4.1
+pkgdown_sha: ~
+articles: []
+urls:
+  reference: https://www.repidemicsconsortium.org/reportfactory/reference
+  article: https://www.repidemicsconsortium.org/reportfactory/articles
+
