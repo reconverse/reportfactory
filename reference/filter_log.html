@@ -11,16 +11,16 @@ dots arguments, output file types, or other logged data — filter_log • repor
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -40,7 +40,6 @@ dots arguments, output file types, or other logged data — filter_log • repor
 dots arguments, output file types, or other logged data — filter_log" />
 <meta property="og:description" content="By default the function returns all matches --- even if some conditions are 
     missing, or there are other log conditions present" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -93,7 +92,7 @@ dots arguments, output file types, or other logged data — filter_log" />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/reconhub/reportfactory">
+  <a href="https://github.com/reconhub/reportfactory/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -174,19 +173,19 @@ method</p></td>
 
 <span class='co'>## new random factory in temp folder</span>
 <span class='no'>odir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>()
-<span class='fu'>new_factory</span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='kw'>include_examples</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "C:\\Users\\steph\\AppData\\Local\\Temp\\RtmpMjWkL4"</div><div class='input'>
+<span class='fu'><a href='new_factory.html'>new_factory</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='kw'>include_examples</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZUTLyi"</div><div class='input'>
 
 <span class='no'>factory_name</span> <span class='kw'>=</span> <span class='st'>"foo"</span>
-<span class='no'>report_source_file_name</span> <span class='kw'>&lt;-</span> <span class='fu'>list_reports</span>(<span class='kw'>pattern</span> <span class='kw'>=</span> <span class='no'>factory_name</span>)[<span class='fl'>1</span>]
+<span class='no'>report_source_file_name</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_reports.html'>list_reports</a></span>(<span class='kw'>pattern</span> <span class='kw'>=</span> <span class='no'>factory_name</span>)[<span class='fl'>1</span>]
 
 
 <span class='co'>## The log entry for a report created with the following arguments:</span>
-<span class='fu'>compile_report</span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>report_source_file_name</span>,
+<span class='fu'><a href='compile_report.html'>compile_report</a></span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>report_source_file_name</span>,
                <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"test"</span>))</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// compiling report: 'foo_2018-06-29'</span></div><div class='output co'>#&gt; <span class='message'>// using params: </span>
-#&gt; <span class='message'>other: test</span></div><div class='output co'>#&gt; <span class='warning'>Warning: package 'knitr' was built under R version 3.6.2</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='output co'>#&gt; <span class='warning'>Warning: cannot remove file 'figures', reason 'Permission denied'</span></div><div class='input'>
+#&gt; <span class='message'>other: test</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
 <span class='co'>## The log is saved in the root of the factory</span>
 <span class='no'>log_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>".compile_log.rds"</span>)
 
@@ -194,65 +193,65 @@ method</p></td>
 <span class='fu'>filter_log</span>(<span class='kw'>log_file</span> <span class='kw'>=</span> <span class='no'>log_file</span>,
            <span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>report_source_file_name</span>,
            <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-           <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"test"</span>))</div><div class='output co'>#&gt; $`2020-03-17_17-26-09`
-#&gt; $`2020-03-17_17-26-09`$compile_init_env
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$file
+           <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"test"</span>))</div><div class='output co'>#&gt; $`2020-03-17_19-32-18`
+#&gt; $`2020-03-17_19-32-18`$compile_init_env
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$file
 #&gt; [1] "foo_2018-06-29.Rmd"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$quiet
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$quiet
 #&gt; [1] TRUE
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$factory
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4"
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$factory
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$clean_report_sources
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$clean_report_sources
 #&gt; [1] FALSE
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$remove_cache
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$remove_cache
 #&gt; [1] TRUE
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$encoding
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$encoding
 #&gt; [1] "UTF-8"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$params
-#&gt; $`2020-03-17_17-26-09`$compile_init_env$params$other
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$params
+#&gt; $`2020-03-17_19-32-18`$compile_init_env$params$other
 #&gt; [1] "test"
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$dots
+#&gt; $`2020-03-17_19-32-18`$dots
 #&gt; list()
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$timestamp
-#&gt; [1] "2020-03-17_17:26:09"
+#&gt; $`2020-03-17_19-32-18`$timestamp
+#&gt; [1] "2020-03-17_19:32:18"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$output_dir
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_17-26-09"
+#&gt; $`2020-03-17_19-32-18`$output_dir
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_19-32-18"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$output_files
-#&gt; $`2020-03-17_17-26-09`$output_files[[1]]
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_17-26-09/figures/boxplots-1.pdf"
+#&gt; $`2020-03-17_19-32-18`$output_files
+#&gt; $`2020-03-17_19-32-18`$output_files[[1]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_19-32-18/figures/boxplots-1.pdf"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$output_files[[2]]
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_17-26-09/figures/boxplots-1.png"
+#&gt; $`2020-03-17_19-32-18`$output_files[[2]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_19-32-18/figures/boxplots-1.png"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$output_files[[3]]
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_17-26-09/figures/violins-1.pdf"
+#&gt; $`2020-03-17_19-32-18`$output_files[[3]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_19-32-18/figures/violins-1.pdf"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$output_files[[4]]
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_17-26-09/figures/violins-1.png"
+#&gt; $`2020-03-17_19-32-18`$output_files[[4]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_19-32-18/figures/violins-1.png"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$output_files[[5]]
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_17-26-09/foo_2018-06-29.html"
+#&gt; $`2020-03-17_19-32-18`$output_files[[5]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_19-32-18/foo_2018-06-29.html"
 #&gt; 
-#&gt; $`2020-03-17_17-26-09`$output_files[[6]]
-#&gt; [1] "C:/Users/steph/AppData/Local/Temp/RtmpMjWkL4/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_17-26-09/outputs_base.csv"
+#&gt; $`2020-03-17_19-32-18`$output_files[[6]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpZUTLyi/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-17_19-32-18/outputs_base.csv"
 #&gt; 
 #&gt; 
 #&gt; </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>odir</span>)</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -272,7 +271,7 @@ method</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>

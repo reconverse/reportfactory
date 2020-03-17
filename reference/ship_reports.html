@@ -10,16 +10,16 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
@@ -38,7 +38,6 @@
 <meta property="og:title" content="Collect and ship compiled markdown reports to a single folder — ship_reports" />
 <meta property="og:description" content="Copies output files for log entries that match given conditions to a dated
 `shipped_[yyyy-mm-dd]` folder" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -91,7 +90,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/reconhub/reportfactory">
+  <a href="https://github.com/reconhub/reportfactory/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -165,11 +164,11 @@ method - passed to `filter_log`</p></td>
 <span class='no'>odir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>()
 
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-<span class='fu'>random_factory</span>(<span class='kw'>include_examples</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "factory_ee10xomb92Q9Q"</div><div class='input'><span class='no'>source_name</span> <span class='kw'>&lt;-</span> <span class='st'>"foo"</span>
-<span class='no'>report_source_file_name</span> <span class='kw'>&lt;-</span> <span class='fu'>list_reports</span>(<span class='kw'>pattern</span> <span class='kw'>=</span> <span class='no'>source_name</span>)[<span class='fl'>1</span>]
+<span class='fu'><a href='random_factory.html'>random_factory</a></span>(<span class='kw'>include_examples</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "factory_ee10xomb92Q9Q"</div><div class='input'><span class='no'>source_name</span> <span class='kw'>&lt;-</span> <span class='st'>"foo"</span>
+<span class='no'>report_source_file_name</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_reports.html'>list_reports</a></span>(<span class='kw'>pattern</span> <span class='kw'>=</span> <span class='no'>source_name</span>)[<span class='fl'>1</span>]
 
 <span class='no'>dots_args</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"lots"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>)))
-<span class='fu'>compile_report</span>(
+<span class='fu'><a href='compile_report.html'>compile_report</a></span>(
   <span class='no'>report_source_file_name</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"other"</span> <span class='kw'>=</span> <span class='st'>"two"</span>,
@@ -221,17 +220,17 @@ method - passed to `filter_log`</p></td>
 #&gt;   |                                                                              |......................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; "C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output foo_2018-06-29.html --email-obfuscation none --self-contained --standalone --section-divs --template "C:\Users\steph\OneDrive\Documents\R\win-library\3.6\rmarkdown\rmd\h\default.html" --no-highlight --variable highlightjs=1 --variable "theme:bootstrap" --include-in-header "C:\Users\steph\AppData\Local\Temp\RtmpMjWkL4\rmarkdown-str14d41067245a.html" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --lua-filter "C:/Users/steph/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "C:/Users/steph/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output foo_2018-06-29.html --email-obfuscation none --self-contained --standalone --section-divs --template /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable 'theme:bootstrap' --include-in-header /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZUTLyi/rmarkdown-str9ba1ab6a655.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/latex-div.lua </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Output created: foo_2018-06-29.html</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='output co'>#&gt; <span class='warning'>Warning: cannot remove file 'figures', reason 'Permission denied'</span></div><div class='input'>
-<span class='fu'>compile_report</span>(
+#&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
+<span class='fu'><a href='compile_report.html'>compile_report</a></span>(
   <span class='no'>report_source_file_name</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"test"</span>))</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// compiling report: 'foo_2018-06-29'</span></div><div class='output co'>#&gt; <span class='message'>// using params: </span>
 #&gt; <span class='message'>other: test</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
-<span class='fu'>compile_report</span>(
+<span class='fu'><a href='compile_report.html'>compile_report</a></span>(
   <span class='no'>report_source_file_name</span>,
   <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"other"</span> <span class='kw'>=</span> <span class='st'>"two"</span>,
@@ -283,7 +282,7 @@ method - passed to `filter_log`</p></td>
 #&gt;   |                                                                              |......................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; "C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output foo_2018-06-29.html --email-obfuscation none --self-contained --standalone --section-divs --template "C:\Users\steph\OneDrive\Documents\R\win-library\3.6\rmarkdown\rmd\h\default.html" --no-highlight --variable highlightjs=1 --variable "theme:bootstrap" --include-in-header "C:\Users\steph\AppData\Local\Temp\RtmpMjWkL4\rmarkdown-str14d4741e216d.html" --mathjax --variable "mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --lua-filter "C:/Users/steph/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/pagebreak.lua" --lua-filter "C:/Users/steph/OneDrive/Documents/R/win-library/3.6/rmarkdown/rmd/lua/latex-div.lua" </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output foo_2018-06-29.html --email-obfuscation none --self-contained --standalone --section-divs --template /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable 'theme:bootstrap' --include-in-header /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpZUTLyi/rmarkdown-str9ba2671ebbd.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/latex-div.lua </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Output created: foo_2018-06-29.html</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
 <span class='no'>log_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>".compile_log.rds"</span>)
@@ -302,7 +301,7 @@ method - passed to `filter_log`</p></td>
 #&gt; <span class='message'>outputs_base.csv</span></div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>odir</span>)</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
@@ -321,7 +320,7 @@ method - passed to `filter_log`</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
 
       </footer>
