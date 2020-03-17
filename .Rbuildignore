@@ -23,3 +23,4 @@ artwork/*
 ^.github$
 ^.history$
 ^drat\.sh$
+^\.github$

@@ -3,7 +3,6 @@ cache: packages
 warnings_are_errors: true
 r_packages:
   - drat
-  - pkgdown
 
 after_success:
   - Rscript -e 'covr::codecov()'
@@ -18,11 +17,3 @@ addons:
       - libsodium-dev
       - libicu-dev
 
-deploy:
-  provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
-  skip_cleanup: true
-
-stages:
-  - name: deploy
-    if: branch = master
