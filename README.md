@@ -19,11 +19,14 @@ Downloads](https://cranlogs.r-pkg.org/badges/reportfactory)](https://cran.r-proj
 for compiling multiple `.Rmd` reports using `rmarkdown::render()` within
 a folder.
 
-There a few key principles it adheres to: - *Lightweight* Low
-dependencies for easy installation in environments where internet
-connections are unreliable. - *Reproducible* Time-stamped names and
-folders make viewing the same report over time a breeze. - *Time-saving*
-Easy convenience functions to compile one or many reports
+There a few key principles it adheres to:
+
+  - *Lightweight* Low dependencies for easy installation in environments
+    where internet connections are unreliable.
+  - *Reproducible* Time-stamped names and folders make viewing the same
+    report over time a breeze.
+  - *Time-saving* Easy convenience functions to compile one or many
+    reports
 
 ![reportfactory
 diagram](https://raw.githubusercontent.com/reconhub/reportfactory/master/artwork/workflow.png)
@@ -50,8 +53,8 @@ TRUE to switch projects). Check out more templates at
 ``` r
 library(reportfactory)
 factory_proj <- "new_factory"
-new_factory(file.path(tempdir(),factory_proj), include_template = TRUE, move_in = FALSE)
-#> [1] "C:\\Users\\steph\\AppData\\Local\\Temp\\RtmpOk2JR3/new_factory"
+new_factory(file.path(factory_proj), include_template = TRUE, move_in = FALSE)
+#> [1] "new_factory"
 ```
 
 ### Step 2 - Add your reports
@@ -71,7 +74,7 @@ list_deps(factory = factory_proj) # list all needed packages
 
 ### Step 3 - Compile report(s)
 
-#### Step 3a - A single report
+#### Option 1 - A single report
 
 The `compile_report()` function can be used to compile a report using
 its name, or a partial match for its name. This is useful when you’re
@@ -88,7 +91,7 @@ list_outputs(factory_proj)
 #> character(0)
 ```
 
-#### Step 3b - Reports with updates
+#### Option 2 - All reports with updates
 
 Compile all reports to get their outputs. By default, this just compiles
 the most recent versions.
@@ -100,7 +103,49 @@ update_reports(factory_proj)
 #> 
 #> /// 'example_report_2019-01-31' done!
 list_outputs(factory_proj)
-#> [1] "example_report_2019-01-31/compiled_2020-03-23_17-15-28/example_report_2019-01-31.html"
+#> [1] "example_report_2019-01-31/compiled_2020-03-23_17-38-27/example_report_2019-01-31.html"
+```
+
+#### Option 3 - All reports
+
+Compile all reports to get their outputs. By default, this just compiles
+the most recent versions.
+
+``` r
+update_reports(factory_proj, all = TRUE)
+#> 
+#> /// compiling report: 'example_report_2019-01-31'
+#> 
+#> /// 'example_report_2019-01-31' done!
+list_outputs(factory_proj)
+#> [1] "example_report_2019-01-31/compiled_2020-03-23_17-38-27/example_report_2019-01-31.html"
+#> [2] "example_report_2019-01-31/compiled_2020-03-23_17-38-30/example_report_2019-01-31.html"
+```
+
+### Step 4 - Consolidate latest outputs
+
+You can now get a single directory of the latest report outputs using:
+
+``` r
+ship_reports(factory = factory_proj, most_recent = TRUE)
+#> 
+#> /// Shipping example_report_2019-01-31 outputs: 
+#> 
+#> example_report_2019-01-31.html
+list.dirs(factory_proj)
+#>  [1] "new_factory"                                                                                   
+#>  [2] "new_factory/data"                                                                              
+#>  [3] "new_factory/data/clean"                                                                        
+#>  [4] "new_factory/data/raw"                                                                          
+#>  [5] "new_factory/report_outputs"                                                                    
+#>  [6] "new_factory/report_outputs/example_report_2019-01-31"                                          
+#>  [7] "new_factory/report_outputs/example_report_2019-01-31/compiled_2020-03-23_17-38-27"             
+#>  [8] "new_factory/report_outputs/example_report_2019-01-31/compiled_2020-03-23_17-38-30"             
+#>  [9] "new_factory/report_sources"                                                                    
+#> [10] "new_factory/scripts"                                                                           
+#> [11] "new_factory/shipped_2020-03-23_17-38-33"                                                       
+#> [12] "new_factory/shipped_2020-03-23_17-38-33/example_report_2019-01-31"                             
+#> [13] "new_factory/shipped_2020-03-23_17-38-33/example_report_2019-01-31/compiled_2020-03-23_17-38-30"
 ```
 
 ## Contributing guidelines
