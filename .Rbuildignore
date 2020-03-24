@@ -24,3 +24,4 @@ artwork/*
 ^.history$
 ^drat\.sh$
 ^\.github$
+^_pkgdown.yml$
