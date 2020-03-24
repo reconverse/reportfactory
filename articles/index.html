@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load all R scripts in the factory — rfh_load_scripts • reportfactory</title>
+<title>Articles • reportfactory</title>
 
 
 <!-- jquery -->
@@ -39,11 +39,7 @@
 
 
 
-<meta property="og:title" content="Load all R scripts in the factory — rfh_load_scripts" />
-<meta property="og:description" content="This helper function will load all `.R` scripts within folders `scripts/` and
-`src/`. All scripts are loaded using `source()` with the argument `local =
-TRUE` so that the current environment (typically that of the compiled report)
-will be visible to all sourced scripts." />
+<meta property="og:title" content="Articles" />
 
 
 
@@ -62,7 +58,7 @@ will be visible to all sourced scripts." />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-article-index">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -132,56 +128,22 @@ will be visible to all sourced scripts." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load all R scripts in the factory</h1>
-    <small class="dont-index">Source: <a href='https://github.com/reconhub/reportfactory/blob/master/R/rfh_load_scripts.R'><code>R/rfh_load_scripts.R</code></a></small>
-    <div class="hidden name"><code>rfh_load_scripts.Rd</code></div>
+      <h1>Articles</h1>
     </div>
 
-    <div class="ref-description">
-    <p>This helper function will load all `.R` scripts within folders `scripts/` and
-`src/`. All scripts are loaded using `source()` with the argument `local =
-TRUE` so that the current environment (typically that of the compiled report)
-will be visible to all sourced scripts.</p>
+    <div class="section ">
+      <h3>All vignettes</h3>
+      <p class="section-desc"></p>
+
+      <dl>
+        <dt><a href="faqs.html">Frequently Asked Questions (FAQs)</a></dt>
+        <dd></dt>
+        <dt><a href="gettingstarted.html">Getting started with reportfactory</a></dt>
+        <dd></dt>
+        <dt><a href="howitworks.html">How reportfactory works</a></dt>
+        <dd></dt>
+      </dl>
     </div>
-
-    <pre class="usage"><span class='fu'>rfh_load_scripts</span>(<span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>quiet</th>
-      <td><p>A logical indicating whether messages should be displayed to the
-console (`TRUE`, default), or not.</p></td>
-    </tr>
-    </table>
-
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'>## create random factory</span>
-<span class='no'>odir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>()
-<span class='fu'><a href='random_factory.html'>random_factory</a></span>()</div><div class='output co'>#&gt; [1] "factory_Swl10KLUUEdLi"</div><div class='input'>
-<span class='co'>## load scripts - nothing to load</span>
-<span class='fu'>rfh_load_scripts</span>()</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>No `.R` files in `scripts/`</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Loading the following `.R`  files in `src/`:</span>
-#&gt; <span class='message'>  toto.R</span></div><div class='input'>
-<span class='co'>## create toy script, try again</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='st'>"src/"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'src' already exists</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='st'>"toto &lt;- 1:10"</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"src/toto.R"</span>)
-<span class='fu'>rfh_load_scripts</span>()</div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>No `.R` files in `scripts/`</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Loading the following `.R`  files in `src/`:</span>
-#&gt; <span class='message'>  toto.R</span></div><div class='input'>
-<span class='co'>## check that toto exists and is 1:10</span>
-<span class='no'>toto</span></div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</div><div class='input'>
-<span class='co'>## restore original working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>odir</span>)</div></pre>
-  </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <nav id="toc" data-toggle="toc" class="sticky-top">
-      <h2 data-toc-skip>Contents</h2>
-    </nav>
   </div>
 </div>
 
