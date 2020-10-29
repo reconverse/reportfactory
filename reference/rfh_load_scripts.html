@@ -82,12 +82,6 @@ will be visible to all sourced scripts." />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -144,7 +138,7 @@ TRUE` so that the current environment (typically that of the compiled report)
 will be visible to all sourced scripts.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>rfh_load_scripts</span>(<span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>rfh_load_scripts</span><span class='op'>(</span>quiet <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,27 +150,36 @@ console (`TRUE`, default), or not.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Thibaut Jombart (thibautjombart@gmail.com)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## create random factory</span>
-<span class='no'>odir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>()
-<span class='fu'><a href='random_factory.html'>random_factory</a></span>()</div><div class='output co'>#&gt; [1] "factory_Swl10KLUUEdLi"</div><div class='input'>
+<span class='va'>odir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='random_factory.html'>random_factory</a></span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "factory_Swl10KLUUEdLi"</div><div class='input'>
 <span class='co'>## load scripts - nothing to load</span>
-<span class='fu'>rfh_load_scripts</span>()</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'>rfh_load_scripts</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>No `.R` files in `scripts/`</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Loading the following `.R`  files in `src/`:</span>
 #&gt; <span class='message'>  toto.R</span></div><div class='input'>
 <span class='co'>## create toy script, try again</span>
-<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='st'>"src/"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: 'src' already exists</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='st'>"toto &lt;- 1:10"</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"src/toto.R"</span>)
-<span class='fu'>rfh_load_scripts</span>()</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='st'>"src/"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: 'src' already exists</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"toto &lt;- 1:10"</span>, file <span class='op'>=</span> <span class='st'>"src/toto.R"</span><span class='op'>)</span>
+<span class='fu'>rfh_load_scripts</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>No `.R` files in `scripts/`</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Loading the following `.R`  files in `src/`:</span>
 #&gt; <span class='message'>  toto.R</span></div><div class='input'>
 <span class='co'>## check that toto exists and is 1:10</span>
-<span class='no'>toto</span></div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</div><div class='input'>
+<span class='va'>toto</span>
+</div><div class='output co'>#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</div><div class='input'>
 <span class='co'>## restore original working directory</span>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>odir</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>odir</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -192,7 +195,7 @@ console (`TRUE`, default), or not.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

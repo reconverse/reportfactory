@@ -82,12 +82,6 @@ dots arguments, output file types, or other logged data — filter_log" />
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -143,8 +137,8 @@ dots arguments, output file types, or other logged data</h1>
     missing, or there are other log conditions present</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filter_log</span>(<span class='no'>log_file</span>, <span class='kw'>match_exact_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>most_recent</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>outputs_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output_file_types</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>filter_log</span><span class='op'>(</span><span class='va'>log_file</span>, match_exact_type <span class='op'>=</span> <span class='cn'>NULL</span>, most_recent <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  outputs_only <span class='op'>=</span> <span class='cn'>FALSE</span>, output_file_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,6 +181,9 @@ method</p></td>
 
     <p>a list of log entries which match the `...` arguments and other
   parameter input</p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Amy Gimma (<a href='mailto:amy.gimma@lshtm.ac.uk'>amy.gimma@lshtm.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>## This filters a compile log with a set of conditions, which would </span>
@@ -194,84 +191,88 @@ method</p></td>
 
 
 <span class='co'>## new random factory in temp folder</span>
-<span class='no'>odir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>()
-<span class='fu'><a href='new_factory.html'>new_factory</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>(), <span class='kw'>include_examples</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpzbQpC8"</div><div class='input'>
+<span class='va'>odir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='fu'><a href='new_factory.html'>new_factory</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, include_examples <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpo0Idzk"</div><div class='input'>
 
-<span class='no'>factory_name</span> <span class='kw'>=</span> <span class='st'>"foo"</span>
-<span class='no'>report_source_file_name</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_reports.html'>list_reports</a></span>(<span class='kw'>pattern</span> <span class='kw'>=</span> <span class='no'>factory_name</span>)[<span class='fl'>1</span>]
+<span class='va'>factory_name</span> <span class='op'>=</span> <span class='st'>"foo"</span>
+<span class='va'>report_source_file_name</span> <span class='op'>&lt;-</span> <span class='fu'><a href='list_reports.html'>list_reports</a></span><span class='op'>(</span>pattern <span class='op'>=</span> <span class='va'>factory_name</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
 
 
 <span class='co'>## The log entry for a report created with the following arguments:</span>
-<span class='fu'><a href='compile_report.html'>compile_report</a></span>(<span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>report_source_file_name</span>,
-               <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-               <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"test"</span>))</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'><a href='compile_report.html'>compile_report</a></span><span class='op'>(</span>file <span class='op'>=</span> <span class='va'>report_source_file_name</span>,
+               quiet <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+               params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>other <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// compiling report: 'foo_2018-06-29'</span></div><div class='output co'>#&gt; <span class='message'>// using params: </span>
 #&gt; <span class='message'>other: test</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
+#&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>               
 <span class='co'>## The log is saved in the root of the factory</span>
-<span class='no'>log_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>".compile_log.rds"</span>)
-
+<span class='va'>log_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span><span class='op'>(</span><span class='st'>".compile_log.rds"</span><span class='op'>)</span>
+               
 <span class='co'>## Filter the log file for the entry with the same arguments:</span>
-<span class='fu'>filter_log</span>(<span class='kw'>log_file</span> <span class='kw'>=</span> <span class='no'>log_file</span>,
-           <span class='kw'>file</span> <span class='kw'>=</span> <span class='no'>report_source_file_name</span>,
-           <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-           <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"test"</span>))</div><div class='output co'>#&gt; $`2020-03-24_18-13-33`
-#&gt; $`2020-03-24_18-13-33`$compile_init_env
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$file
+<span class='fu'>filter_log</span><span class='op'>(</span>log_file <span class='op'>=</span> <span class='va'>log_file</span>,
+           file <span class='op'>=</span> <span class='va'>report_source_file_name</span>,
+           quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+           params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>other <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; $`2020-10-29_14-57-48`
+#&gt; $`2020-10-29_14-57-48`$compile_init_env
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$file
 #&gt; [1] "foo_2018-06-29.Rmd"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$quiet
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$quiet
 #&gt; [1] TRUE
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$factory
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8"
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$factory
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$clean_report_sources
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$clean_report_sources
 #&gt; [1] FALSE
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$remove_cache
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$remove_cache
 #&gt; [1] TRUE
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$encoding
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$encoding
 #&gt; [1] "UTF-8"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$params
-#&gt; $`2020-03-24_18-13-33`$compile_init_env$params$other
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$params
+#&gt; $`2020-10-29_14-57-48`$compile_init_env$params$other
 #&gt; [1] "test"
 #&gt; 
 #&gt; 
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$dots
+#&gt; $`2020-10-29_14-57-48`$dots
 #&gt; list()
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$timestamp
-#&gt; [1] "2020-03-24_18:13:33"
+#&gt; $`2020-10-29_14-57-48`$timestamp
+#&gt; [1] "2020-10-29_14:57:48"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$output_dir
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-24_18-13-33"
+#&gt; $`2020-10-29_14-57-48`$output_dir
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk/report_outputs/foo_2018-06-29/compiled_other_test_2020-10-29_14-57-48"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$output_files
-#&gt; $`2020-03-24_18-13-33`$output_files[[1]]
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-24_18-13-33/figures/boxplots-1.pdf"
+#&gt; $`2020-10-29_14-57-48`$output_files
+#&gt; $`2020-10-29_14-57-48`$output_files[[1]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk/report_outputs/foo_2018-06-29/compiled_other_test_2020-10-29_14-57-48/figures/boxplots-1.pdf"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$output_files[[2]]
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-24_18-13-33/figures/boxplots-1.png"
+#&gt; $`2020-10-29_14-57-48`$output_files[[2]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk/report_outputs/foo_2018-06-29/compiled_other_test_2020-10-29_14-57-48/figures/boxplots-1.png"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$output_files[[3]]
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-24_18-13-33/figures/violins-1.pdf"
+#&gt; $`2020-10-29_14-57-48`$output_files[[3]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk/report_outputs/foo_2018-06-29/compiled_other_test_2020-10-29_14-57-48/figures/violins-1.pdf"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$output_files[[4]]
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-24_18-13-33/figures/violins-1.png"
+#&gt; $`2020-10-29_14-57-48`$output_files[[4]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk/report_outputs/foo_2018-06-29/compiled_other_test_2020-10-29_14-57-48/figures/violins-1.png"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$output_files[[5]]
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-24_18-13-33/foo_2018-06-29.html"
+#&gt; $`2020-10-29_14-57-48`$output_files[[5]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk/report_outputs/foo_2018-06-29/compiled_other_test_2020-10-29_14-57-48/foo_2018-06-29.html"
 #&gt; 
-#&gt; $`2020-03-24_18-13-33`$output_files[[6]]
-#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpzbQpC8/report_outputs/foo_2018-06-29/compiled_other_test_2020-03-24_18-13-33/outputs_base.csv"
+#&gt; $`2020-10-29_14-57-48`$output_files[[6]]
+#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/Rtmpo0Idzk/report_outputs/foo_2018-06-29/compiled_other_test_2020-10-29_14-57-48/outputs_base.csv"
 #&gt; 
 #&gt; 
-#&gt; </div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>odir</span>)</div></pre>
+#&gt; </div><div class='input'>       
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>odir</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -287,7 +288,7 @@ method</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

@@ -38,12 +38,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -111,7 +105,8 @@
 <h2 class="hasAnchor">
 <a href="#installing-the-package" class="anchor"></a>Installing the package</h2>
 <p>To install the development version of the package, use:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"reconhub/reportfactory"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"reconhub/reportfactory"</span><span class="op">)</span></pre></div>
 <p>Note that this requires the package <code>remotes</code> installed.</p>
 </div>
 <div id="quick-start" class="section level2">
@@ -121,20 +116,22 @@
 <h3 class="hasAnchor">
 <a href="#step-1---create-a-new-factory" class="anchor"></a>Step 1 - Create a new factory</h3>
 <p>Create and open a new factory. Here, we create the factory with a default template but stay in our current activities (set <code>move_in</code> to TRUE to switch projects). Check out more templates at <a href="https://github.com/reconhub/report_factories_templates">reconhub/report_factories_templates</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">reportfactory</span>)
-<span class="no">factory_proj</span> <span class="kw">&lt;-</span> <span class="st">"new_factory"</span>
-<span class="fu"><a href="reference/new_factory.html">new_factory</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(<span class="no">factory_proj</span>), <span class="kw">include_template</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">move_in</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/reconhub/reportfactory">reportfactory</a></span><span class="op">)</span>
+<span class="va">factory_proj</span> <span class="op">&lt;-</span> <span class="st">"new_factory"</span>
+<span class="fu"><a href="reference/new_factory.html">new_factory</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>, include_template <span class="op">=</span> <span class="cn">TRUE</span>, move_in <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; [1] "new_factory"</span></pre></div>
 </div>
 <div id="step-2---add-your-reports" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-2---add-your-reports" class="anchor"></a>Step 2 - Add your reports</h3>
 <p>Here we’ve already created some with the <code>include_template</code> being set to TRUE (the default). The helper functions below show the state of the factory.</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="reference/list_reports.html">list_reports</a></span>(<span class="no">factory_proj</span>)
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="reference/list_reports.html">list_reports</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; [1] "example_report_2019-01-31.Rmd"</span>
-<span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span>(<span class="no">factory_proj</span>)
+<span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; character(0)</span>
-<span class="fu"><a href="reference/list_deps.html">list_deps</a></span>(<span class="kw">factory</span> <span class="kw">=</span> <span class="no">factory_proj</span>) <span class="co"># list all needed packages</span>
+<span class="fu"><a href="reference/list_deps.html">list_deps</a></span><span class="op">(</span>factory <span class="op">=</span> <span class="va">factory_proj</span><span class="op">)</span> <span class="co"># list all needed packages</span>
 <span class="co">#&gt; [1] "here"</span></pre></div>
 </div>
 <div id="step-3---compile-reports" class="section level3">
@@ -144,33 +141,37 @@
 <h4 class="hasAnchor">
 <a href="#option-1---a-single-report" class="anchor"></a>Option 1 - A single report</h4>
 <p>The <code><a href="reference/compile_report.html">compile_report()</a></code> function can be used to compile a report using its name, or a partial match for its name. This is useful when you’re actively working on developing a single report.</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="reference/compile_report.html">compile_report</a></span>(<span class="st">"example_report_2019-01-31.Rmd"</span>, <span class="kw">factory</span> <span class="kw">=</span> <span class="no">factory_proj</span>, <span class="kw">quiet</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="reference/compile_report.html">compile_report</a></span><span class="op">(</span><span class="st">"example_report_2019-01-31.Rmd"</span>, factory <span class="op">=</span> <span class="va">factory_proj</span>, quiet <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></pre></div>
 <p>Use helper functions to see progress.</p>
-<div class="sourceCode" id="cb5"><pre class="r"><span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span>(<span class="no">factory_proj</span>)
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; character(0)</span></pre></div>
 </div>
 <div id="option-2---all-reports-with-updates" class="section level4">
 <h4 class="hasAnchor">
 <a href="#option-2---all-reports-with-updates" class="anchor"></a>Option 2 - All reports with updates</h4>
 <p>Compile all reports to get their outputs. By default, this just compiles the most recent versions.</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="fu"><a href="reference/update_reports.html">update_reports</a></span>(<span class="no">factory_proj</span>)
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="fu"><a href="reference/update_reports.html">update_reports</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; /// compiling report: 'example_report_2019-01-31'</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; /// 'example_report_2019-01-31' done!</span>
-<span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span>(<span class="no">factory_proj</span>)
+<span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; [1] "example_report_2019-01-31/compiled_2020-03-23_17-38-27/example_report_2019-01-31.html"</span></pre></div>
 </div>
 <div id="option-3---all-reports" class="section level4">
 <h4 class="hasAnchor">
 <a href="#option-3---all-reports" class="anchor"></a>Option 3 - All reports</h4>
 <p>Compile all reports to get their outputs. By default, this just compiles the most recent versions.</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="reference/update_reports.html">update_reports</a></span>(<span class="no">factory_proj</span>, <span class="kw">all</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="reference/update_reports.html">update_reports</a></span><span class="op">(</span><span class="va">factory_proj</span>, all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; /// compiling report: 'example_report_2019-01-31'</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; /// 'example_report_2019-01-31' done!</span>
-<span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span>(<span class="no">factory_proj</span>)
+<span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; [1] "example_report_2019-01-31/compiled_2020-03-23_17-38-27/example_report_2019-01-31.html"</span>
 <span class="co">#&gt; [2] "example_report_2019-01-31/compiled_2020-03-23_17-38-30/example_report_2019-01-31.html"</span></pre></div>
 </div>
@@ -179,12 +180,13 @@
 <h3 class="hasAnchor">
 <a href="#step-4---consolidate-latest-outputs" class="anchor"></a>Step 4 - Consolidate latest outputs</h3>
 <p>You can now get a single directory of the latest report outputs using:</p>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/ship_reports.html">ship_reports</a></span>(<span class="kw">factory</span> <span class="kw">=</span> <span class="no">factory_proj</span>, <span class="kw">most_recent</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="reference/ship_reports.html">ship_reports</a></span><span class="op">(</span>factory <span class="op">=</span> <span class="va">factory_proj</span>, most_recent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; /// Shipping example_report_2019-01-31 outputs: </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; example_report_2019-01-31.html</span>
-<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.dirs</a></span>(<span class="no">factory_proj</span>)
+<span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.dirs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt;  [1] "new_factory"                                                                                   </span>
 <span class="co">#&gt;  [2] "new_factory/data"                                                                              </span>
 <span class="co">#&gt;  [3] "new_factory/data/clean"                                                                        </span>
@@ -261,7 +263,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

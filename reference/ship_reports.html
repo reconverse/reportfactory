@@ -80,12 +80,6 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -140,9 +134,9 @@
 `shipped_[yyyy-mm-dd]` folder</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ship_reports</span>(<span class='kw'>factory</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(), <span class='kw'>match_exact_type</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>most_recent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>outputs_only</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>output_file_types</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(),
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>ship_reports</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>, match_exact_type <span class='op'>=</span> <span class='cn'>NULL</span>,
+  most_recent <span class='op'>=</span> <span class='cn'>TRUE</span>, outputs_only <span class='op'>=</span> <span class='cn'>FALSE</span>, output_file_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,22 +174,27 @@ method - passed to `filter_log`</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Amy Gimma (<a href='mailto:amy.gimma@lshtm.ac.uk'>amy.gimma@lshtm.ac.uk</a>)</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='no'>odir</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>()
+<span class='va'>odir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())
-<span class='fu'><a href='random_factory.html'>random_factory</a></span>(<span class='kw'>include_examples</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; [1] "factory_ee10xomb92Q9Q"</div><div class='input'><span class='no'>source_name</span> <span class='kw'>&lt;-</span> <span class='st'>"foo"</span>
-<span class='no'>report_source_file_name</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='list_reports.html'>list_reports</a></span>(<span class='kw'>pattern</span> <span class='kw'>=</span> <span class='no'>source_name</span>)[<span class='fl'>1</span>]
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='random_factory.html'>random_factory</a></span><span class='op'>(</span>include_examples <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "factory_ee10xomb92Q9Q"</div><div class='input'><span class='va'>source_name</span> <span class='op'>&lt;-</span> <span class='st'>"foo"</span>
+<span class='va'>report_source_file_name</span> <span class='op'>&lt;-</span> <span class='fu'><a href='list_reports.html'>list_reports</a></span><span class='op'>(</span>pattern <span class='op'>=</span> <span class='va'>source_name</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
 
-<span class='no'>dots_args</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"lots"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>a</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>20</span>)))
-<span class='fu'><a href='compile_report.html'>compile_report</a></span>(
-  <span class='no'>report_source_file_name</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"other"</span> <span class='kw'>=</span> <span class='st'>"two"</span>,
-                <span class='st'>"more"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"thing"</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)),
-  <span class='kw'>extra</span> <span class='kw'>=</span> <span class='no'>dots_args</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='va'>dots_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"lots"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>,<span class='fl'>20</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='compile_report.html'>compile_report</a></span><span class='op'>(</span>
+  <span class='va'>report_source_file_name</span>, 
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>, 
+  params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"other"</span> <span class='op'>=</span> <span class='st'>"two"</span>,
+                <span class='st'>"more"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"thing"</span> <span class='op'>=</span> <span class='st'>"foo"</span><span class='op'>)</span><span class='op'>)</span>,
+  extra <span class='op'>=</span> <span class='va'>dots_args</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// compiling report: 'foo_2018-06-29'</span></div><div class='output co'>#&gt; <span class='message'>// using params: </span>
 #&gt; <span class='message'>other: two</span>
 #&gt; <span class='message'>more: foo</span></div><div class='output co'>#&gt; <span class='message'></span>
@@ -242,22 +241,24 @@ method - passed to `filter_log`</p></td>
 #&gt;   |                                                                              |......................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output foo_2018-06-29.html --email-obfuscation none --self-contained --standalone --section-divs --template /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable 'theme:bootstrap' --include-in-header /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpzbQpC8/rmarkdown-str79b4d89280d.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/latex-div.lua </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output foo_2018-06-29.html --lua-filter /Users/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Users/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --email-obfuscation none --self-contained --standalone --section-divs --template /Users/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable 'theme:bootstrap' --include-in-header /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpo0Idzk/rmarkdown-str8b968bf71fc.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Output created: foo_2018-06-29.html</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
-<span class='fu'><a href='compile_report.html'>compile_report</a></span>(
-  <span class='no'>report_source_file_name</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>other</span> <span class='kw'>=</span> <span class='st'>"test"</span>))</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'><a href='compile_report.html'>compile_report</a></span><span class='op'>(</span>
+  <span class='va'>report_source_file_name</span>,
+  quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>other <span class='op'>=</span> <span class='st'>"test"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// compiling report: 'foo_2018-06-29'</span></div><div class='output co'>#&gt; <span class='message'>// using params: </span>
 #&gt; <span class='message'>other: test</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
-<span class='fu'><a href='compile_report.html'>compile_report</a></span>(
-  <span class='no'>report_source_file_name</span>,
-  <span class='kw'>quiet</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"other"</span> <span class='kw'>=</span> <span class='st'>"two"</span>,
-                <span class='st'>"more"</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"thing"</span> <span class='kw'>=</span> <span class='st'>"foo"</span>)),
-  <span class='kw'>extra</span> <span class='kw'>=</span> <span class='no'>dots_args</span>)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'><a href='compile_report.html'>compile_report</a></span><span class='op'>(</span>
+  <span class='va'>report_source_file_name</span>, 
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>, 
+  params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"other"</span> <span class='op'>=</span> <span class='st'>"two"</span>,
+                <span class='st'>"more"</span> <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"thing"</span> <span class='op'>=</span> <span class='st'>"foo"</span><span class='op'>)</span><span class='op'>)</span>,
+  extra <span class='op'>=</span> <span class='va'>dots_args</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// compiling report: 'foo_2018-06-29'</span></div><div class='output co'>#&gt; <span class='message'>// using params: </span>
 #&gt; <span class='message'>other: two</span>
 #&gt; <span class='message'>more: foo</span></div><div class='output co'>#&gt; <span class='message'></span>
@@ -304,15 +305,16 @@ method - passed to `filter_log`</p></td>
 #&gt;   |                                                                              |......................................................................| 100%
 #&gt;   ordinary text without R code
 #&gt; 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash+smart --output foo_2018-06-29.html --email-obfuscation none --self-contained --standalone --section-divs --template /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable 'theme:bootstrap' --include-in-header /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpzbQpC8/rmarkdown-str79b1bddb3c5.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/pagebreak.lua --lua-filter /Users/runner/runners/2.165.2/work/_temp/Library/rmarkdown/rmd/lua/latex-div.lua </div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; </div><div class='output co'>#&gt; <span class='message'>output file: foo_2018-06-29.knit.md</span></div><div class='output co'>#&gt; /usr/local/bin/pandoc +RTS -K512m -RTS foo_2018-06-29.utf8.md --to html4 --from markdown+autolink_bare_uris+tex_math_single_backslash --output foo_2018-06-29.html --lua-filter /Users/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/pagebreak.lua --lua-filter /Users/runner/work/_temp/Library/rmarkdown/rmarkdown/lua/latex-div.lua --email-obfuscation none --self-contained --standalone --section-divs --template /Users/runner/work/_temp/Library/rmarkdown/rmd/h/default.html --no-highlight --variable highlightjs=1 --variable 'theme:bootstrap' --include-in-header /var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpo0Idzk/rmarkdown-str8b9552c0372.html --mathjax --variable 'mathjax-url:https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>Output created: foo_2018-06-29.html</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// 'foo_2018-06-29' done!</span></div><div class='input'>
-<span class='no'>log_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span>(<span class='st'>".compile_log.rds"</span>)
+<span class='va'>log_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></span><span class='op'>(</span><span class='st'>".compile_log.rds"</span><span class='op'>)</span>
 
-<span class='fu'>ship_reports</span>(
-  <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='st'>"other"</span> <span class='kw'>=</span> <span class='st'>"two"</span>),
-  <span class='kw'>most_recent</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</div><div class='output co'>#&gt; <span class='message'></span>
+<span class='fu'>ship_reports</span><span class='op'>(</span>
+  params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"other"</span> <span class='op'>=</span> <span class='st'>"two"</span><span class='op'>)</span>, 
+  most_recent <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>/// Shipping foo_2018-06-29 outputs: </span>
 #&gt; <span class='message'></span>
 #&gt; <span class='message'>boxplots-1.pdf</span>
@@ -321,7 +323,9 @@ method - passed to `filter_log`</p></td>
 #&gt; <span class='message'>violins-1.png</span>
 #&gt; <span class='message'>foo_2018-06-29.html</span>
 #&gt; <span class='message'>outputs_base.csv</span></div><div class='input'>
-<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span>(<span class='no'>odir</span>)</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>odir</span><span class='op'>)</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -337,7 +341,7 @@ method - passed to `filter_log`</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
