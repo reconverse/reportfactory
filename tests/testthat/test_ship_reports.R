@@ -8,13 +8,12 @@ random_factory(include_examples = TRUE)
 source_name <- "foo"
 report_source_file_name <- list_reports(pattern = source_name)[1]
 
-dots_args <- list("lots" = data.frame(a = c(10,20)))
 compile_report(
   report_source_file_name, 
   quiet = FALSE, 
   params = list("other" = "two",
-                "more" = list("thing" = "foo")),
-  extra = dots_args)
+                "more" = list("thing" = "foo"))
+)
 
 compile_report(
   report_source_file_name,
@@ -25,8 +24,8 @@ compile_report(
   report_source_file_name, 
   quiet = FALSE, 
   params = list("other" = "two",
-                "more" = list("thing" = "foo")),
-  extra = dots_args)
+                "more" = list("thing" = "foo"))
+)
 
 log_file <- readRDS(".compile_log.rds")
 length(log_file)

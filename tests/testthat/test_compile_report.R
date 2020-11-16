@@ -1,6 +1,5 @@
 context("Test report compilation")
 
-
 test_that("Compilation can handle multiple outputs", {
   skip_on_cran()
   odir <- getwd()
@@ -24,7 +23,12 @@ test_that("Compilation can handle multiple outputs", {
   log_entry <- readRDS(".compile_log.rds")[[1]]
   log_outputs <- unlist(lapply(log_entry$output_files, basename))
   expect_identical(base_refs, log_outputs)
+
 })
+
+
+
+
 
 test_that("Compilation can take params and pass to markdown::render", {
   skip_on_cran()
@@ -37,12 +41,19 @@ test_that("Compilation can take params and pass to markdown::render", {
 
   foo_value <- "testzfoo"
   compile_report(report, params =
-                   list(foo = foo_value, show_stuff = TRUE, bar = letters))
+                           list(foo = foo_value,
+                                show_stuff = TRUE,
+                                bar = letters))
 
   expect_match(
     list_outputs()[length(list_outputs())],
     paste("foo", foo_value, "show_stuff_TRUE_bar_a_b_c_d", sep = "_"))
+
 })
+
+
+
+
 
 test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   # tests the following criteria:
@@ -99,7 +110,12 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   expect_equal(length(removed), length(to_remove))
   expect_setequal(to_remove, removed)
   expect_equal(file.exists(protected_filename), TRUE)
+  
 })
+
+
+
+
 
 test_that("Compile logs activity in an rds file", {
   skip_on_cran()
@@ -127,22 +143,21 @@ test_that("Compile logs activity in an rds file", {
   expect_equal(quiet_arg, TRUE)
   
   ## compiling another report to be sure the log does not remove data 
-    ## or have merge issues
-  dots_args <- list("lots" = data.frame(a = c(10,20)))
-  compile_report(list_reports(pattern = factory_name)[1], 
-                 quiet = FALSE, 
-                 params = list("other" = "two",
-                               "more" = list("thing" = "foo")),
-                extra = dots_args)
+  ## or have merge issues
+  
+  compile_report(
+    list_reports(pattern = factory_name)[1], 
+    quiet = FALSE, 
+    params = list("other" = "two",
+                  "more" = list("thing" = "foo")))
   
   log_file <- readRDS(".compile_log.rds")
   
   log_entry <- log_file[[2]]
   other_param <- log_entry$compile_init_env$params$other
   expect_equal(other_param, "two")
-  log_dots_args <- log_entry$dots$extra
-  expect_equal(is.data.frame(log_dots_args$lots), TRUE)
   log_output_dir <- log_entry$output_dir
   ## Expect to have the two initalize values plus two log entries
   expect_equal(length(log_file), 2)
+  
 })

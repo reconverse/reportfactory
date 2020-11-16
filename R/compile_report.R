@@ -82,7 +82,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## This is used to create log entry, passed in with the env (not called
   ## directly in the code)
   compile_init_env <- as.list(environment())
-  dots <- list(...)
+  ## dots <- list(...) # not needed
 
   ## This is used in several places throughout the function, and should be used 
   ## for all timestamps
@@ -205,7 +205,9 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   output_file <- rmarkdown::render(rmd_path,
                                    quiet = quiet,
                                    encoding = encoding,
-                                   envir = compile_env) # force clean envir
+                                   envir = compile_env, # force clean envir
+                                   params = NULL, # override to avoid render bug
+                                   ...) # passing further args to render
 
   message(sprintf("\n/// '%s' done!\n", shorthand))
 
@@ -265,7 +267,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   current_log <- current_compile_log(log_file_path, base_name, datetime)
   env_list <- as.list(environment())
   ## Pass the current env to `create_log_entry` (inculdes `compile_init_env`,
-  ## `timestamp`, `dots`, output file paths, and other relevant variables)
+  ## `timestamp`, output file paths, and other relevant variables)
   log_entry <- create_log_entry(env_list)
   add_to_log(current_log, log_entry, log_file_path, datetime)
   ## End log code

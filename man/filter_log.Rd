@@ -5,8 +5,14 @@
 \title{Filter reportfactory logs by factory, source file name, parameters,
 dots arguments, output file types, or other logged data}
 \usage{
-filter_log(log_file, match_exact_type = NULL, most_recent = FALSE,
-  outputs_only = FALSE, output_file_types = c(), ...)
+filter_log(
+  log_file,
+  match_exact_type = NULL,
+  most_recent = FALSE,
+  outputs_only = FALSE,
+  output_file_types = c(),
+  ...
+)
 }
 \arguments{
 \item{log_file}{the compile log list (which is located in the root of the 

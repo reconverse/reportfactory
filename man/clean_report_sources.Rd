@@ -4,8 +4,7 @@
 \alias{clean_report_sources}
 \title{Clean the folder report_sources}
 \usage{
-clean_report_sources(factory = getwd(), quiet = FALSE,
-  remove_cache = TRUE)
+clean_report_sources(factory = getwd(), quiet = FALSE, remove_cache = TRUE)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working

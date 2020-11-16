@@ -4,8 +4,12 @@
 \alias{new_factory}
 \title{Create a new report factory}
 \usage{
-new_factory(destination = "new_factory", include_template = TRUE,
-  include_examples = FALSE, move_in = TRUE)
+new_factory(
+  destination = "new_factory",
+  include_template = TRUE,
+  include_examples = FALSE,
+  move_in = TRUE
+)
 }
 \arguments{
 \item{destination}{the name of the report factory folder to be created}
