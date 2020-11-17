@@ -175,14 +175,15 @@ content gets removed; defaults to `FALSE`</p></td>
 <span class='co'>## create new random factory in temp folder</span>
 <span class='va'>odir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='random_factory.html'>random_factory</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpQ2p8ay/factory_wl4die"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpR7iT04/factory_wl4die"</div><div class='input'>
 <span class='co'>## add content</span>
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"report_sources"</span>, <span class='st'>"_archive"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## check initial content</span>
 <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"report_sources"</span>, all.files <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "_archive"                      "."                            
-#&gt; [3] ".."                            "example_report_2019-01-31.Rmd"</div><div class='input'>
+#&gt; [3] ".."                            "example_report_2019-01-31.Rmd"
+#&gt; [5] "example_report_2020-11-17.Rmd" "iris_2020-11-15.Rmd"          </div><div class='input'>
 <span class='co'>## add crap</span>
 <span class='va'>crap_files</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"toto.txt"</span>,
                 <span class='st'>"#toto.Rmd#"</span>,
@@ -204,9 +205,10 @@ content gets removed; defaults to `FALSE`</p></td>
 </div><div class='output co'>#&gt;  [1] "_archive"                      "."                            
 #&gt;  [3] ".."                            ".hidden"                      
 #&gt;  [5] "#toto.Rmd#"                    "cache"                        
-#&gt;  [7] "example_report_2019-01-31.Rmd" "figures"                      
-#&gt;  [9] "outputs_xlsx"                  "some_file.html"               
-#&gt; [11] "toto.Rmd~"                     "toto.txt"                     </div><div class='input'>
+#&gt;  [7] "example_report_2019-01-31.Rmd" "example_report_2020-11-17.Rmd"
+#&gt;  [9] "figures"                       "iris_2020-11-15.Rmd"          
+#&gt; [11] "outputs_xlsx"                  "some_file.html"               
+#&gt; [13] "toto.Rmd~"                     "toto.txt"                     </div><div class='input'>
 <span class='co'>## clean the crap</span>
 <span class='fu'>clean_report_sources</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>The following files in `report_sources/` are not rmarkdown sources </span>
@@ -223,7 +225,8 @@ content gets removed; defaults to `FALSE`</p></td>
 <span class='co'>## check content after cleanup</span>
 <span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='st'>"report_sources"</span>, all.files <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "_archive"                      "."                            
-#&gt; [3] ".."                            "example_report_2019-01-31.Rmd"</div><div class='input'>
+#&gt; [3] ".."                            "example_report_2019-01-31.Rmd"
+#&gt; [5] "example_report_2020-11-17.Rmd" "iris_2020-11-15.Rmd"          </div><div class='input'>
 <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>odir</span><span class='op'>)</span>
 
 </div></pre>

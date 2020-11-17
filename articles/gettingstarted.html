@@ -122,7 +122,8 @@
 <p>Here we’ve already created some with the <code>include_template</code> being set to TRUE (the default). The helper functions below show the state of the factory.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/list_reports.html">list_reports</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report_2019-01-31.Rmd"</span>
+<span class="co">#&gt; [1] "example_report_2019-01-31.Rmd" "example_report_2020-11-17.Rmd"</span>
+<span class="co">#&gt; [3] "iris_2020-11-15.Rmd"</span>
 <span class="fu"><a href="../reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; character(0)</span>
 <span class="fu"><a href="../reference/list_deps.html">list_deps</a></span><span class="op">(</span>factory <span class="op">=</span> <span class="va">factory_proj</span><span class="op">)</span> <span class="co"># list all needed packages</span>
@@ -145,11 +146,16 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/update_reports.html">update_reports</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; /// compiling report: 'example_report_2019-01-31'</span>
+<span class="co">#&gt; /// compiling report: 'example_report_2020-11-17'</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; /// 'example_report_2019-01-31' done!</span>
+<span class="co">#&gt; /// 'example_report_2020-11-17' done!</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; /// compiling report: 'iris_2020-11-15'</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; /// 'iris_2020-11-15' done!</span>
 <span class="fu"><a href="../reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report_2019-01-31/compiled_2020-11-17_05-43-46/example_report_2019-01-31.html"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report_2020-11-17/compiled_2020-11-17_16-55-33/example_report_2020-11-17.html"</span>
+<span class="co">#&gt; [2] "iris_2020-11-15/compiled_2020-11-17_16-55-34/iris_2020-11-15.html"</span></code></pre></div>
 </div>
 <div id="option-3---all-reports" class="section level4">
 <h4 class="hasAnchor">
@@ -161,9 +167,20 @@
 <span class="co">#&gt; /// compiling report: 'example_report_2019-01-31'</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; /// 'example_report_2019-01-31' done!</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; /// compiling report: 'example_report_2020-11-17'</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; /// 'example_report_2020-11-17' done!</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; /// compiling report: 'iris_2020-11-15'</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; /// 'iris_2020-11-15' done!</span>
 <span class="fu"><a href="../reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="va">factory_proj</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report_2019-01-31/compiled_2020-11-17_05-43-46/example_report_2019-01-31.html"</span>
-<span class="co">#&gt; [2] "example_report_2019-01-31/compiled_2020-11-17_05-43-48/example_report_2019-01-31.html"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report_2019-01-31/compiled_2020-11-17_16-55-35/example_report_2019-01-31.html"</span>
+<span class="co">#&gt; [2] "example_report_2020-11-17/compiled_2020-11-17_16-55-33/example_report_2020-11-17.html"</span>
+<span class="co">#&gt; [3] "example_report_2020-11-17/compiled_2020-11-17_16-55-38/example_report_2020-11-17.html"</span>
+<span class="co">#&gt; [4] "iris_2020-11-15/compiled_2020-11-17_16-55-34/iris_2020-11-15.html"                    </span>
+<span class="co">#&gt; [5] "iris_2020-11-15/compiled_2020-11-17_16-55-39/iris_2020-11-15.html"</span></code></pre></div>
 <!-- ### Step 4 - Consolidate latest outputs -->
 <!-- You can now get a single directory of the latest report outputs using: -->
 </div>
