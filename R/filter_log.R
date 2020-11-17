@@ -30,6 +30,8 @@
 #' @return a list of log entries which match the `...` arguments and other
 #'   parameter input
 #'
+#' @noRd
+#' 
 #' @examples
 #' ## This filters a compile log with a set of conditions, which would 
 #' ## match the call of the `reportfactory::compile_report` function. 
@@ -37,7 +39,7 @@
 #' 
 #' ## new random factory in temp folder
 #' odir <- getwd()
-#' new_factory(tempdir(), include_examples = TRUE)
+#' random_factory(tempdir())
 #' 
 #' 
 #' factory_name = "foo"

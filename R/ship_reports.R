@@ -2,7 +2,9 @@
 #'
 #' Copies output files for log entries that match given conditions to a dated
 #' `shipped_[yyyy-mm-dd]` folder
-#'     
+#'
+#' @noRd
+#' 
 #' @param factory The path the factory directory, defaults to current directory
 #'
 #' @param match_exact_type a vector of condition types passed to `filter_log`
@@ -28,8 +30,7 @@
 #' 
 #' odir <- getwd()
 #' 
-#' setwd(tempdir())
-#' random_factory(include_examples = TRUE)
+#' random_factory(tempdir())
 #' source_name <- "foo"
 #' report_source_file_name <- list_reports(pattern = source_name)[1]
 #' 

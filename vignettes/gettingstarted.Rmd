@@ -83,10 +83,10 @@ update_reports(factory_proj, all = TRUE)
 list_outputs(factory_proj)
 ```
 
-### Step 4 - Consolidate latest outputs
-You can now get a single directory of the latest report outputs using:
+<!-- ### Step 4 - Consolidate latest outputs -->
+<!-- You can now get a single directory of the latest report outputs using: -->
 
-```{r shipit}
+```{r shipit, eval = FALSE, echo = FALSE}
 ship_reports(factory = factory_proj, most_recent = TRUE)
 list.dirs(factory_proj)
 ```

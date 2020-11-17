@@ -26,7 +26,7 @@
 #'
 #' ## create new random factory in temp folder
 #' odir <- getwd()
-#' new_factory(tempdir(), include_examples = FALSE)
+#' random_factory(tempdir())
 #'
 #' ## add content
 #' dir.create(file.path("report_sources", "_archive"))

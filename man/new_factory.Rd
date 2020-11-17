@@ -7,7 +7,6 @@
 new_factory(
   destination = "new_factory",
   include_template = TRUE,
-  include_examples = FALSE,
   move_in = TRUE
 )
 }
@@ -15,19 +14,15 @@ new_factory(
 \item{destination}{the name of the report factory folder to be created}
 
 \item{include_template}{a logical indicating if a template of report
-and folders structure shoud be added to the factory; defaults to \code{TRUE}}
+and folders structure shoud be added to the factory; defaults to `TRUE`}
 
-\item{include_examples}{a logical indicating if examples of reports shoud be
-added to the factory; defaults to \code{FALSE}}
-
-\item{move_in}{a logical indicating if the current session should move into
-the created factory; defaults to \code{TRUE}}
+\item{move_in}{a `logical` indicating if the current session should move into
+the created factory; defaults to `TRUE`}
 }
 \description{
-This function can be used to create a new report factory, using a template
-containing data and associated reports as examples. The provided examples use
-(simulated) infectious disease data, but any other data analysis would work
-the same. See details for the content of the factory
+This function can be used to create a new report factory. By default, the
+factory is created with a template of report, and the working environment is
+moved to the newly created factory.
 }
 \details{
 The default factory includes:

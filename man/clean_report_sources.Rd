@@ -15,6 +15,9 @@ content gets removed; defaults to `FALSE`}
 
 \item{remove_cache}{a logical indicating if `cache` folder should be kept}
 }
+\value{
+invisibly returns the path to the removed files
+}
 \description{
 This function removes undesirable files
 and folders present in `report_sources`
@@ -27,7 +30,7 @@ except for:
 
 ## create new random factory in temp folder
 odir <- getwd()
-new_factory(tempdir(), include_examples = FALSE)
+random_factory(tempdir())
 
 ## add content
 dir.create(file.path("report_sources", "_archive"))

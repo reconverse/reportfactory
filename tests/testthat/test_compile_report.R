@@ -11,7 +11,7 @@ test_that("Compilation can handle basic report", {
   output_files <- sort(output_files)
 
   ref <- c("example_report_2019-01-31.html")
-  expect_identical(ref, outputs)
+  expect_identical(ref, output_files)
 
 })
 
