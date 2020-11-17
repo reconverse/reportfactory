@@ -18,6 +18,8 @@
 #'
 #' @param remove_cache a logical indicating if `cache` folder should be kept
 #'
+#' @return invisibly returns the path to the removed files
+#' 
 #' @export
 #'
 #' @examples
@@ -123,7 +125,7 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
     }
   }
 
-  if (!quiet) {
+  if (!quiet && length(to_remove)) {
     to_remove_txt <- paste(to_remove, collapse = "\n")
     msg <- paste0("The following files in `report_sources/` ",
                   "are not rmarkdown sources \nand were removed:\n\n",
@@ -131,6 +133,6 @@ clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                   "\n")
     message(msg)
   }
-  invisible(NULL)
+  invisible(to_remove)
 
 }

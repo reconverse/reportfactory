@@ -51,54 +51,60 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
     # 2. Files that are not .Rmd are removed
     # 3. Empty directories are removed
   skip_on_cran()
-  odir <- getwd()
-  on.exit(setwd(odir))
+ 
+  x <- random_factory(tempdir(),
+                      move_in = FALSE)
 
-  setwd(tempdir())
-  random_factory()
+  ## create junk
+  ## sutff/ will contain only junk and needs removing
+  ## foo/ will contain some junk and Rmds and needs cleaning
+  dir.create(
+    file.path(
+    x,
+    "report_sources",
+    "stuff"),
+    FALSE, TRUE)
+  dir.create(
+    file.path(
+      x,
+      "report_sources",
+      "foo"),
+    FALSE, TRUE)
+  file.create(
+     file.path(x,
+               "report_sources",
+               "junk.csv"))
+  file.create(
+     file.path(x,
+               "report_sources",
+               "stuff",
+               "some-crap.R"))
+   file.create(
+     file.path(x,
+               "report_sources",
+               "foo",
+               "more_junk.xlsx"))
+   file.create(
+     file.path(x,
+               "report_sources",
+               "foo",
+               "some_report_2020-01-01.Rmd"))
+ 
 
-  csv1_filename <- "report_sources/other_stuff/bad_csv.csv"
-  write.csv(data.frame(trash = "file"), csv1_filename)
+   ## round of cleaning
+   exp_res <- c("report_sources/foo/more_junk.xlsx",
+                "report_sources/stuff/some-crap.R", 
+                "report_sources/junk.csv",
+                "report_sources/stuff")
+   
+  expect_message(
+    res <- clean_report_sources(x))
+  expect_identical(res, exp_res)
 
-  nested_dir <- "report_sources/another_one"
-  dir.create(nested_dir)
-  csv2_filename <- "report_sources/another_one/bad_csv2.csv"
-  write.csv(data.frame(another = "file"), csv2_filename)
-
-  protected_dir <- "report_sources/contacts/x"
-  dir.create(protected_dir)
-  protected_dir <- "report_sources/contacts/x/protected_dir"
-  dir.create(protected_dir)
-  moved_report <- list_reports(pattern = "contacts")[1]
-  protected_filename <- "report_sources/contacts/x/protected_dir/important.Rmd"
-  file.rename(paste0(getwd(), "/report_sources/contacts/", moved_report),
-              paste0(getwd(), "/", protected_filename))
-
-  empty_dirname <- "report_sources/empty_dir"
-  empty_dir <- dir.create(empty_dirname)
-
-  orig_source_files <- list.files("report_sources", include.dirs = TRUE,
-                                 all.files = TRUE, recursive = TRUE)
-
-  report <- list_reports(pattern = "foo")[1]
   
-  warning_message <- "the following files in 'report_sources/' are not .Rmd"
-  expect_warning(
-    compile_report(report, clean_report_sources = TRUE, quiet = TRUE), 
-    regexp = warning_message)
-  
-  
-  compile_report(report, clean_report_sources = TRUE)
-
-  clean_source_files <- list.files("report_sources", include.dirs = TRUE,
-                                      all.files = TRUE, recursive = TRUE)
-  clean_source_files
-  removed <- setdiff(orig_source_files, clean_source_files)
-  removed <- paste0("report_sources/", removed)
-  to_remove <- c(nested_dir, csv2_filename, empty_dirname,  csv1_filename)
-  expect_equal(length(removed), length(to_remove))
-  expect_setequal(to_remove, removed)
-  expect_equal(file.exists(protected_filename), TRUE)
+  ## second cleaning should be empty
+  res <- clean_report_sources(x)
+  expect_identical(res, character())
   
 })
 
