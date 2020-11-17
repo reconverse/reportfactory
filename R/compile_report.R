@@ -107,7 +107,7 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
     stop("more than one report asked from 'compile_report'")
   }
   rmd_path <- grep(".Rmd",
-                   dir(find_file("report_sources"),
+                   dir(factory_path("report_sources"),
                        recursive = TRUE, pattern = sprintf("^%s$", file),
                        full.names = TRUE),
                    value = TRUE, ignore.case = TRUE)
@@ -223,12 +223,12 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
 
 
   ## 5. move all outputs identified in step 3 to a dedicated folder
-  if (!dir.exists(find_file("report_outputs"))) {
-    dir.create(find_file("report_outputs"), FALSE, TRUE)
+  if (!dir.exists(factory_path("report_outputs"))) {
+    dir.create(factory_path("report_outputs"), FALSE, TRUE)
   }
 
   
-  report_dir <- file.path(find_file("report_outputs"),
+  report_dir <- file.path(factory_path("report_outputs"),
                           paste(base_name, date, sep = "_"))
   dir.create(report_dir, FALSE, TRUE)
 

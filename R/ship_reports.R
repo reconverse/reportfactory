@@ -62,7 +62,6 @@
 #' 
 #' setwd(odir)
 #'
-#' @export
 #' 
 ship_reports <- function(factory = getwd(), match_exact_type = NULL,
                          most_recent = TRUE, outputs_only = FALSE,

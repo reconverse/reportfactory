@@ -4,7 +4,6 @@
 #' By default the function returns all matches --- even if some conditions are 
 #'     missing, or there are other log conditions present
 #'
-#' @export
 #'
 #' @author Amy Gimma (\email{amy.gimma@@lshtm.ac.uk})
 #' 

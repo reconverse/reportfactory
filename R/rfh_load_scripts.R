@@ -43,7 +43,7 @@ rfh_load_scripts <- function(quiet = FALSE) {
   parent <- parent.frame()
 
   ## process .R files in scripts/
-  path_to_scripts <- find_file("scripts")
+  path_to_scripts <- factory_path("scripts")
   scripts_files <- dir(path_to_scripts,
                        pattern = "[.]R$",
                        recursive = TRUE,
@@ -65,7 +65,7 @@ rfh_load_scripts <- function(quiet = FALSE) {
   
   
   ## process .R files in src/
-  path_to_src <- find_file("src")
+  path_to_src <- factory_path("src")
   src_files <- dir(path_to_src,
                        pattern = "[.]R$",
                        recursive = TRUE,

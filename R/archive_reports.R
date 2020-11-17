@@ -27,7 +27,7 @@ archive_reports <- function(factory = getwd(), before = NULL) {
 
 
   rmd_path <- grep(".Rmd",
-                  dir(find_file("report_sources"),
+                  dir(factory_path("report_sources"),
                       recursive = TRUE),
                   value = TRUE, ignore.case = TRUE)
   rmd_path <- ignore_tilde(rmd_path)

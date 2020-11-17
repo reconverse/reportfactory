@@ -18,7 +18,7 @@ list_outputs <- function(factory = getwd(), pattern = NULL) {
   on.exit(setwd(odir))
   setwd(factory)
 
-  out <- dir(find_file("report_outputs"), recursive = TRUE)
+  out <- dir(factory_path("report_outputs"), recursive = TRUE)
 
   if (!is.null(pattern)) {
     out <- grep(pattern, out, value = TRUE)

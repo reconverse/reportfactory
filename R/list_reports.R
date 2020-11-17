@@ -23,7 +23,7 @@ list_reports <- function(factory = getwd(),
   on.exit(setwd(odir))
   setwd(factory)
 
-  out <- dir(find_file("report_sources"),
+  out <- dir(factory_path("report_sources"),
              recursive = TRUE, pattern = ".Rmd$",
              ignore.case = TRUE, full.names = TRUE)
   if (ignore_archive) {
