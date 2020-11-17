@@ -1,28 +1,17 @@
 context("Test report compilation")
 
-test_that("Compilation can handle multiple outputs", {
+test_that("Compilation can handle basic report", {
   skip_on_cran()
-  odir <- getwd()
-  on.exit(setwd(odir))
-
-  setwd(tempdir())
-  random_factory(include_examples = TRUE)
-
-  compile_report(list_reports(pattern = "foo")[1], quiet = TRUE)
-  outputs <- sub("([[:alnum:]_-]+/){2}", "",
-                     list_outputs())
-
-  outputs <- sort(outputs)
-  ref <- c("figures/boxplots-1.pdf", "figures/boxplots-1.png",
-           "figures/violins-1.pdf", "figures/violins-1.png",
-           "foo_2018-06-29.html", "outputs_base.csv")
-
-  expect_identical(ref, outputs)
   
-  base_refs <- unlist(lapply(ref, basename))
-  log_entry <- readRDS(".compile_log.rds")[[1]]
-  log_outputs <- unlist(lapply(log_entry$output_files, basename))
-  expect_identical(base_refs, log_outputs)
+  x <- random_factory(tempdir(), move_in = FALSE)
+
+  report_rmd <- list_reports(factory = x)[1]
+  compile_report(report_rmd, factory = x, quiet = TRUE)
+  output_files <- basename(list_outputs(factory = x))
+  output_files <- sort(output_files)
+
+  ref <- c("example_report_2019-01-31.html")
+  expect_identical(ref, outputs)
 
 })
 
@@ -32,21 +21,21 @@ test_that("Compilation can handle multiple outputs", {
 
 test_that("Compilation can take params and pass to markdown::render", {
   skip_on_cran()
-  odir <- getwd()
-  on.exit(setwd(odir))
+ 
+  x <- random_factory(tempdir(), move_in = FALSE)
 
-  setwd(tempdir())
-  factory <- random_factory(include_examples = TRUE)
-  report <- list_reports(pattern = "foo")[1]
-
+  report_rmd <- list_reports(factory = x)[1]
   foo_value <- "testzfoo"
-  compile_report(report, params =
-                           list(foo = foo_value,
-                                show_stuff = TRUE,
-                                bar = letters))
 
+  compile_report(report_rmd,
+                 factory = x,
+                 params =
+                   list(foo = foo_value,
+                        show_stuff = TRUE,
+                        bar = letters))
+  
   expect_match(
-    list_outputs()[length(list_outputs())],
+    list_outputs(factory = x),
     paste("foo", foo_value, "show_stuff_TRUE_bar_a_b_c_d", sep = "_"))
 
 })
@@ -58,7 +47,7 @@ test_that("Compilation can take params and pass to markdown::render", {
 test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   # tests the following criteria:
     # 1. IMPORTANT: A deeply nested .Rmd file AND its directories are not,
-        # removed, including in nested directories
+    #    removed, including in nested directories
     # 2. Files that are not .Rmd are removed
     # 3. Empty directories are removed
   skip_on_cran()
@@ -66,7 +55,7 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
   on.exit(setwd(odir))
 
   setwd(tempdir())
-  random_factory(include_examples = TRUE)
+  random_factory()
 
   csv1_filename <- "report_sources/other_stuff/bad_csv.csv"
   write.csv(data.frame(trash = "file"), csv1_filename)
@@ -125,7 +114,7 @@ test_that("Compile logs activity in an rds file", {
   
   setwd(tempdir())
   factory_name <- "foo"
-  random_factory(include_examples = TRUE)
+  random_factory()
   compile_report(list_reports(
     pattern = factory_name)[1],
     quiet = TRUE,
