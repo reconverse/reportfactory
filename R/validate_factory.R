@@ -41,7 +41,6 @@ validate_factory <- function(factory = getwd(),
                              warnings = TRUE,
                              errors = TRUE) {
 
-
   out <- list(warnings = character(0),
               errors = character(0))
 

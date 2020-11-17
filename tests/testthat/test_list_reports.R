@@ -1,7 +1,7 @@
 
 context("List reports")
 
-test_that("list reports returns equal values in new_factory", {
+test_that("list_reports returns equal values in new_factory", {
   odir <- getwd()
   on.exit(setwd(odir))
 
@@ -13,4 +13,5 @@ test_that("list reports returns equal values in new_factory", {
   actual <- length(list_reports(destination))
 
   expect_equal(expected, actual)
-  })
+
+})

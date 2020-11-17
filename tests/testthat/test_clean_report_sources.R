@@ -6,7 +6,7 @@ test_that("Undesirable files and folders get removed in report_sources/", {
   skip_on_cran()
 
   setwd(tempdir())
-  random_factory(include_examples = FALSE)
+  random_factory()
 
   dir.create(file.path("report_sources", "_archive"))
   old_content <- dir("report_sources", all.files = TRUE)
@@ -42,7 +42,7 @@ test_that("cache is protected from removal if needed", {
   skip_on_cran()
 
   setwd(tempdir())
-  random_factory(include_examples = FALSE)
+  random_factory()
 
   dir.create(file.path("report_sources", "cache"))
   old_content <- dir("report_sources", all.files = TRUE)

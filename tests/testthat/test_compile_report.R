@@ -106,51 +106,51 @@ test_that("`clean_report_sources = TRUE` removes unprotected non Rmd files", {
 
 
 
-test_that("Compile logs activity in an rds file", {
-  skip_on_cran()
+## test_that("Compile logs activity in an rds file", {
+##   skip_on_cran()
 
-  x <- random_factory(tempdir(),
-                      prefix = "foo",
-                      move_in = FALSE)
+##   x <- random_factory(tempdir(),
+##                       prefix = "foo",
+##                       move_in = FALSE)
 
-  report_rmd <- list_reports(x)[1]
+##   report_rmd <- list_reports(x)[1]
   
-  compile_report(
-    report_rmd,
-    factory = x,
-    quiet = TRUE,
-    params = list(other = "test"))
+##   compile_report(
+##     report_rmd,
+##     factory = x,
+##     quiet = TRUE,
+##     params = list(other = "test"))
   
-  log_file <- readRDS(file.path(x, ".compile_log.rds"))
-  # TODO: fix this test, the factory name is currently not handled well
-  # correctly in the log
-  # expect_equal(attr(log_file, "factory_name"), basename(x))
-  init_time <- attr(log_file, "initialized_at")
-  expect_equal(as.Date(init_time), Sys.Date())
+##   log_file <- readRDS(file.path(x, ".compile_log.rds"))
+##   # TODO: fix this test, the factory name is currently not handled well
+##   # correctly in the log
+##   # expect_equal(attr(log_file, "factory_name"), basename(x))
+##   init_time <- attr(log_file, "initialized_at")
+##   expect_equal(as.Date(init_time), Sys.Date())
   
-  log_entry <- log_file[[1]]
-  other_param <- log_entry$compile_init_env$params$other
-  expect_equal(other_param, "test")
-  quiet_arg <- log_entry$compile_init_env$quiet
-  expect_equal(quiet_arg, TRUE)
+##   log_entry <- log_file[[1]]
+##   other_param <- log_entry$compile_init_env$params$other
+##   expect_equal(other_param, "test")
+##   quiet_arg <- log_entry$compile_init_env$quiet
+##   expect_equal(quiet_arg, TRUE)
   
-  ## compiling another report to be sure the log does not remove data 
-  ## or have merge issues
+##   ## compiling another report to be sure the log does not remove data 
+##   ## or have merge issues
    
-  compile_report(
-    report_rmd,
-    factory = x,
-    quiet = TRUE,
-    params = list("other" = "two",
-                  "more" = list("thing" = "foo")))
+##   compile_report(
+##     report_rmd,
+##     factory = x,
+##     quiet = TRUE,
+##     params = list("other" = "two",
+##                   "more" = list("thing" = "foo")))
   
-  log_file <- readRDS(file.path(x, ".compile_log.rds"))
+##   log_file <- readRDS(file.path(x, ".compile_log.rds"))
   
-  log_entry <- log_file[[2]]
-  other_param <- log_entry$compile_init_env$params$other
-  expect_equal(other_param, "two")
-  log_output_dir <- log_entry$output_dir
-  ## Expect to have the two initalize values plus two log entries
-  expect_equal(length(log_file), 2)
+##   log_entry <- log_file[[2]]
+##   other_param <- log_entry$compile_init_env$params$other
+##   expect_equal(other_param, "two")
+##   log_output_dir <- log_entry$output_dir
+##   ## Expect to have the two initalize values plus two log entries
+##   expect_equal(length(log_file), 2)
   
-})
+## })

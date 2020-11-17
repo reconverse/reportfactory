@@ -1,23 +1,17 @@
 context("Validation of report factory")
 
 
-test_that("A new_factory is valid", {
+test_that("A new_factory is valid, and stays valid after update", {
 
   skip_on_cran()
 
-  new_dir <- function() {
-    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
-    file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
-  }
-
-  new_factory(x <- new_dir(), move_in = TRUE, include_examples = TRUE)
+  x <- random_factory(tempdir())
 
   no_probs <- function(test) {
     length(test$errors) == 0L && length(test$warnings) == 0L
   }
   expect_true(no_probs(validate_factory(x)))
-  test_report <- list_reports(pattern = "contacts")[1]
-  compile_report(test_report, quiet = TRUE, factory = x)
+  update_reports(x, quiet = TRUE)
   expect_true(no_probs(validate_factory(x)))
 
 })
@@ -30,16 +24,16 @@ test_that("Broken factories are identified", {
 
   skip_on_cran()
 
-  new_dir <- function() {
-    rnd  <- paste(sample(0:9, 20, replace = TRUE), collapse = "")
-    file.path(tempdir(), paste("factory_test", rnd, sep = "_"))
+  random_dir <- function() {
+    file.path(tempdir(), random_alphanum(6))
   }
 
   expect_error(validate_factory("asd"),
                "the directory 'asd' does not exist")
 
   ## empty factory
-  dir.create(x <- new_dir(), FALSE, TRUE)
+  x <- random_dir()
+  dir.create(x, FALSE, TRUE)
 
   exp_msg <- paste("file '.here' is missing",
                    "file '.gitignore' is missing",
@@ -49,33 +43,41 @@ test_that("Broken factories are identified", {
 
 
   ## .here missing
-  dir.create(x <- new_dir(), FALSE, TRUE)
+  x <- random_dir()
+  dir.create(x, FALSE, TRUE)
+ 
   file.create(file.path(x, ".gitignore"))
   dir.create(file.path(x, "report_sources"))
-
+  
   exp_msg <- "file '.here' is missing"
   expect_error(validate_factory(x), exp_msg)
 
 
   ## .gitignore missing
-  dir.create(x <- new_dir(), FALSE, TRUE)
+  x <- random_dir()
+  dir.create(x, FALSE, TRUE)
+
   file.create(file.path(x, ".here"))
   dir.create(file.path(x, "report_sources"))
-
+  
   exp_msg <- "file '.gitignore' is missing"
   expect_error(validate_factory(x), exp_msg)
 
 
   ## report_sources missing
-  dir.create(x <- new_dir(), FALSE, TRUE)
+  x <- random_dir()
+  dir.create(x, FALSE, TRUE)
+
   file.create(file.path(x, ".here"))
   file.create(file.path(x, ".gitignore"))
-
+  
   exp_msg <- "folder 'report_sources/' is missing"
   expect_error(validate_factory(x), exp_msg)
 
   ## duplicated report names
-  dir.create(x <- new_dir(), FALSE, TRUE)
+  x <- random_dir()
+  dir.create(x, FALSE, TRUE)
+
   file.create(file.path(x, ".here"))
   file.create(file.path(x, ".gitignore"))
   dir.create(file.path(x, "report_sources"), FALSE, TRUE)
@@ -90,7 +92,9 @@ test_that("Broken factories are identified", {
 
 
   ## non-rmd files in sources
-  dir.create(x <- new_dir(), FALSE, TRUE)
+  x <- random_dir()
+  dir.create(x, FALSE, TRUE)
+
   file.create(file.path(x, ".here"))
   file.create(file.path(x, ".gitignore"))
   dir.create(file.path(x, "report_sources"), FALSE, TRUE)
