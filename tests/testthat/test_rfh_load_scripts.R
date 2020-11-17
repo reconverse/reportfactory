@@ -8,7 +8,7 @@ test_that("rfh_load_scripts works in the absence of scripts", {
   skip_on_cran()
 
   odir <- getwd()
-  random_factory()
+  random_factory(tempdir())
   
   expect_message(rfh_load_scripts(), "No `.R` files in `scripts/`", fixed = FALSE)    
   expect_message(rfh_load_scripts(), "No `.R` files in `src/`", fixed = FALSE)    
@@ -29,15 +29,17 @@ test_that("rfh_load_scripts loads scripts in /scripts", {
   skip_on_cran()
 
   odir <- getwd()
-  random_factory()
-  
+  random_factory(tempdir())
+
   ## create scripts
   if (!dir.exists("scripts")) {
     dir.create("scripts")
   }
   toto_value <- round(runif(1), 5)
   cat(sprintf("toto <- %f", toto_value),
-      file = "scripts/toto.R", append = FALSE)
+      file = file.path("scripts",
+                       "toto.R"),
+      append = FALSE)
   
   expect_message(rfh_load_scripts(), "Loading the following `.R`  files in `scripts/`", fixed = FALSE)    
   expect_message(rfh_load_scripts(), "toto.R", fixed = FALSE)    
@@ -62,7 +64,7 @@ test_that("rfh_load_scripts loads scripts in /src", {
   skip_on_cran()
 
   odir <- getwd()
-  random_factory()
+  random_factory(tempdir())
   
   ## create src
   if (!dir.exists("src")) {
@@ -72,9 +74,15 @@ test_that("rfh_load_scripts loads scripts in /src", {
   cat(sprintf("titi <- %f", titi_value),
       file = "src/titi.R", append = FALSE)
   
-  expect_message(rfh_load_scripts(), "Loading the following `.R`  files in `src/`", fixed = FALSE)    
-  expect_message(rfh_load_scripts(), "titi.R", fixed = FALSE)    
-  expect_message(rfh_load_scripts(), "No `.R` files in `scripts/`", fixed = FALSE)    
+  expect_message(rfh_load_scripts(),
+                 "Loading the following `.R`  files in `src/`",
+                 fixed = FALSE)    
+  expect_message(rfh_load_scripts(),
+                 "titi.R",
+                 fixed = FALSE)    
+  expect_message(rfh_load_scripts(),
+                 "No `.R` files in `scripts/`",
+                 fixed = FALSE)    
 
   expect_identical(titi, titi_value)
 
@@ -100,7 +108,7 @@ test_that("rfh_load_scripts loads scripts in the right environment", {
   skip_on_cran()
 
   odir <- getwd()
-  random_factory()
+  random_factory(tempdir())
   
   ## create src
   if (!dir.exists("src")) {
