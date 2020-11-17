@@ -13,7 +13,7 @@
 #' @noRd
 #' @keywords internal
 #'
-#' @example
+#' @examples
 #'
 #' \dontrun{
 #'

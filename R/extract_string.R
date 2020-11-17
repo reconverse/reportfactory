@@ -17,7 +17,7 @@
 #' @noRd
 #' @keywords internal
 #'
-#' @example
+#' @examples
 #'
 #' \dontrun{
 #' x <- "I love RECON"
