@@ -1,17 +1,18 @@
 
 context("List reports")
 
-test_that("list_reports returns equal values in new_factory", {
+test_that("list_reports lists all Rmd files in report_sources", {
   odir <- getwd()
-  on.exit(setwd(odir))
 
-  destination <- file.path(tempdir(), "new_factory")
-  destination
-  new_factory(destination)
+  x <- random_factory(tempdir())
+  
+  expected <- basename(
+    list.files(file.path(x, "report_sources"),
+               pattern = ".Rmd$"))
 
-  expected <- 1
-  actual <- length(list_reports(destination))
+  expect_equal(sort(expected),
+               sort(list_reports()))
 
-  expect_equal(expected, actual)
-
+  setwd(odir)
+  
 })
