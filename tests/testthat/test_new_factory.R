@@ -4,22 +4,16 @@ test_that("new_factory generates the right files - with templates", {
 
   skip_on_cran()
 
-  zip_path <-  system.file("factory_template_default.zip",
+  ref_path <-  system.file("factory_template_default",
                            package = "reportfactory")
 
-  ref_path <- file.path(tempdir(), "ref_factory")
-  unzip(zipfile = zip_path,
-        exdir = ref_path)
-
-
-  new_fac_path <- file.path(tempdir(), "new_factory")
-  new_factory(new_fac_path, move_in = FALSE)
+  x <- random_factory(tempdir(), move_in = FALSE)
 
   ref_hashes <- tools::md5sum(dir(ref_path,
                                   recursive = TRUE,
                                   full.names = TRUE,
                                   all.files = TRUE))
-  new_hashes <- tools::md5sum(dir(new_fac_path,
+  new_hashes <- tools::md5sum(dir(x,
                                   recursive = TRUE,
                                   full.names = TRUE,
                                   all.files = TRUE))
@@ -36,22 +30,16 @@ test_that("new_factory generates the right files - empty factory", {
 
   skip_on_cran()
 
-  zip_path <-  system.file("factory_template_empty.zip",
+  ref_path <-  system.file("factory_template_empty",
                            package = "reportfactory")
 
-  ref_path <- file.path(tempdir(), "ref_factory")
-  unzip(zipfile = zip_path,
-        exdir = ref_path)
-
-
-  new_fac_path <- file.path(tempdir(), "new_factory")
-  new_factory(new_fac_path, move_in = FALSE, include_template = FALSE)
+  x <- random_factory(tempdir(), include_template = FALSE, move_in = FALSE)
 
   ref_hashes <- tools::md5sum(dir(ref_path,
                                   recursive = TRUE,
                                   full.names = TRUE,
                                   all.files = TRUE))
-  new_hashes <- tools::md5sum(dir(new_fac_path,
+  new_hashes <- tools::md5sum(dir(x,
                                   recursive = TRUE,
                                   full.names = TRUE,
                                   all.files = TRUE))
@@ -78,5 +66,7 @@ test_that("working directory changes as expected", {
   ## with a change
   factory_dir <- new_factory(tempdir(), move_in = TRUE)
   expect_identical(getwd(), factory_dir)
+
+  setwd(odir)
   
 })

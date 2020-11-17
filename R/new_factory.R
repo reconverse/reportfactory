@@ -71,15 +71,14 @@ new_factory <- function(destination = "new_factory",
   ## the template if requested
 
   if (include_template) {
-    zip_path <- system.file("factory_template_default.zip",
-                            package = "reportfactory")
+    factory_path <- system.file("factory_template_default",
+                                package = "reportfactory")
   } else {
-    zip_path <- system.file("factory_template_empty.zip",
+    factory_path <- system.file("factory_template_empty",
                             package = "reportfactory")
   }
 
-  utils::unzip(zipfile = zip_path, exdir = destination)
-
+  R.utils::copyDirectory(factory_path, destination, recursive = TRUE)
 
   if (move_in) {
     setwd(destination)
