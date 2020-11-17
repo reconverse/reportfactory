@@ -6,11 +6,11 @@
 \usage{
 compile_report(
   file,
-  quiet = FALSE,
   factory = getwd(),
   clean_report_sources = FALSE,
   remove_cache = TRUE,
   encoding = "UTF-8",
+  quiet = FALSE,
   params = list(),
   ...
 )
@@ -18,9 +18,6 @@ compile_report(
 \arguments{
 \item{file}{the full path, or a partial, unambiguous match for the Rmd
 report to be compiled.}
-
-\item{quiet}{a logical indicating if messages from R Markdown compilation
-should be displayed; \code{TRUE} by default.}
 
 \item{factory}{the path to a report factory; defaults to the current working
 directory}
@@ -37,6 +34,9 @@ defaults to `TRUE`, in which case `cache` will also be removed if
 \item{encoding}{a character string indicating which encoding should be used
 when compiling the document; defaults to `"UTF-8"`, which ensures that
 non-ascii characters work across different systems}
+
+\item{quiet}{a logical indicating if messages from R Markdown compilation
+should be displayed; \code{TRUE} by default.}
 
 \item{params}{a list that is passed to the `params` argument in
 `rmarkdown::render`, which are accessed in the `.Rmd` file with

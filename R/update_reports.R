@@ -42,7 +42,9 @@
 #' @inheritParams compile_report
 #' @inheritParams list_reports
 
-update_reports <- function(factory = getwd(), all = FALSE, quiet = TRUE,
+update_reports <- function(factory = getwd(),
+                           all = FALSE,
+                           quiet = TRUE,
                            encoding = "UTF-8",
                            ignore_archive = TRUE,
                            clean_report_sources = FALSE,

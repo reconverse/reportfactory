@@ -71,13 +71,15 @@
 #' @param ... further arguments passed to \code{rmarkdown::render}.
 #'
 
-compile_report <- function(file, quiet = FALSE, factory = getwd(),
+compile_report <- function(file,
+                           factory = getwd(),
                            clean_report_sources = FALSE,
                            remove_cache = TRUE,
                            encoding = "UTF-8",
+                           quiet = FALSE,
                            params = list(), ...) {
   
-  ## <<< START DO NOT REMOVE >>>>
+  # Handle log entries
   
   ## This is used to create log entry, passed in with the env (not called
   ## directly in the code)
@@ -88,15 +90,18 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   ## for all timestamps
   timestamp <- sub(" ", "_", as.character(Sys.time()))
   datetime <- gsub(":", "-", timestamp)
-  
-  ## <<< END DO NOT REMOVE >>> 
 
+
+  
+  # Check factory and move into it
+  
   validate_factory(factory)
 
   odir <- getwd()
   on.exit(setwd(odir))
   setwd(factory)
 
+  # Identification and compilation of the report
   ## 1. perform cleaning of `report_sources/`
   if (clean_report_sources) {
     clean_report_sources(quiet = quiet, remove_cache = remove_cache)
@@ -108,7 +113,8 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   }
   rmd_path <- grep(".Rmd",
                    dir(factory_path("report_sources"),
-                       recursive = TRUE, pattern = sprintf("^%s$", file),
+                       recursive = TRUE,
+                       pattern = sprintf("^%s$", file),
                        full.names = TRUE),
                    value = TRUE, ignore.case = TRUE)
   rmd_path <- ignore_tilde(rmd_path)
@@ -260,19 +266,18 @@ compile_report <- function(file, quiet = FALSE, factory = getwd(),
   file.remove(to_remove)
   
   
-  ## ================
-  ## Start log code
-
+  
+  # store log info
   log_file_path <- file.path(factory, ".compile_log.rds")
   current_log <- current_compile_log(log_file_path, base_name, datetime)
   env_list <- as.list(environment())
+
   ## Pass the current env to `create_log_entry` (inculdes `compile_init_env`,
   ## `timestamp`, output file paths, and other relevant variables)
   log_entry <- create_log_entry(env_list)
   add_to_log(current_log, log_entry, log_file_path, datetime)
-  ## End log code
-  # #================
   
 
+  # nothing to return
   return(invisible(NULL))
 }
