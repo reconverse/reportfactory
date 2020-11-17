@@ -28,6 +28,5 @@ random_factory <- function(path = getwd(),
   id <- random_alphanum(n)
   factory_name <- paste(prefix, id, sep = "_")
   factory_name <- sub("^_", "", factory_name) # in case prefix is empty
-  destination <- file.path(path, factory_name)
-  new_factory(destination, ...)
+  new_factory(factory_name, path, ...)
 }

@@ -71,8 +71,7 @@ update_reports <- function(factory = getwd(),
   } else {
     sources_by_type <- split(report_sources, types)
     for (e in sources_by_type) {
-      index_latest <- which.max(as.Date(extract_date(e)))
-      compile_report(e[index_latest],
+      compile_report(e,
                      quiet = quiet,
                      encoding = encoding,
                      clean_report_sources = clean_report_sources,

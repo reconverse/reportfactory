@@ -5,13 +5,17 @@
 \title{Create a new report factory}
 \usage{
 new_factory(
-  destination = "new_factory",
+  name = "new_factory",
+  path = ".",
   include_template = TRUE,
   move_in = TRUE
 )
 }
 \arguments{
-\item{destination}{the name of the report factory folder to be created}
+\item{name}{the name of the report factory folder to be created.}
+
+\item{path}{the folder where the report factory should be created.  This
+will default to the current working directory.}
 
 \item{include_template}{a logical indicating if a template of report
 and folders structure shoud be added to the factory; defaults to `TRUE`}
@@ -19,30 +23,30 @@ and folders structure shoud be added to the factory; defaults to `TRUE`}
 \item{move_in}{a `logical` indicating if the current session should move into
 the created factory; defaults to `TRUE`}
 }
+\value{
+the report factory folder location (invisibly)
+}
 \description{
 This function can be used to create a new report factory. By default, the
 factory is created with a template of report, and the working environment is
 moved to the newly created factory.
 }
 \details{
-The default factory includes:
+`new_factory` will create a report factory folder structure that includes:
 
-\itemize{
+* `report_sources`: a folder storing the reports, named after the convention
+  described in `update_reports()`.
+* `.gitignore`: a file used to tell git to ignore the produced outputs in
+  `report_outputs()`.
+* `open.Rproj`: an Rproject file to open the factory when using Rstudio.
+* `.here`: an empty file used as an anchor by `here::here()`.
+* `README.md`: instructions on how to use report factory
 
- \item \code{data/}: a folder storing data
+If `include_template` is TRUE, then the factory will also include:
 
- \item \code{report_sources/}: a folder storing the reports, named after the
-convention described in \code{\link{update_reports}}, and stored in
-subfolders \code{contacts} and \code{epicurves}
-
- \item \code{.gitignore}: a file used to tell git to ignore the produced
-outputs in \code{report_outputs}
-
- \item \code{open.Rproj}: an Rproject to open the factory using Rstudio
-
- \item \code{.here}: an empty file used as anchor by \code{\link[here]{here}}
-
-}
+* `data/raw/`: a folder storing raw data
+* `data/clean/`: a folder storing cleaned data
+* `R/`: a folder to store additional code that may be called in reports.#'
 }
 \examples{
 
@@ -62,7 +66,7 @@ install_deps()
 
 ## compile a single report:
 
-compile_report("contacts_2017-10-29", quiet = TRUE)
+compile_report("example_report_1", quiet = TRUE)
 list_outputs()
 
 ## compile all reports (only most recent versions):
@@ -70,7 +74,4 @@ list_outputs()
 update_reports()
 list_outputs()
 }
-}
-\author{
-Thibaut Jombart \email{thibautjombart@gmail.com}
 }

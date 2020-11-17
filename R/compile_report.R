@@ -72,7 +72,7 @@
 #'
 
 compile_report <- function(file,
-                           factory = getwd(),
+                           factory = ".",
                            clean_report_sources = FALSE,
                            remove_cache = TRUE,
                            encoding = "UTF-8",
@@ -111,8 +111,10 @@ compile_report <- function(file,
   if (length(file) > 1L) {
     stop("more than one report asked from 'compile_report'")
   }
+  root <- rprojroot::find_root(rprojroot::has_file(".here"), factory)
+
   rmd_path <- grep(".Rmd",
-                   dir(factory_path("report_sources"),
+                   dir(file.path(root, "report_sources"),
                        recursive = TRUE,
                        pattern = sprintf("^%s$", file),
                        full.names = TRUE),
@@ -126,14 +128,8 @@ compile_report <- function(file,
   }
 
   base_name <- extract_base(rmd_path)
-  date <- extract_date(file)
-  if (is.na(date)) {
-    stop(
-      sprintf("cannot identify a date in format yyyy-mm-dd in %s", file)
-      )
-  }
-
-  shorthand <- paste0(base_name, "_", date)
+  
+  #shorthand <- paste0(base_name, "_", date)
   setwd(file_dir)
 
   files_before <- list.files(recursive = TRUE)
@@ -197,7 +193,7 @@ compile_report <- function(file,
 
 
   ## display messages to the console
-  message(sprintf("\n/// compiling report: '%s'", shorthand))
+  message(sprintf("\n/// compiling report: '%s'", base_name))
   if (has_params) {
     message(sprintf("// using params: \n%s",
                     txt_display))
@@ -215,7 +211,7 @@ compile_report <- function(file,
                                    params = NULL, # override to avoid render bug
                                    ...) # passing further args to render
 
-  message(sprintf("\n/// '%s' done!\n", shorthand))
+  message(sprintf("\n/// '%s' done!\n", base_name))
 
 
   ## 4. identify all files in report_sources
@@ -229,13 +225,12 @@ compile_report <- function(file,
 
 
   ## 5. move all outputs identified in step 3 to a dedicated folder
-  if (!dir.exists(factory_path("report_outputs"))) {
-    dir.create(factory_path("report_outputs"), FALSE, TRUE)
+  if (!dir.exists(file.path(root, "report_outputs"))) {
+    dir.create(file.path(root, "report_outputs"), FALSE, TRUE)
   }
 
   
-  report_dir <- file.path(factory_path("report_outputs"),
-                          paste(base_name, date, sep = "_"))
+  report_dir <- file.path(file.path(root, "report_outputs"), base_name)
   dir.create(report_dir, FALSE, TRUE)
 
   ## add txt indicative of params that were used; only applies if params were

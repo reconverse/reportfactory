@@ -10,7 +10,7 @@ test_that("Compilation can handle basic report", {
   output_files <- basename(list_outputs(factory = x))
   output_files <- sort(output_files)
 
-  ref <- c("example_report_2019-01-31.html")
+  ref <- c("example_report_1.html")
   expect_identical(ref, output_files)
 
 })

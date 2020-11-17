@@ -16,15 +16,13 @@
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
 
-list_reports <- function(factory = getwd(),
+list_reports <- function(factory = ".",
                          pattern = NULL,
                          ignore_archive = TRUE) {
 
-  odir <- getwd()
-  on.exit(setwd(odir))
-  setwd(factory)
+  root <- rprojroot::find_root(rprojroot::has_file(".here"), factory)
 
-  out <- dir(factory_path("report_sources"),
+  out <- dir(file.path(root, "report_sources"),
              recursive = TRUE, pattern = ".Rmd$",
              ignore.case = TRUE, full.names = TRUE)
   if (ignore_archive) {

@@ -3,38 +3,34 @@
 #' This function can be used to create a new report factory. By default, the
 #' factory is created with a template of report, and the working environment is
 #' moved to the newly created factory.
-#'
-#' @details
-#' The default factory includes:
-#'
-#' \itemize{
-#'
-#'  \item \code{data/}: a folder storing data
-#'
-#'  \item \code{report_sources/}: a folder storing the reports, named after the
-#' convention described in \code{\link{update_reports}}, and stored in
-#' subfolders \code{contacts} and \code{epicurves}
-#'
-#'  \item \code{.gitignore}: a file used to tell git to ignore the produced
-#' outputs in \code{report_outputs}
-#'
-#'  \item \code{open.Rproj}: an Rproject to open the factory using Rstudio
-#'
-#'  \item \code{.here}: an empty file used as anchor by \code{\link[here]{here}}
-#'
-#' }
-#'
-#' @param destination the name of the report factory folder to be created
-#'
+#' 
+#' @param name the name of the report factory folder to be created.
+#' @param path the folder where the report factory should be created.  This
+#'   will default to the current working directory.
 #' @param include_template a logical indicating if a template of report
 #' and folders structure shoud be added to the factory; defaults to `TRUE`
-#'
 #' @param move_in a `logical` indicating if the current session should move into
 #'   the created factory; defaults to `TRUE`
+#' @return the report factory folder location (invisibly)
+#'
+#' @details
+#' `new_factory` will create a report factory folder structure that includes:
+#' 
+#' * `report_sources`: a folder storing the reports, named after the convention
+#'   described in `update_reports()`.
+#' * `.gitignore`: a file used to tell git to ignore the produced outputs in
+#'   `report_outputs()`.
+#' * `open.Rproj`: an Rproject file to open the factory when using Rstudio.
+#' * `.here`: an empty file used as an anchor by `here::here()`.
+#' * `README.md`: instructions on how to use report factory
+#' 
+#' If `include_template` is TRUE, then the factory will also include:
+#' 
+#' * `data/raw/`: a folder storing raw data
+#' * `data/clean/`: a folder storing cleaned data
+#' * `R/`: a folder to store additional code that may be called in reports.#'
 #'
 #' @export
-#'
-#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
 #' @examples
 #'
@@ -54,7 +50,7 @@
 #'
 #' ## compile a single report:
 #'
-#' compile_report("contacts_2017-10-29", quiet = TRUE)
+#' compile_report("example_report_1", quiet = TRUE)
 #' list_outputs()
 #'
 #' ## compile all reports (only most recent versions):
@@ -62,28 +58,66 @@
 #' update_reports()
 #' list_outputs()
 #' }
-
-new_factory <- function(destination = "new_factory",
+new_factory <- function(name = "new_factory",
+                        path = ".",
                         include_template = TRUE,
                         move_in = TRUE) {
 
-  ## factory with example data and reports is not the default, but will override
-  ## the template if requested
+  # create report factory folder
+  root <- file.path(path, name)
+  if (file.exists(root)) {
+		stop("Directory '", name, "' already exists. Aborting.", call. = FALSE)
+	} else {
+		dir.create(root, recursive = TRUE)
+	}
+
+  # create report sources_folder
+  dir.create(file.path(root, "report_sources"))
+
+  # copy over skeleton .gitignore
+  copy_system_file("skeleton.gitignore", dest = file.path(root, ".gitignore"))
+
+  # copy over skeleton .Rproj
+  copy_system_file("skeleton.Rproj", dest = file.path(root, "open.Rproj"))
+
+  # copy over README
+  copy_system_file("README.md", dest = root)
+	
+  # create .here
+  file.create(file.path(root, ".here"))
 
   if (include_template) {
-    zip_path <- system.file("factory_template_default.zip",
-                            package = "reportfactory")
-  } else {
-    zip_path <- system.file("factory_template_empty.zip",
-                            package = "reportfactory")
+    # create data folders
+    clean_folder <- file.path(root, "data", "clean")
+    dir.create(clean_folder, recursive = TRUE)
+    raw_folder <- file.path(root, "data", "raw")
+    dir.create(raw_folder, recursive = TRUE)
+
+    # create R folder
+    dir.create(file.path(root, "R"))
+
+    # copy example reports over
+    for (i in 1:3 ) {
+      copy_system_file(
+        paste0("example_report_", i, ".Rmd"),
+        dest = file.path(root, "report_sources")
+      )
+    }
   }
-
-  utils::unzip(zipfile = zip_path, exdir = destination)
-
 
   if (move_in) {
-    setwd(destination)
+    if (rstudioapi::isAvailable()) {
+      rstudioapi::openProject(file.path(root, ".Rproj"))
+		} else {
+      setwd(root)
+    }
   }
+  invisible(root)
+}
 
-  return(destination)
+
+copy_system_file <- function(file, folder = "skeletons",
+                             package = "reportfactory", dest) {
+  f <- system.file(folder, file, package = package)
+  file.copy(f, dest)
 }
