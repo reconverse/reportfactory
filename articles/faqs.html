@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -79,8 +79,7 @@
 
       
 
-      </header><script src="faqs_files/accessible-code-block-0.0.1/empty-anchor.js"></script><link href="faqs_files/anchor-sections-1.0/anchor-sections.css" rel="stylesheet">
-<script src="faqs_files/anchor-sections-1.0/anchor-sections.js"></script><div class="row">
+      </header><script src="faqs_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Frequently Asked Questions (FAQs)</h1>
@@ -137,15 +136,15 @@
 <h2 class="hasAnchor">
 <a href="#where-do-i-put-my-data-and-how-do-i-use-it-in-a-report" class="anchor"></a>Where do I put my data and how do I use it in a report?</h2>
 <p>We recommend storing all data in a <code>data/</code> folder in the root directory. When loading your data in the reports, make sure you use <code>here</code>, e.g.:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span><span class="op">(</span><span class="st">"data/linelist_2018-06-11.csv"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"data/linelist_2018-06-11.csv"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="where-do-i-put-scripts-for-use" class="section level2">
 <h2 class="hasAnchor">
 <a href="#where-do-i-put-scripts-for-use" class="anchor"></a>Where do I put scripts for use?</h2>
 <p>The rationale is the same as for data: store your scripts in a dedicated folder at the root of the project, e.g. <code>scripts/</code>, and source them from R using <code>here</code>, e.g.:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/here/man/here.html">here</a></span><span class="op">(</span><span class="st">"script/big_chunk_of_r_code.R"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/source.html">source</a></span><span class="op">(</span><span class="fu">here</span><span class="fu">::</span><span class="fu"><a href="https://here.r-lib.org//reference/here.html">here</a></span><span class="op">(</span><span class="st">"script/big_chunk_of_r_code.R"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="where-do-i-put-functions-for-use" class="section level2">
 <h2 class="hasAnchor">

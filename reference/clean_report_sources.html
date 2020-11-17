@@ -77,7 +77,7 @@ except for:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -142,8 +142,7 @@ except for:
 * `cache/` (unless `remove_cache` is `FALSE`)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>clean_report_sources</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  remove_cache <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>clean_report_sources</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span>, remove_cache <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -164,6 +163,9 @@ content gets removed; defaults to `FALSE`</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>invisibly returns the path to the removed files</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Thibaut Jombart</p>
@@ -172,8 +174,8 @@ content gets removed; defaults to `FALSE`</p></td>
     <pre class="examples"><div class='input'>
 <span class='co'>## create new random factory in temp folder</span>
 <span class='va'>odir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='new_factory.html'>new_factory</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, include_examples <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//Rtmpo0Idzk"</div><div class='input'>
+<span class='fu'><a href='random_factory.html'>random_factory</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T//RtmpQ2p8ay/factory_wl4die"</div><div class='input'>
 <span class='co'>## add content</span>
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='st'>"report_sources"</span>, <span class='st'>"_archive"</span><span class='op'>)</span><span class='op'>)</span>
 

@@ -76,7 +76,7 @@ within report_outputs." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -140,9 +140,16 @@ within). Outputs will be generated in a named and time-stamped directory
 within <code>report_outputs</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>compile_report</span><span class='op'>(</span><span class='va'>file</span>, quiet <span class='op'>=</span> <span class='cn'>FALSE</span>, factory <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>,
-  clean_report_sources <span class='op'>=</span> <span class='cn'>FALSE</span>, remove_cache <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span>, params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compile_report</span><span class='op'>(</span>
+  <span class='va'>file</span>,
+  quiet <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  factory <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>,
+  clean_report_sources <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  remove_cache <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  encoding <span class='op'>=</span> <span class='st'>"UTF-8"</span>,
+  params <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,10 +213,11 @@ this will remove pretty much anything that's not an `Rmd` file or a
 prior to the compilation, used later to diff post-compilation to identify
 new files</p>
 <p>3. compile the user-provided report `foo_date[].Rmd` file stored in
-`report_sources/`; compilation parameters are passed to
-`rmarkdown::render`'s argument `params` through `render_param`; parameters
-will also be used to form the output file name, which will display the
-parameter names and first values, so the output folder will look like:
+`report_sources/`; compilation parameters are saved to a new, concise env 
+object and passed to `rmarkdown::render`'s `envir` argument (the `render` 
+argument for `params` is unpredictable); `params` will also be used to 
+form the output file name, which will display theparameter names and first 
+values, so the output folder will look like:
 `compiled_foo_[foo-values]_bar_[bar-values]_[date]_[time]/`</p>
 <p>4. identify all files in report_sources; new ones are those which where not
 around at step 1; this can cause problems when there are left-over outputs

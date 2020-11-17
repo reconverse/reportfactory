@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Archive reports before a given date — archive_reports • reportfactory</title>
+<title>Generate 'n' alhapnumeric characters — random_alphanum • reportfactory</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="Archive reports before a given date — archive_reports" />
-<meta property="og:description" content="This places reports in a factory under an _archive directory,
-preserving their original directory structure." />
+<meta property="og:title" content="Generate 'n' alhapnumeric characters — random_alphanum" />
+<meta property="og:description" content="Not exported; returns a ranom set of alphanumeric values of length 'n'." />
 
 
 
@@ -124,36 +123,26 @@ preserving their original directory structure." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Archive reports before a given date</h1>
-    <small class="dont-index">Source: <a href='https://github.com/reconhub/reportfactory/blob/master/R/archive_reports.R'><code>R/archive_reports.R</code></a></small>
-    <div class="hidden name"><code>archive_reports.Rd</code></div>
+    <h1>Generate 'n' alhapnumeric characters</h1>
+    <small class="dont-index">Source: <a href='https://github.com/reconhub/reportfactory/blob/master/R/random_alphanum.R'><code>R/random_alphanum.R</code></a></small>
+    <div class="hidden name"><code>random_alphanum.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This places reports in a factory under an <code>_archive</code> directory,
-preserving their original directory structure.</p>
+    <p>Not exported; returns a ranom set of alphanumeric values of length 'n'.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>archive_reports</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>, before <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>random_alphanum</span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>factory</th>
-      <td><p>a working directory that contains a valid reportfactory</p></td>
-    </tr>
-    <tr>
-      <th>before</th>
-      <td><p>a Date or POSIXt object indicating the earliest date keep. All
-dates before this date will be archived.</p></td>
+      <th>n</th>
+      <td><p>the number of random alphanumeric characters to use</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>a named logical vector of archived reports. Successfully archived
-  reports will return TRUE and unsuccessfully archived will return FALSE</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

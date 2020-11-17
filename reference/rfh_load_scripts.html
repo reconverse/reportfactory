@@ -75,7 +75,7 @@ will be visible to all sourced scripts." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
       </span>
     </div>
 
@@ -159,16 +159,15 @@ console (`TRUE`, default), or not.</p></td>
 <span class='co'>## create random factory</span>
 <span class='va'>odir</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='fu'><a href='random_factory.html'>random_factory</a></span><span class='op'>(</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "factory_Swl10KLUUEdLi"</div><div class='input'>
+</div><div class='output co'>#&gt; [1] "/private/var/folders/24/8k48jl6d249_n_qfxwsl6xvm0000gn/T/RtmpQ2p8ay/file8421e23504d/reference/factory_exombe"</div><div class='input'>
 <span class='co'>## load scripts - nothing to load</span>
 <span class='fu'>rfh_load_scripts</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>No `.R` files in `scripts/`</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'>Loading the following `.R`  files in `src/`:</span>
-#&gt; <span class='message'>  toto.R</span></div><div class='input'>
+#&gt; <span class='message'>No `.R` files in `src/`</span></div><div class='input'>
 <span class='co'>## create toy script, try again</span>
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span><span class='op'>(</span><span class='st'>"src/"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='warning'>Warning: 'src' already exists</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"toto &lt;- 1:10"</span>, file <span class='op'>=</span> <span class='st'>"src/toto.R"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"toto &lt;- 1:10"</span>, file <span class='op'>=</span> <span class='st'>"src/toto.R"</span><span class='op'>)</span>
 <span class='fu'>rfh_load_scripts</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>No `.R` files in `scripts/`</span></div><div class='output co'>#&gt; <span class='message'></span>

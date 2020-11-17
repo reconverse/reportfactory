@@ -13,9 +13,6 @@
     <loc>https://www.repidemicsconsortium.org/reportfactory/reference/compile_report.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/filter_log.html</loc>
-  </url>
-  <url>
     <loc>https://www.repidemicsconsortium.org/reportfactory/reference/install_deps.html</loc>
   </url>
   <url>
@@ -31,13 +28,13 @@
     <loc>https://www.repidemicsconsortium.org/reportfactory/reference/new_factory.html</loc>
   </url>
   <url>
+    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/random_alphanum.html</loc>
+  </url>
+  <url>
     <loc>https://www.repidemicsconsortium.org/reportfactory/reference/random_factory.html</loc>
   </url>
   <url>
     <loc>https://www.repidemicsconsortium.org/reportfactory/reference/rfh_load_scripts.html</loc>
-  </url>
-  <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/ship_reports.html</loc>
   </url>
   <url>
     <loc>https://www.repidemicsconsortium.org/reportfactory/reference/update_reports.html</loc>
