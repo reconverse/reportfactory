@@ -4,7 +4,7 @@
 \alias{validate_factory}
 \title{Inspect and validate the content of a factory}
 \usage{
-validate_factory(factory = getwd(), warnings = TRUE, errors = TRUE)
+validate_factory(factory = ".", warnings = TRUE, errors = TRUE)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working
@@ -27,14 +27,14 @@ Checks ran on the factory include
 
 \itemize{
 
- \item the directory exists [error]
+  \item the directory exists [error]
 
- \item all mandatory files exist: .here, .gitignore [error]
+  \item all mandatory files exist: .here, .gitignore [error]
 
- \item all mandatory folders exist: report_sources/ [error]
+  \item all mandatory folders exist: report_sources/ [error]
 
- \item all .Rmd reports have unique names once outside their folders (to
- avoid conflicts in outputs) [warning]
+  \item all .Rmd reports have unique names once outside their folders (to
+   avoid conflicts in outputs) [warning]
 
 }
 }

@@ -3,6 +3,12 @@
 #' This function can be used to inspect the content of a factory and make sure
 #' it looks fine. This includes various sanity checks listed in details. The
 #' function returns a list of error and warning messages.
+#' 
+#' @inheritParams compile_report
+#' @param warnings A logical indicating if warnings should be issued;
+#'   defaults to \code{TRUE}.
+#' @param errors A logical indicating if errors should be issued;
+#'   defaults to \code{TRUE}.
 #'
 #' @details
 #' Checks ran on the factory include
@@ -10,40 +16,27 @@
 #'
 #' \itemize{
 #'
-#'  \item the directory exists [error]
+#'   \item the directory exists [error]
 #'
-#'  \item all mandatory files exist: .here, .gitignore [error]
+#'   \item all mandatory files exist: .here, .gitignore [error]
 #'
-#'  \item all mandatory folders exist: report_sources/ [error]
+#'   \item all mandatory folders exist: report_sources/ [error]
 #'
-#'  \item all .Rmd reports have unique names once outside their folders (to
-#'  avoid conflicts in outputs) [warning]
+#'   \item all .Rmd reports have unique names once outside their folders (to
+#'    avoid conflicts in outputs) [warning]
 #'
 #' }
-#'
-#'
-#' @export
-#'
+#' 
 #' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
 #'
-#' @inheritParams compile_report
-#'
-#' @param warnings A logical indicating if warnings should be issued;
-#' defaults to \code{TRUE}.
-#'
-#' @param errors A logical indicating if errors should be issued;
-#' defaults to \code{TRUE}.
-#'
-#'
-validate_factory <- function(factory = getwd(),
+#' @export
+validate_factory <- function(factory = ".",
                              warnings = TRUE,
                              errors = TRUE) {
 
-  out <- list(warnings = character(0),
-              errors = character(0))
+  
 
   ## check that the directory exists
-
   if (!dir.exists(factory)) {
       msg <- sprintf("the directory '%s' does not exist", factory)
       stop(msg)
@@ -54,32 +47,26 @@ validate_factory <- function(factory = getwd(),
   setwd(factory)
 
 
+  out <- list(warnings = character(0), errors = character(0))
+
   ## check that all files and folders are there
-
-  content <- dir(all.files = TRUE)
-  check_item <- function(x) {
-    is_folder <- length(grep("/$", x)) > 0L
-    f <- ifelse(is_folder, dir.exists, file.exists)
-
-    if (!f(x)) {
-      msg <- sprintf("%s '%s' is missing",
-                     ifelse(is_folder, "folder", "file"),
-                     x)
-      out$errors <<- c(out$errors, msg)
-    }
-  }
   expected <- c(".here", ".gitignore", "report_sources/")
   for (e in expected) {
-    check_item(e)
+    is_folder <- length(grep("/$", e)) > 0L
+    f <- ifelse(is_folder, dir.exists, file.exists)
+    if (!f(e)) {
+      msg <- sprintf(
+        "%s '%s' is missing", ifelse(is_folder, "folder", "file"), e
+      )
+      out$errors <- c(out$errors, msg)
+    }
   }
 
 
   ## these checks rely on the existence of 'report_sources/'
-
   if (dir.exists("report_sources")) {
+    
     ## check that all reports are unique
-
-
     files <- dir("report_sources",
                  recursive = TRUE, pattern = ".Rmd$",
                  ignore.case = TRUE, full.names = TRUE)
@@ -94,12 +81,10 @@ validate_factory <- function(factory = getwd(),
                        paste(culprits, collapse = "\n"))
         out$errors <- c(out$errors, msg)
       }
-
     }
 
 
     ## check that the report_sources/ only contains `Rmd` files
-
     files <- list.files("report_sources/", recursive = TRUE)
     files <- ignore_tilde(files)
 
@@ -120,7 +105,6 @@ validate_factory <- function(factory = getwd(),
 
   }
 
-
   if (warnings) {
     if (length(out$warnings) > 0L) {
       msg <- paste(out$warnings, collapse = "\n")
@@ -128,14 +112,12 @@ validate_factory <- function(factory = getwd(),
     }
   }
 
-
   if (errors) {
     if (length(out$errors) > 0L) {
       msg <- paste(out$errors, collapse = "\n")
       stop("the following errors were found:\n", msg)
     }
   }
-
 
   return(out)
 }

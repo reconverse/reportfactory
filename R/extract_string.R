@@ -1,4 +1,3 @@
-
 #' Extract any string from a vector using a regular expression
 #'
 #'

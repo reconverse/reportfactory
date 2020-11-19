@@ -75,8 +75,8 @@ new_factory <- function(name = "new_factory",
     raw_folder <- file.path(root, "data", "raw")
     dir.create(raw_folder, recursive = TRUE)
 
-    # create R folder
-    dir.create(file.path(root, "R"))
+    # create scripts folder
+    dir.create(file.path(root, "scripts"))
 
     # copy example reports over
     for (i in 1:3 ) {

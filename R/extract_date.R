@@ -1,4 +1,3 @@
-
 #' Extract the date from a charcter string (vectorised)
 #'
 #' This function is used to extract a date from a string
