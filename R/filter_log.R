@@ -39,7 +39,7 @@
 #' 
 #' ## new random factory in temp folder
 #' odir <- getwd()
-#' random_factory(tempdir())
+#' x <- random_factory(tempdir())
 #' 
 #' 
 #' factory_name = "foo"
@@ -61,6 +61,7 @@
 #'            params = list(other = "test"))
 #'        
 #' setwd(odir)
+#' unlink(x)
 
 filter_log <- function(log_file, match_exact_type = NULL,
                        most_recent = FALSE, outputs_only = FALSE,

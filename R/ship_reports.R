@@ -30,7 +30,7 @@
 #' 
 #' odir <- getwd()
 #' 
-#' random_factory(tempdir())
+#' x <- random_factory(tempdir())
 #' source_name <- "foo"
 #' report_source_file_name <- list_reports(pattern = source_name)[1]
 #' 
@@ -62,7 +62,7 @@
 #' )
 #' 
 #' setwd(odir)
-#'
+#' unlink(x)
 #' 
 ship_reports <- function(factory = getwd(), match_exact_type = NULL,
                          most_recent = TRUE, outputs_only = FALSE,

@@ -30,34 +30,12 @@
 #' * `data/clean/`: a folder storing cleaned data
 #' * `R/`: a folder to store additional code that may be called in reports.#'
 #'
-#' @export
-#'
 #' @examples
-#'
-#' \dontrun{
-#' destination <- file.path(tempdir(), "new_factory")
-#' destination
-#' new_factory(destination)
-#' dir()
-#'
-#' ## check content
-#' list_reports()
-#' list_outputs()
-#'
-#' ## check dependencies
-#' list_deps()
-#' install_deps()
-#'
-#' ## compile a single report:
-#'
-#' compile_report("example_report_1", quiet = TRUE)
-#' list_outputs()
-#'
-#' ## compile all reports (only most recent versions):
-#'
-#' update_reports()
-#' list_outputs()
-#' }
+#' \dontshow{.old_wd <- setwd(tempdir)}
+#' f1 <- new_factory("new_factory_1", move_in = FALSE)
+#' f2 <- new_factory("new_factory_2", include_template = FALSE, move_in = TRUE)
+#' \dontshow{.old_wd <- setwd(tempdir); unlink(f1), unlink(f2)}
+#' @export
 new_factory <- function(name = "new_factory",
                         path = ".",
                         include_template = TRUE,

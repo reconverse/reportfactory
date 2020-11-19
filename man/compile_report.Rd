@@ -6,7 +6,7 @@
 \usage{
 compile_report(
   file,
-  factory = getwd(),
+  factory = ".",
   clean_report_sources = FALSE,
   remove_cache = TRUE,
   encoding = "UTF-8",

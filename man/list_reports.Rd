@@ -4,7 +4,7 @@
 \alias{list_reports}
 \title{List reports in the factory}
 \usage{
-list_reports(factory = getwd(), pattern = NULL, ignore_archive = TRUE)
+list_reports(factory = ".", pattern = NULL, ignore_archive = TRUE)
 }
 \arguments{
 \item{factory}{the path to a report factory; defaults to the current working

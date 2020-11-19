@@ -26,7 +26,7 @@
 #'
 #' ## create new random factory in temp folder
 #' odir <- getwd()
-#' random_factory(tempdir())
+#' x <- random_factory(tempdir())
 #'
 #' ## add content
 #' dir.create(file.path("report_sources", "_archive"))
@@ -57,7 +57,7 @@
 #' dir("report_sources", all.files = TRUE)
 #'
 #' setwd(odir)
-#'
+#' unlink(x)
 
 clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                                  remove_cache = TRUE) {

@@ -12,26 +12,6 @@
 #' @param quiet A logical indicating whether messages should be displayed to the
 #'   console (`TRUE`, default), or not.
 #'
-#' @examples
-#'
-#' ## create random factory
-#' odir <- getwd()
-#' random_factory()
-#'
-#' ## load scripts - nothing to load
-#' rfh_load_scripts()
-#'
-#' ## create toy script, try again
-#' dir.create("src/")
-#' cat("toto <- 1:10", file = "src/toto.R")
-#' rfh_load_scripts()
-#'
-#' ## check that toto exists and is 1:10
-#' toto
-#'
-#' ## restore original working directory
-#' setwd(odir)
-
 rfh_load_scripts <- function(quiet = FALSE) {
 
   ## Approach: we list all .R files in /scripts/ and in /src/, and load all of

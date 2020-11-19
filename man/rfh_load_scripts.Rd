@@ -16,26 +16,6 @@ This helper function will load all `.R` scripts within folders `scripts/` and
 TRUE` so that the current environment (typically that of the compiled report)
 will be visible to all sourced scripts.
 }
-\examples{
-
-## create random factory
-odir <- getwd()
-random_factory()
-
-## load scripts - nothing to load
-rfh_load_scripts()
-
-## create toy script, try again
-dir.create("src/")
-cat("toto <- 1:10", file = "src/toto.R")
-rfh_load_scripts()
-
-## check that toto exists and is 1:10
-toto
-
-## restore original working directory
-setwd(odir)
-}
 \author{
 Thibaut Jombart (thibautjombart@gmail.com)
 }

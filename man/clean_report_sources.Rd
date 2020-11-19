@@ -30,7 +30,7 @@ except for:
 
 ## create new random factory in temp folder
 odir <- getwd()
-random_factory(tempdir())
+x <- random_factory(tempdir())
 
 ## add content
 dir.create(file.path("report_sources", "_archive"))
@@ -61,7 +61,7 @@ clean_report_sources()
 dir("report_sources", all.files = TRUE)
 
 setwd(odir)
-
+unlink(x)
 }
 \author{
 Thibaut Jombart
