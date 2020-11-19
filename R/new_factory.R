@@ -57,13 +57,16 @@ new_factory <- function(name = "new_factory",
   dir.create(file.path(root, "report_sources"))
 
   # copy over skeleton .gitignore
-  copy_system_file("skeleton.gitignore", dest = file.path(root, ".gitignore"))
+  copy_skeleton_file("skeleton.gitignore", dest = file.path(root, ".gitignore"))
 
   # copy over skeleton .Rproj
-  copy_system_file("skeleton.Rproj", dest = file.path(root, "open.Rproj"))
+  copy_skeleton_file(
+    "skeleton.Rproj", 
+    dest = file.path(root, paste0(name, ".Rproj"))
+  )
 
   # copy over README
-  copy_system_file("README.md", dest = root)
+  copy_skeleton_file("README.md", dest = root)
 	
   # create .here
   file.create(file.path(root, ".here"))
@@ -78,18 +81,13 @@ new_factory <- function(name = "new_factory",
     # create scripts folder
     dir.create(file.path(root, "scripts"))
 
-    # copy example reports over
-    for (i in 1:3 ) {
-      copy_system_file(
-        paste0("example_report_", i, ".Rmd"),
-        dest = file.path(root, "report_sources")
-      )
-    }
+    # copy example report over
+    copy_skeleton_file("example_report.Rmd", file.path(root, "report_sources"))
   }
 
   if (move_in) {
     if (rstudioapi::isAvailable()) {
-      rstudioapi::openProject(file.path(root, ".Rproj"))
+      rstudioapi::openProject(file.path(root, paste0(name, ".Rproj")))
 		} else {
       setwd(root)
     }
@@ -98,8 +96,7 @@ new_factory <- function(name = "new_factory",
 }
 
 
-copy_system_file <- function(file, folder = "skeletons",
-                             package = "reportfactory", dest) {
-  f <- system.file(folder, file, package = package)
+copy_skeleton_file <- function(file, dest) {
+  f <- system.file("skeletons", file, package = "reportfactory")
   file.copy(f, dest)
 }

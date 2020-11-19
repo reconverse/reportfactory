@@ -1,87 +1,67 @@
-context("Creation of report factory")
-
-# test_that("new_factory generates the right files - with templates", {
-
-#   skip_on_cran()
-
-#   zip_path <-  system.file("factory_template_default.zip",
-#                            package = "reportfactory")
-
-#   ref_path <- file.path(tempdir(), "ref_factory")
-#   unzip(zipfile = zip_path,
-#         exdir = ref_path)
-
-
-#   new_fac_path <- file.path(tempdir(), "new_factory")
-#   new_factory(new_fac_path, move_in = FALSE)
-
-#   ref_hashes <- tools::md5sum(dir(ref_path,
-#                                   recursive = TRUE,
-#                                   full.names = TRUE,
-#                                   all.files = TRUE))
-#   new_hashes <- tools::md5sum(dir(new_fac_path,
-#                                   recursive = TRUE,
-#                                   full.names = TRUE,
-#                                   all.files = TRUE))
-
-#   expect_identical(unname(ref_hashes), unname(new_hashes))
-
-# })
-
-
-
-
-
-# test_that("new_factory generates the right files - empty factory", {
-
-#   skip_on_cran()
-
-#   zip_path <-  system.file("factory_template_empty.zip",
-#                            package = "reportfactory")
-
-#   ref_path <- file.path(tempdir(), "ref_factory")
-#   unzip(zipfile = zip_path,
-#         exdir = ref_path)
-
-
-#   new_fac_path <- file.path(tempdir(), "new_factory")
-#   new_factory(new_fac_path, move_in = FALSE, include_template = FALSE)
-
-#   ref_hashes <- tools::md5sum(dir(ref_path,
-#                                   recursive = TRUE,
-#                                   full.names = TRUE,
-#                                   all.files = TRUE))
-#   new_hashes <- tools::md5sum(dir(new_fac_path,
-#                                   recursive = TRUE,
-#                                   full.names = TRUE,
-#                                   all.files = TRUE))
-
-#   expect_identical(unname(ref_hashes), unname(new_hashes))
-
-# })
-
-
-
-
-test_that("working directory changes as expected", {
-
-  skip_on_cran()
-
-  ## with no change
+test_that("new_factory generates the right files - with templates", {
+    
   odir <- getwd()
-  f1 <- new_factory("f1", tempdir(), move_in = FALSE)
+  f <- new_factory(path = tempdir(), move_in = FALSE)
+  on.exit(unlink(f, recursive = TRUE))
 
-  ## new_factory with move_in = FALSE should not alter the working directory
   expect_identical(odir, getwd())
-
-
-  ## with a change
-  factory_dir <- new_factory("f2", tempdir(), move_in = TRUE)
-  expect_identical(getwd(), factory_dir)
   
-  # clean up
-  setwd(odir)
-  unlink(f1, recursive = TRUE)
-  unlink(factory_dir, recursive = TRUE)
+  expected_location <- file.path(tempdir(), "new_factory")
   
+  expect_true(dir.exists(expected_location))
+  expect_identical(f, expected_location)
+
+  all_files <- list.files(
+    file.path(tempdir(), "new_factory"),
+    all.files = TRUE,
+    recursive = TRUE,
+    include.dirs = TRUE
+  )
+  
+  expected_files <- c(
+    "report_sources",
+    "report_sources/example_report.Rmd",
+    ".here",
+    ".gitignore",
+    "new_factory.Rproj",
+    "README.md",
+    "data",
+    "data/clean",
+    "data/raw",
+    "scripts"
+    )
+    
+    expect_identical(sort(expected_files), sort(all_files))
+})
+
+test_that("new_factory generates the right files - empty factory", {
+  
+  odir <- getwd()
+  f <- new_factory(path = tempdir(), include_template = FALSE, move_in = TRUE)
+  on.exit({
+    unlink(f, recursive = TRUE)
+    setwd(odir)
+  })
+
+  expected_location <- file.path(tempdir(), "new_factory")
+  expect_true(dir.exists(expected_location))
+  expect_identical(f, expected_location)
+  expect_identical(f, getwd())
+  
+  all_files <- list.files(
+    expected_location,
+    all.files = TRUE,
+    recursive = TRUE,
+    include.dirs = TRUE
+  )
+  
+  expected_files <- c(
+    "report_sources",
+    ".here",
+    ".gitignore",
+    "new_factory.Rproj",
+    "README.md"
+    )
+    
+    expect_identical(sort(expected_files), sort(all_files))
 })
