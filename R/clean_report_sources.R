@@ -16,49 +16,46 @@
 #' @param quiet a logical indicating if the function should throw a message if
 #'   content gets removed; defaults to `FALSE`
 #'
-#' @param remove_cache a logical indicating if `cache` folder should be kept
+#' @param remove_cache a logical indicating if `cache` folder should be removed
 #'
 #' @return invisibly returns the path to the removed files
 #' 
 #' @export
 #'
 #' @examples
-#'
-#' ## create new random factory in temp folder
-#' odir <- getwd()
-#' x <- random_factory(tempdir())
-#'
-#' ## add content
-#' dir.create(file.path("report_sources", "_archive"))
+#' \dontshow{.old_wd <- setwd(tempdir())}
+#' 
+#' ## create new factory
+#' x <- new_factory()
 #'
 #' ## check initial content
 #' dir("report_sources", all.files = TRUE)
 #'
-#' ## add crap
-#' crap_files <- c("toto.txt",
+#' ## add some miscellaneous content
+#' misc_files <- c("toto.txt",
 #'                 "#toto.Rmd#",
 #'                 "toto.Rmd~",
 #'                 "some_file.html",
 #'                 ".hidden")
-#' crap_folders <- c("figures",
+#' misc_folders <- c("figures",
 #'                   "cache",
 #'                   "outputs_xlsx")
 #'
-#' file.create(file.path("report_sources", crap_files))
-#' sapply(file.path("report_sources", crap_folders), dir.create)
+#' file.create(file.path("report_sources", misc_files))
+#' invisible(
+#'   lapply(file.path("report_sources", misc_folders), dir.create)
+#' )
 #'
-#' ## check content with all crap
+#' ## check content with all the additional folders and files
 #' dir("report_sources", all.files = TRUE)
 #'
-#' ## clean the crap
+#' ## clean the 
 #' clean_report_sources()
 #'
 #' ## check content after cleanup
 #' dir("report_sources", all.files = TRUE)
 #'
-#' setwd(odir)
-#' unlink(x)
-
+#' \dontshow{setwd(.old_wd); unlink(x)}
 clean_report_sources <- function(factory = getwd(), quiet = FALSE,
                                  remove_cache = TRUE) {
   ## The approach is is:

@@ -1,4 +1,3 @@
-
 #' Inspect and validate the content of a factory
 #'
 #' This function can be used to inspect the content of a factory and make sure
@@ -36,7 +35,6 @@
 #' defaults to \code{TRUE}.
 #'
 #'
-
 validate_factory <- function(factory = getwd(),
                              warnings = TRUE,
                              errors = TRUE) {

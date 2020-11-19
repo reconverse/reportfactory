@@ -69,7 +69,7 @@ test_that("working directory changes as expected", {
 
   ## with no change
   odir <- getwd()
-  new_factory("f1", tempdir(), move_in = FALSE)
+  f1 <- new_factory("f1", tempdir(), move_in = FALSE)
 
   ## new_factory with move_in = FALSE should not alter the working directory
   expect_identical(odir, getwd())
@@ -78,5 +78,10 @@ test_that("working directory changes as expected", {
   ## with a change
   factory_dir <- new_factory("f2", tempdir(), move_in = TRUE)
   expect_identical(getwd(), factory_dir)
+  
+  # clean up
+  setwd(odir)
+  unlink(f1, recursive = TRUE)
+  unlink(factory_dir, recursive = TRUE)
   
 })

@@ -46,11 +46,15 @@ If `include_template` is TRUE, then the factory will also include:
 
 * `data/raw/`: a folder storing raw data
 * `data/clean/`: a folder storing cleaned data
-* `R/`: a folder to store additional code that may be called in reports.#'
+* `R/`: a folder to store additional code that may be called in reports
 }
 \examples{
-\dontshow{.old_wd <- setwd(tempdir)}
+\dontshow{.old_wd <- setwd(tempdir())}
 f1 <- new_factory("new_factory_1", move_in = FALSE)
 f2 <- new_factory("new_factory_2", include_template = FALSE, move_in = TRUE)
-\dontshow{.old_wd <- setwd(tempdir); unlink(f1), unlink(f2)}
+\dontshow{
+unlink(f1, recursive = TRUE)
+unlink(f2, recursive = TRUE)
+setwd(.old_wd)
+}
 }
