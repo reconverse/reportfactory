@@ -25,7 +25,7 @@ test_that("String returned is the correct class", {
 
 test_that("Vectors of characters are well handled", {
   x <- c("asd", "45", "4555asd")
-  extract_string(x, pattern = "[0-9][:alpha:]")
   expected <- c(NA, NA, "5a")
+  actual <- extract_string(x, pattern = "[0-9][:alpha:]")
   expect_equal(expected, unname(actual))
 })
