@@ -23,6 +23,8 @@ test_that("rfh_find_latest works well", {
                    sub(getwd(), "", rfh_find_latest("linelist")))
   expect_identical("/data/linelist_2020-10-12.csv",
                    sub(getwd(), "", rfh_find_latest("^linelist")))
+ expect_identical(NULL,
+                  rfh_find_latest("yakossomak", quiet = TRUE))
   
   ## test that we can actually read the file
   expected <- "This is a test"
@@ -32,10 +34,6 @@ test_that("rfh_find_latest works well", {
   ## test expected errors / messages
   msg <- "Some files matching requested pattern have no 'yyyy-mm-dd' date"
   expect_message(rfh_find_latest("linelist"), msg)
-
-  msg <- "No 'yyyy-mm-dd' date in files matching requested pattern."
-  expect_error(rfh_find_latest("contacts"),
-               msg)
 
   msg <- "No file matching pattern 'foobar' found in"
   expect_message(rfh_find_latest("foobar"),

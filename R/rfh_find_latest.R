@@ -16,7 +16,30 @@
 #'   default), or not (`FALSE`)
 #'
 #' @param ... further arguments passed to [`list.files`](list.files)
+#'
+#' ## create random factory and toy files
+#' odir <- getwd()
+#' random_factory(tempdir())
+
+#' file.create(file.path("data", "linelist_2020-10-01.xlsx"))
+#' file.create(file.path("data", "linelist_2020-10-12.csv"))
+#' file.create(file.path("data", "linelist.xlsx"))
+#' file.create(file.path("data", "contacts.xlsx"))
+#' file.create(file.path("data", "death_linelist_2020-10-13.xlsx"))
 #' 
+#' ## find the latest data with 'linelist' in the name; note that this
+#' ## matches both 'linelist' and 'death_linelist' files
+#' rfh_find_latest("linelist")
+#' 
+#' ## same, but this time files starting with 'linelist', i.e. excluding
+#' ## 'death_linelist'
+#' rfh_find_latest("^linelist")
+#' 
+#' ## this returns NULL
+#' rfh_find_latest("foobar")
+#' 
+#' setwd(odir)
+
 rfh_find_latest <- function(pattern,
                             where = getwd(),
                             quiet = FALSE,
@@ -63,14 +86,16 @@ rfh_find_latest <- function(pattern,
   # to a file, and only the one in the basename is used
   base_files <- basename(all_files)
   file_dates <- extract_date(base_files)
-  if (all(is.na(file_dates))) {
-    msg <- "No 'yyyy-mm-dd' date in files matching requested pattern."
-    stop(msg)
-  }
+ 
   if (any(is.na(file_dates)) && !quiet) {
     msg <- "Some files matching requested pattern have no 'yyyy-mm-dd' date"
     message(msg)
   }
+
+  to_keep <- !is.na(file_dates)
+  base_files <- base_files[to_keep]
+  file_dates <- file_dates[to_keep]
+  all_files <- all_files[to_keep]
   last_file_index <- which.max(file_dates)
   out <- all_files[last_file_index]
 
