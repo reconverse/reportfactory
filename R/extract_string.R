@@ -29,6 +29,13 @@
 #'
 
 extract_string <- function(x, pattern) {
-  m <- regexpr(pattern, x)
-  regmatches(x, m)
+  extract_string_atomic <- function(x) {
+    m <- regexpr(pattern, x)
+    out <- regmatches(x, m)
+    if (!length(out)) {
+      out <- NA_character_
+    }
+    out
+  }
+  vapply(x, extract_string_atomic, character(1))
 }
