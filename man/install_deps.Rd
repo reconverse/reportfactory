@@ -4,22 +4,22 @@
 \alias{install_deps}
 \title{Install dependencies of reports within}
 \usage{
-install_deps(update = FALSE, ...)
+install_deps(factory = ".", update = FALSE, ...)
 }
 \arguments{
+\item{factory}{The path to the report factory or a folder within the desired
+factory. Defaults to the current directory.}
+
 \item{update}{A logical indicating if packages which are already installed
 should be re-installed (\code{TRUE}); otherwise, only missing packages are
 installed; defaults to \code{FALSE}.}
 
-\item{...}{Arguments to be passed to \code{install.packages}.}
+\item{...}{Arguments to be passed to \code{install.packages()}.}
 }
 \description{
-This function can be used to install package dependencies
-based on the reports within the factory.
+This function can be used to install package dependencies based on the
+reports within the factory.
 }
 \seealso{
 \code{\link{list_deps}} to list dependencies of packages
-}
-\author{
-Thibaut Jombart \email{thibautjombart@gmail.com}
 }

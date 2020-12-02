@@ -1,0 +1,20 @@
+---
+title: "Testing parameterised reports"
+params:
+  test1: "one"
+  test2: "two"
+output:
+  github_document:
+    html_preview: false
+---
+
+test parameter output
+```{r cars}
+a <- params$test1
+a
+b <- params$test2
+b
+c <- params$test3
+c
+```
+

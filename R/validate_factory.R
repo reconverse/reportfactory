@@ -1,143 +1,134 @@
-
 #' Inspect and validate the content of a factory
 #'
-#' This function can be used to inspect the content of a factory and make sure
-#' it looks fine. This includes various sanity checks listed in details. The
-#' function returns a list of error and warning messages.
+#' `validate_factory()` can be used to inspect the content of a factory and make
+#' everything looks fine. This includes various sanity checks listed in details
+#' that will error if a problem is found.
+#' 
+#' @inheritParams compile_reports
+#' @param allow_duplicates A logical indicating duplicate filenames are
+#'   allowed across folders.
 #'
 #' @details
-#' Checks ran on the factory include
-#' (the result of a failure is indicated in brackets):
-#'
-#' \itemize{
-#'
-#'  \item the directory exists [error]
-#'
-#'  \item all mandatory files exist: .here, .gitignore [error]
-#'
-#'  \item all mandatory folders exist: report_sources/ [error]
-#'
-#'  \item all .Rmd reports have unique names once outside their folders (to
-#'  avoid conflicts in outputs) [warning]
-#'
-#' }
-#'
+#' Checks run on the factory include:
+#'   * the factory directory exists;
+#'   * the factory_config file exist;
+#'   * all mandatory folders exist - by default these are 'report_sources/'
+#'     and 'outputs/';
+#'   * (optionally) all .Rmd reports have unique names once outside their
+#'     folders.
+#' 
+#' @return A list with 4 entries:
+#'   * root - the root folder path of the factory;
+#'   * factory_name - the name of the report factory;
+#'   * report_sources - the name of the report_sources folder; and
+#'   * outputs - the name of the outputs folder.
 #'
 #' @export
-#'
-#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
-#'
-#' @inheritParams compile_report
-#'
-#' @param warnings A logical indicating if warnings should be issued;
-#' defaults to \code{TRUE}.
-#'
-#' @param errors A logical indicating if errors should be issued;
-#' defaults to \code{TRUE}.
-#'
-#'
+validate_factory <- function(factory = ".", allow_duplicates = TRUE) {
 
-validate_factory <- function(factory = getwd(),
-                             warnings = TRUE,
-                             errors = TRUE) {
+  # this finds the folder containing factory_config or errors if not possible
+  root <- factory_root(factory)
 
-  out <- list(warnings = character(0),
-              errors = character(0))
+  # load configuration
+  config <- as.data.frame(read.dcf(fs::path(root, "factory_config")))
 
-  ## check that the directory exists
-
-  if (!dir.exists(factory)) {
-      msg <- sprintf("the directory '%s' does not exist", factory)
-      stop(msg)
+  # the factory name is present in factory_config
+  factory_name <- config$name
+  if (is.null(factory_name)) {
+    stop(
+      "'name' is missing from factory_config.\n",
+      "       Have you edited the file by mistake?",
+      call. = FALSE
+    )
   }
 
-  odir <- getwd()
-  on.exit(setwd(odir))
-  setwd(factory)
-
-
-  ## check that all files and folders are there
-
-  content <- dir(all.files = TRUE)
-  check_item <- function(x) {
-    is_folder <- length(grep("/$", x)) > 0L
-    f <- ifelse(is_folder, dir.exists, file.exists)
-
-    if (!f(x)) {
-      msg <- sprintf("%s '%s' is missing",
-                     ifelse(is_folder, "folder", "file"),
-                     x)
-      out$errors <<- c(out$errors, msg)
-    }
-  }
-  expected <- c(".here", ".gitignore", "report_sources/")
-  for (e in expected) {
-    check_item(e)
+  # the factory folder matches the name from factory_config
+  folder <- fs::path_split(root)
+  folder <- folder[[1]][length(folder[[1]])]
+  if (folder != factory_name) {
+    stop(
+      "Have you renamed the factory?\n",
+      sprintf(
+        "Expecting factory to be called '%s' not '%s'. Please rename", 
+        factory_name,
+        folder      
+      ),
+      call. = FALSE
+    )
   }
 
+  # report_sources is present in factory_config
+  report_sources <- config$report_sources
+  if (is.null(report_sources)) {
+    stop(
+      "'report_sources' is missing from factory_config.\n",
+      "       Have you edited the file by mistake?",
+      call. = FALSE
+    )
+  }
 
-  ## these checks rely on the existence of 'report_sources/'
+  # the report_source folder matches the name from factory_config
+  pth <- fs::path(root, report_sources)
+  if (!fs::dir_exists(pth)) {
+    stop(
+      sprintf(
+        "Folder '%s' does not exist.  Have you renamed it by mistake?",
+        report_sources
+      ),
+      call. = FALSE
+    )
+  }
+  
+  # outputs is present in factory_config
+  outputs <- config$outputs
+  if (is.null(outputs)) {
+    stop(
+      "'outputs' is missing from factory_config.\n",
+      "       Have you edited the file by mistake?",
+      call. = FALSE
+    )
+  }
 
-  if (dir.exists("report_sources")) {
-    ## check that all reports are unique
+  # the outputs folder matches the name from factory_config
+  pth <- fs::path(root, outputs)
+  if (!fs::dir_exists(pth)) {
+    stop(
+      sprintf(
+        "Folder '%s' does not exist.  Have you renamed it by mistake?",
+        outputs
+      ),
+      call. = FALSE
+    )
+  }
+    
+  # optionally, check for duplicate filenames
+  if (!allow_duplicates) {
+    # check that all reports are unique
+    filepaths <- fs::dir_ls(
+      fs::path(root, report_sources),
+      type = "file",
+      recurse = TRUE,
+      regexp = "\\.[rR]md$"
+    )
 
-
-    files <- dir("report_sources",
-                 recursive = TRUE, pattern = ".Rmd$",
-                 ignore.case = TRUE, full.names = TRUE)
-    files <- gsub(".*/", "", files)
-
-    is_duplicated <- duplicated(files)
-
-    if (any(is_duplicated)) {
-      if (errors) {
-        culprits <- files[is_duplicated]
-        msg <- sprintf("the following reports are duplicated:\n%s",
-                       paste(culprits, collapse = "\n"))
-        out$errors <- c(out$errors, msg)
-      }
-
-    }
-
-
-    ## check that the report_sources/ only contains `Rmd` files
-
-    files <- list.files("report_sources/", recursive = TRUE)
-    files <- ignore_tilde(files)
-
-    is_rmd <- grep("[.]rmd$", tolower(files))
-    not_rmd <- setdiff(seq_along(files), is_rmd)
-    if (length(not_rmd) > 0L) {
-      if (warnings) {
-        culprits <- files[not_rmd]
+    if (length(filepaths) > 0) {
+      filenames <- tolower(fs::path_file(filepaths))
+      dups <- duplicated(filenames) | duplicated(filenames, fromLast = TRUE)
+      dups <- filepaths[dups]
+      if (length(dups) > 0) {
         msg <- sprintf(
-          "the following files in 'report_sources/' are not .Rmd:\n%s",
-          paste(culprits, collapse = "\n"),
-          "\nWe recommend only storing .Rmd in report_sources/",
-          "Store data, scripts etc. in separate folders and refer",
-          "to files using e.g. 'here::here(data/my_data.R)'")
-        out$warnings <- c(out$warnings, msg)
+          "Be aware that the following reports have duplicated filename:\n%s",
+          paste(dups, collapse = "\n")
+        )
+        stop(msg, call. = FALSE)
       }
     }
-
   }
 
-
-  if (warnings) {
-    if (length(out$warnings) > 0L) {
-      msg <- paste(out$warnings, collapse = "\n")
-      warning("the following warnings were found:\n", msg)
-    }
-  }
-
-
-  if (errors) {
-    if (length(out$errors) > 0L) {
-      msg <- paste(out$errors, collapse = "\n")
-      stop("the following errors were found:\n", msg)
-    }
-  }
-
-
-  return(out)
+  list(
+    root = root,
+    factory_name = factory_name,
+    report_sources = report_sources,
+    outputs = outputs
+  )
 }

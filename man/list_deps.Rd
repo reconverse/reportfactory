@@ -4,23 +4,17 @@
 \alias{list_deps}
 \title{List dependencies of reports within a factory}
 \usage{
-list_deps(missing = FALSE, factory = getwd())
+list_deps(factory = ".", missing = FALSE)
 }
 \arguments{
-\item{missing}{A logical indicating if only missing dependencies should be
-listed (\code{TRUE}); otherwise, all packages needed in the reports are
-listed; defaults to \code{FALSE}}
+\item{factory}{The path to the report factory or a folder within the desired
+factory. Defaults to the current directory.}
 
-\item{factory}{the path to a report factory; defaults to the current working
-directory}
+\item{missing}{A logical indicating if only missing dependencies should be
+listed (\code{TRUE}); otherwise, all packages needed in the reports are listed;
+defaults to \code{FALSE}}
 }
 \description{
 This function can be used to list package dependencies based of the reports
 within the factory. It is a wrapper for \code{checkpoint::scanForPackages}.
-}
-\seealso{
-\code{\link{install_deps}} to install dependencies
-}
-\author{
-Thibaut Jombart \email{thibautjombart@gmail.com}
 }

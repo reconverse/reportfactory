@@ -1,23 +1,32 @@
 Package: reportfactory
-Type: Package
 Title: Lightweight Infrastructure for Handling Multiple Rmarkdown Documents
-Version: 0.0.6
-Authors@R: c(person("Thibaut", "Jombart", role = c("aut", "cre"), email =
-  "thibautjombart@gmail.com"),
-  person("Zhian N.", "Kamvar", role = "ctb", email = "zkamvar@gmail.com"),
-  person("Amy", "Gimma", role = "ctb", email = "amyg225@gmail.com"))
-Description: Provides an infrastructure for handling multiple dated reports using \code{rmarkdown::render}, including automated curation and time-stamping of outputs, parametrisation, dependencies, and some helper functions.
+Version: 0.0.7
+Authors@R: c(
+  person("Thibaut", "Jombart", role = c("aut", "cre"), email = "thibautjombart@gmail.com"), 
+  person("Zhian N.", "Kamvar", role = "aut", email = "zkamvar@gmail.com"),
+  person("Amy", "Gimma", role = "ctb", email = "amyg225@gmail.com"),
+  person("Tim", "Taylor", role ="aut", email = "tim.taylor@hiddenelephants.co.uk",
+         comment = c(ORCID = "0000-0002-8587-7113"))
+ )
+Description: Provides an infrastructure for handling multiple dated reports
+  using \code{rmarkdown::render}, including automated curation and time-stamping
+  of outputs, parametrisation, dependencies, and some helper functions.
 License: MIT + file LICENSE
 URL: https://github.com/reconhub/reportfactory
-Encoding: UTF-8
 BugReports: https://github.com/reconhub/reportfactory/issues
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Imports:
+Suggests: 
+    testthat,
+    covr
+Imports: 
+    rprojroot,
+    fs,
+    rmarkdown,
+    utils,
     checkpoint,
-    rmarkdown (>= 1.13),
-    rprojroot
-Suggests:
-    here,
-    knitr,
-    testthat (>= 2.1.0)
-VignetteBuilder: knitr
+    yaml,
+    callr
+Config/testthat/edition: 3

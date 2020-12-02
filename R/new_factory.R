@@ -4,86 +4,132 @@
 #' factory is created with a template of report, and the working environment is
 #' moved to the newly created factory.
 #'
+#' @param factory The name of the report factory to be created.
+#' @param path The folder where the report factory should be created.  This
+#'   will default to the current directory.
+#' @param report_sources The name of the folder to be used for report
+#'   templates.  Defaults to 'report_sources/'.
+#' @param outputs The name of the folder to be used for saving the built
+#'   reports.  Defaults to 'outputs/'.
+#' @param move_in A `logical` indicating if the current session should move into
+#'   the created factory; defaults to `TRUE`.
+#' @param create_README A `logical` indicating if a 'README' file should be
+#'   created; defaults to TRUE.
+#' @param create_example_report A `logical` indicating if `new_factory()` should
+#'   create an example report in the 'report_sources' folder along with some
+#'   example data in the 'data/raw' folder; defaults to TRUE.
+#' @param create_data_folders a `logical` indicating if `new_factory()` should
+#'   create folders to store data; defaults to TRUE.
+#' @param create_scripts_folder a `logical` indicating if `new_factory()` should
+#'   create folders to store R scripts; defaults to TRUE.
+#' @param use_here a `logical` indicating if `new_factory()` should create
+#'   a `.here` that can be used with `here::here()`.
+#' @param create_gitignore a `logical` indicating if `new_factory()` should create
+#'   a minimal '.gitignore' file;; defaults to TRUE.
+
+#' @return the report factory folder location (invisibly)
+#'
 #' @details
-#' The default factory includes:
+#' Assuming the default names are used then `new_factory` will create a report
+#' factory folder (called "new_factory") that includes:
 #'
-#' \itemize{
+#' * `report_sources`: a folder for storing the .Rmd reports
+#' * `outputs`: a folder storing the compiled reports
+#' * `factory_config`: a control file used to anchor a report factory
 #'
-#'  \item \code{data/}: a folder storing data
+#' Depending on the values of the logical arguments, the factory may also
+#' include:
 #'
-#'  \item \code{report_sources/}: a folder storing the reports, named after the
-#' convention described in \code{\link{update_reports}}, and stored in
-#' subfolders \code{contacts} and \code{epicurves}
-#'
-#'  \item \code{.gitignore}: a file used to tell git to ignore the produced
-#' outputs in \code{report_outputs}
-#'
-#'  \item \code{open.Rproj}: an Rproject to open the factory using Rstudio
-#'
-#'  \item \code{.here}: an empty file used as anchor by \code{\link[here]{here}}
-#'
-#' }
-#'
-#' @param destination the name of the report factory folder to be created
-#'
-#' @param include_template a logical indicating if a template of report
-#' and folders structure shoud be added to the factory; defaults to `TRUE`
-#'
-#' @param move_in a `logical` indicating if the current session should move into
-#'   the created factory; defaults to `TRUE`
-#'
-#' @export
-#'
-#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
+#' * `README.md`: Example README with instructions on how to use report factory.
+#' * `.gitignore`: a file used to tell git to ignore certain files including the
+#'   produced outputs in `outputs()`.
+#' * `data/raw/`: a folder for storing raw data
+#' * `data/raw/example_data.csv`: a set of data for use with the example report
+#' * `data/clean/`: a folder for storing cleaned data
+#' * `scripts/`: a folder to store additional code that may be called in reports
+#' * `report_sources/example_report.Rmd`: an example .Rmd report template
+#' * `.here`: a file to anchor calls to `here::here()`
 #'
 #' @examples
-#'
-#' \dontrun{
-#' destination <- file.path(tempdir(), "new_factory")
-#' destination
-#' new_factory(destination)
-#' dir()
-#'
-#' ## check content
-#' list_reports()
-#' list_outputs()
-#'
-#' ## check dependencies
-#' list_deps()
-#' install_deps()
-#'
-#' ## compile a single report:
-#'
-#' compile_report("contacts_2017-10-29", quiet = TRUE)
-#' list_outputs()
-#'
-#' ## compile all reports (only most recent versions):
-#'
-#' update_reports()
-#' list_outputs()
+#' \dontshow{.old_wd <- setwd(tempdir())}
+#' f1 <- new_factory("new_factory_1", move_in = FALSE)
+#' f2 <- new_factory("new_factory_2", move_in = TRUE)
+#' \dontshow{
+#' unlink(f1, recursive = TRUE)
+#' unlink(f2, recursive = TRUE)
+#' setwd(.old_wd)
 #' }
+#'
+#' @export
+new_factory <- function(factory = "new_factory", path = ".",
+                        report_sources = "report_sources",
+                        outputs = "outputs", move_in = TRUE,
+                        create_README = TRUE, create_example_report = TRUE,
+                        create_data_folders = TRUE,
+                        create_scripts_folder = TRUE, use_here = TRUE,
+                        create_gitignore = TRUE) {
 
-new_factory <- function(destination = "new_factory",
-                        include_template = TRUE,
-                        move_in = TRUE) {
+  # create report factory folder
+  root <- fs::path(path, factory)
+  if (fs::dir_exists(root)) {
+		stop("Directory '", factory, "' already exists. Aborting.", call. = FALSE)
+	} else {
+		fs::dir_create(root)
+	}
 
-  ## factory with example data and reports is not the default, but will override
-  ## the template if requested
+  # create report outputs folder
+  fs::dir_create(fs::path(root, report_sources))
 
-  if (include_template) {
-    zip_path <- system.file("factory_template_default.zip",
-                            package = "reportfactory")
-  } else {
-    zip_path <- system.file("factory_template_empty.zip",
-                            package = "reportfactory")
+  # create report_sources folder
+  fs::dir_create(fs::path(root, outputs))
+
+  # create the factory configuration file
+  write.dcf(
+    x = data.frame(
+      name = factory,
+      report_sources = report_sources,
+      outputs = outputs
+    ),
+    file = fs::path(root, "factory_config")
+  )
+
+  # conditionally create the README
+  if (create_README) {
+    copy_skeleton_file("README.md", dest = root)
   }
 
-  utils::unzip(zipfile = zip_path, exdir = destination)
+    # conditionally create the data folders
+  if (create_data_folders) {
+    clean_folder <- fs::path(root, "data", "clean")
+    fs::dir_create(clean_folder)
+    raw_folder <- fs::path(root, "data", "raw")
+    fs::dir_create(raw_folder)
+  }
 
+  # conditionally create the scripts folder
+  if (create_scripts_folder) {
+    fs::dir_create(fs::path(root, "scripts"))
+  }
+
+  # create .here file
+  if (use_here) {
+    file.create(file.path(root, ".here"))
+  }
+
+  # copy over skeleton .gitignore
+  if (create_gitignore) {
+    copy_skeleton_file("skeleton.gitignore", dest = fs::path(root, ".gitignore"))
+  }
+
+  # conditionally copy over the example report and data
+  if (create_example_report) {
+    copy_skeleton_file("example_report.Rmd", fs::path(root, report_sources))
+    f <- fs::path_package("reportfactory", "extdata", "example_data.csv")
+    fs::file_copy(f, fs::path(root, "data", "raw"))
+  }
 
   if (move_in) {
-    setwd(destination)
+    setwd(root)
   }
-
-  return(destination)
+  invisible(root)
 }

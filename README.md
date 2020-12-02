@@ -1,32 +1,42 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Travis-CI Build
-Status](https://travis-ci.org/reconhub/reportfactory.svg?branch=master)](https://travis-ci.org/reconhub/reportfactory)
-[![Build
-status](https://ci.appveyor.com/api/projects/status/7h2mgej230dv5r7w/branch/master?svg=true)](https://ci.appveyor.com/project/thibautjombart/reportfactory/branch/master)
-[![Coverage
-Status](https://codecov.io/github/reconhub/reportfactory/coverage.svg?branch=master)](https://codecov.io/github/reconhub/reportfactory?branch=master)
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/reportfactory)](https://cran.r-project.org/package=reportfactory)
-[![CRAN
-Downloads](https://cranlogs.r-pkg.org/badges/reportfactory)](https://cran.r-project.org/package=reportfactory)
+<!-- badges: start -->
+
+[![R-CMD-check](https://github.com/reconhub/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/reportfactory/actions)
+[![Codecov test
+coverage](https://codecov.io/gh/reconhub/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/reportfactory?branch=master)
+<!-- badges: end -->
 
 # Welcome to reportfactory\!
 
+<br> **<span style="color: red;">NOTE</span>**
+
+This version of {reportfactory} works in a very different way to the
+previous unreleased version. For those already using {reportfactory} in
+their pipelines you can obtain the old version using the {remotes}
+package:
+
+``` r
+remotes::install_github("reconhub/reportfactory@old_version")
+```
+
+You can also download it directly from
+<https://github.com/reconhub/reportfactory/releases/tag/old_version>.
+
 ## reportfactory in a nutshell
 
-{reportfactory} is a lightweight R package which facilitates a workflow
-for compiling multiple `.Rmd` reports using `rmarkdown::render()` within
-a folder.
+{reportfactory} is a R package which facilitates a workflow for
+compiling multiple `.Rmd` reports within a folder.
 
 There a few key principles it adheres to:
 
-  - *Lightweight* Low dependencies for easy installation in environments
-    where internet connections are unreliable.
-  - *Reproducible* Time-stamped names and folders make viewing the same
-    report over time a breeze.
-  - *Time-saving* Easy convenience functions to compile one or many
-    reports
+  - *Simplicity* Only focusses on the compilation of reports not data
+    management.
+  - *Reproducible* Time-stamped folder structure and customisable
+    subfolder make viewing the same report over time a breeze.
+  - *Time-saving* Easy convenience functions to reports based on regular
+    expressions.
 
 ![reportfactory
 diagram](https://raw.githubusercontent.com/reconhub/reportfactory/master/artwork/workflow.png)
@@ -39,119 +49,116 @@ To install the development version of the package, use:
 remotes::install_github("reconhub/reportfactory")
 ```
 
-Note that this requires the package `remotes` installed.
-
 ## Quick start
 
 ### Step 1 - Create a new factory
 
-Create and open a new factory. Here, we create the factory with a
-default template but stay in our current activities (set `move_in` to
-TRUE to switch projects). Check out more templates at
-[reconhub/report\_factories\_templates](https://github.com/reconhub/report_factories_templates).
+Create and open a new factory. Here, we create the factory with mostly
+the default settings but stay in our current working directory (set
+`move_in` to TRUE to switch directories).
 
 ``` r
 library(reportfactory)
-factory_proj <- "new_factory"
-new_factory(file.path(factory_proj), include_template = TRUE, move_in = FALSE)
-#> [1] "new_factory"
+new_factory("my_factory", path = tempdir())
 ```
 
 ### Step 2 - Add your reports
 
-Here we’ve already created some with the `include_template` being set to
-TRUE (the default). The helper functions below show the state of the
-factory.
+Here we’ve already created some with most of the default arguments being
+set to TRUE (the default). These default settings include both an
+example report and some associated data
+(`report_sources/example_report.Rmd` and `data/raw/example_data.csv`).
+The helper functions below show the state of the factory.
 
 ``` r
-list_reports(factory_proj)
-#> [1] "example_report_2019-01-31.Rmd"
-list_outputs(factory_proj)
+list_reports()       # list all available report sources
+#> example_report.Rmd
+list_deps()          # list all of the dependencies of the reports
+#> [1] "here"       "incidence2"
+list_outputs()       # currently empty
 #> character(0)
-list_deps(factory = factory_proj) # list all needed packages
-#> [1] "here"
 ```
 
 ### Step 3 - Compile report(s)
 
-#### Option 1 - A single report
+The `compile_reports()` function can be used to compile a report using
+regular expressions matched against the full filename of reports within
+the factory.
 
-The `compile_report()` function can be used to compile a report using
-its name, or a partial match for its name. This is useful when you’re
-actively working on developing a single report.
+This ability to use of regular expressions is useful when you’re
+actively working on developing your reports but once the factory is
+setup we recommend passing full filenames to the function so it is
+always clear what will be built.
 
 ``` r
-compile_report("example_report_2019-01-31.Rmd", factory = factory_proj, quiet = TRUE)
+compile_reports( 
+  reports = "example_report.Rmd"
+)
+#> >>> Compiling report: example_report
+#> All done!
 ```
 
-Use helper functions to see progress.
+Use `list_ouputs()` to view the report outputs.
 
 ``` r
-list_outputs(factory_proj)
-#> character(0)
+list_outputs()
+#> example_report/2020-12-02_T21-42-07/example_report.Rmd
+#> example_report/2020-12-02_T21-42-07/example_report.html
 ```
 
-#### Option 2 - All reports with updates
-
-Compile all reports to get their outputs. By default, this just compiles
-the most recent versions.
+`compile_reports()` can also be used to pass a set of parameters to use
+with a parameterised report (here we use a subfolder argument to
+distinguish the parameterised reports).
 
 ``` r
-update_reports(factory_proj)
-#> 
-#> /// compiling report: 'example_report_2019-01-31'
-#> 
-#> /// 'example_report_2019-01-31' done!
-list_outputs(factory_proj)
-#> [1] "example_report_2019-01-31/compiled_2020-03-23_17-38-27/example_report_2019-01-31.html"
+compile_reports(
+  reports = "example_report.Rmd",
+  params = list(grouped_plot = FALSE),
+  subfolder = "regional"
+)
+#> >>> Compiling report: example_report
+#>       - with parameters: grouped_plot = FALSE
+#> All done!
+list_outputs()
+#> example_report/2020-12-02_T21-42-07/example_report.Rmd
+#> example_report/2020-12-02_T21-42-07/example_report.html
+#> example_report/regional/2020-12-02_T21-42-08/example_report.Rmd
+#> example_report/regional/2020-12-02_T21-42-08/example_report.html
 ```
 
-#### Option 3 - All reports
-
-Compile all reports to get their outputs. By default, this just compiles
-the most recent versions.
+If you want to have an overview of your entire factory then you can use
+the `fs` package and the `dir_tree` function:
 
 ``` r
-update_reports(factory_proj, all = TRUE)
-#> 
-#> /// compiling report: 'example_report_2019-01-31'
-#> 
-#> /// 'example_report_2019-01-31' done!
-list_outputs(factory_proj)
-#> [1] "example_report_2019-01-31/compiled_2020-03-23_17-38-27/example_report_2019-01-31.html"
-#> [2] "example_report_2019-01-31/compiled_2020-03-23_17-38-30/example_report_2019-01-31.html"
-```
-
-### Step 4 - Consolidate latest outputs
-
-You can now get a single directory of the latest report outputs using:
-
-``` r
-ship_reports(factory = factory_proj, most_recent = TRUE)
-#> 
-#> /// Shipping example_report_2019-01-31 outputs: 
-#> 
-#> example_report_2019-01-31.html
-list.dirs(factory_proj)
-#>  [1] "new_factory"                                                                                   
-#>  [2] "new_factory/data"                                                                              
-#>  [3] "new_factory/data/clean"                                                                        
-#>  [4] "new_factory/data/raw"                                                                          
-#>  [5] "new_factory/report_outputs"                                                                    
-#>  [6] "new_factory/report_outputs/example_report_2019-01-31"                                          
-#>  [7] "new_factory/report_outputs/example_report_2019-01-31/compiled_2020-03-23_17-38-27"             
-#>  [8] "new_factory/report_outputs/example_report_2019-01-31/compiled_2020-03-23_17-38-30"             
-#>  [9] "new_factory/report_sources"                                                                    
-#> [10] "new_factory/scripts"                                                                           
-#> [11] "new_factory/shipped_2020-03-23_17-38-33"                                                       
-#> [12] "new_factory/shipped_2020-03-23_17-38-33/example_report_2019-01-31"                             
-#> [13] "new_factory/shipped_2020-03-23_17-38-33/example_report_2019-01-31/compiled_2020-03-23_17-38-30"
+fs::dir_tree()
+#> .
+#> ├── README.md
+#> ├── data
+#> │   ├── clean
+#> │   └── raw
+#> │       └── example_data.csv
+#> ├── factory_config
+#> ├── outputs
+#> │   └── example_report
+#> │       ├── 2020-12-02_T21-42-07
+#> │       │   ├── example_report.Rmd
+#> │       │   └── example_report.html
+#> │       └── regional
+#> │           └── 2020-12-02_T21-42-08
+#> │               ├── example_report.Rmd
+#> │               └── example_report.html
+#> ├── report_sources
+#> │   └── example_report.Rmd
+#> └── scripts
 ```
 
 ## Contributing guidelines
 
 Contributions are welcome via **pull requests**.
 
-Please note that this project is released with a [Contributor Code of
-Conduct](CONDUCT.md). By participating in this project you agree to
-abide by its terms.
+### Code of Conduct
+
+Please note that the reportfactory project is released with a
+[Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
+By contributing to this project, you agree to abide by its terms.
