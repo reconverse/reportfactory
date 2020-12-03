@@ -23,7 +23,7 @@ list_reports <- function(factory = ".", pattern = NULL, ...) {
       fs::path(root, report_sources),
       all = TRUE,
       recurse = TRUE,
-      regexp = ".Rmd$"
+      regexp = "\\.Rmd$"
     ),
     fs::path(root, report_sources)
   )
