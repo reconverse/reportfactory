@@ -102,8 +102,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> example_report/2020-12-07_T11-48-06/example_report.Rmd
-#> example_report/2020-12-07_T11-48-06/example_report.html
+#> example_report/2020-12-07_T16-41-53/example_report.Rmd
+#> example_report/2020-12-07_T16-41-53/example_report.html
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -120,10 +120,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> example_report/2020-12-07_T11-48-06/example_report.Rmd
-#> example_report/2020-12-07_T11-48-06/example_report.html
-#> example_report/regional/2020-12-07_T11-48-07/example_report.Rmd
-#> example_report/regional/2020-12-07_T11-48-07/example_report.html
+#> example_report/2020-12-07_T16-41-53/example_report.Rmd
+#> example_report/2020-12-07_T16-41-53/example_report.html
+#> example_report/regional/2020-12-07_T16-41-54/example_report.Rmd
+#> example_report/regional/2020-12-07_T16-41-54/example_report.html
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -137,11 +137,11 @@ For instance:
 ### Factory overview
 
 If you want to have an overview of your entire factory then you can use
-the `fs` package and the `dir_tree` function:
+the `factory_overview()` function:
 
 ``` r
-fs::dir_tree()
-#> .
+factory_overview()
+#> /tmp/RtmpHmCFkN/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -150,11 +150,11 @@ fs::dir_tree()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-07_T11-48-06
+#> │       ├── 2020-12-07_T16-41-53
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-07_T11-48-07
+#> │           └── 2020-12-07_T16-41-54
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources

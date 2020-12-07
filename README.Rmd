@@ -133,9 +133,9 @@ is interpreted as a subset of files output by list_reports(). For instance:
 ### Factory overview
 
 If you want to have an overview of your entire factory then you can use the
-`fs` package and the `dir_tree` function:
-```{r dirtree}
-fs::dir_tree()
+`factory_overview()` function:
+```{r factoryoverview}
+factory_overview()
 ```
 
 ## Contributing guidelines
