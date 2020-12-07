@@ -26,7 +26,7 @@ external files in the `.Rmd` using `here::here()`, and you’re sorted.
   - `list_reports()`: lists reports currently stored in the factory
     (only `.Rmd` source files)
 
-  - `compile_report()`: compiles one or more reports: An individual report can
+  - `compile_reports()`: compiles one or more reports: An individual report can
     be compiled using the exact file name or a non-ambiguous match; multiple
     reports can be compiled by using a regular expression to match report names;
     all reports can be compiled if the argument is left empty.  Compiled reports

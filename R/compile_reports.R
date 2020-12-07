@@ -33,10 +33,11 @@ compile_reports <- function(factory = ".", reports = NULL,
                             timestamp = format(Sys.time(), "%Y-%m-%d_T%H-%M-%S"), 
                             ...) {
   
-  # force timestamp to evaluate as soon as function called
+  # force timestamp to evaluate as soon as function called - needed due to the
+  # `Sys.time` call within the default argument
   force(timestamp)
   
-  # move in to factory
+  # get factory root, report_sources and output folders
   tmp <- validate_factory(factory)
   root <- tmp$root
   report_sources <- tmp$report_sources
