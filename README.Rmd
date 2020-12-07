@@ -123,6 +123,15 @@ compile_reports(
 list_outputs()
 ```
 
+Note that reports can also be an integer or a logical vector, in which case it
+is interpreted as a subset of files output by list_reports(). For instance:
+  
+  * `compile_reports(reports = c(1, 3))` will compile the first and third
+    reports listed by list_reports(); and
+  * `compile_reports(reports = TRUE)` will compile all reports.
+
+### Factory overview
+
 If you want to have an overview of your entire factory then you can use the
 `fs` package and the `dir_tree` function:
 ```{r dirtree}
