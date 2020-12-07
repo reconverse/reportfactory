@@ -9,14 +9,14 @@
 #'   installed; defaults to `FALSE`.
 #' @param ... Arguments to be passed to `install.packages()`.
 #' 
-#' @seealso \code{\link{list_deps}} to list dependencies of packages
+#' @seealso `list_deps()` to list dependencies of packages
 #' 
 #' @export
 install_deps <- function(factory = ".", update = FALSE, ...) {
 
   pkg_to_install <- list_deps(factory = factory, missing = !update)
 
-  if (length(pkg_to_install) > 0L) {
+  if (length(pkg_to_install)){
     utils::install.packages(pkg_to_install, ...)
   } else {
     message("All packages needed are already installed.")

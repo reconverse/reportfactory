@@ -26,13 +26,11 @@ external files in the `.Rmd` using `here::here()`, and you’re sorted.
   - `list_reports()`: lists reports currently stored in the factory
     (only `.Rmd` source files)
 
-  - `compile_report()`: compiles one single report, designated using the
-    file name or a non-ambiguous match; outputs will be stored in
-    `outputs/`
-
-  - `update_reports()`: compiles all report, using by default the most
-    recent version of each report; outputs will be stored in
-    `outputs/`
+  - `compile_report()`: compiles one or more reports: An individual report can
+    be compiled using the exact file name or a non-ambiguous match; multiple
+    reports can be compiled by using a regular expression to match report names;
+    all reports can be compiled if the argument is left empty.  Compiled reports
+    will be stored in `outputs/`.
 
 ## Suggested workflow
 
@@ -47,7 +45,7 @@ external files in the `.Rmd` using `here::here()`, and you’re sorted.
     happy with the results, **make sure you remove all output files from
     the source folder**
 
-4.  run `update_reports()` to generate all outputs, or
-    `compile_report("foobar")` if you just want to produce
-    time-stamped outputs for this report; check results in the folder
-    `outputs`
+4.  run `compile_reports()` to generate all outputs, or
+    `compile_reports("foobar")` if you just want to produce time-stamped
+    outputs for reports that can be matched via regular expressions by "foobar";
+    check results in the folder `outputs/`.

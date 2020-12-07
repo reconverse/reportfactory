@@ -2,7 +2,6 @@ library(fs)
 test_that("factory_root errors correctly", {
   expect_error(factory_root(path_temp()), "is not part of a report factory")
   expect_error(factory_root("thiswillerror"), "does not exist")
-  expect_error(factory_root(), "Are you in the wrong folder")
 
   odir <- setwd(tempdir())
   on.exit(setwd(odir))

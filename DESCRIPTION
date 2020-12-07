@@ -8,7 +8,7 @@ Authors@R: c(
   person("Tim", "Taylor", role ="aut", email = "tim.taylor@hiddenelephants.co.uk",
          comment = c(ORCID = "0000-0002-8587-7113"))
  )
-Description: Provides an infrastructure for handling multiple dated reports
+Description: Provides an infrastructure for handling multiple reports
   using \code{rmarkdown::render}, including automated curation and time-stamping
   of outputs, parametrisation, dependencies, and some helper functions.
 License: MIT + file LICENSE

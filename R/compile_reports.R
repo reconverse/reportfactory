@@ -1,23 +1,29 @@
-#' Compile an R Markdown report
+#' Compile one or several R Markdown reports
 #' 
 #' @param factory The path to the report factory or a folder within the desired
 #'   factory. Defaults to the current directory.
 #' @param reports Either a regular expression (passed directly to `grep()`) that
 #'   matches to the report paths you would like to compile or an integer/logical
-#'   vector.  If `reports` is an integer or character vector then a call of 
+#'   vector.  If `reports` is an integer or logical vector then a call of 
 #'   `compile_reports(factory, reports = idx)` is equivalent to
 #'   `compile_reports(factory, list_reports(factory)[idx])`.
-#' @param params A named list of parameters to be fed to each report that
-#'   matches the regular expression.  If a report has default parameters set in
-#'   it's yaml heading and their are duplicates then preference is given to the
-#'   value supplied here. 
+#' @param params A named list of parameters to be used for compiling reports,
+#'   passed to `rmarkdown::render()` as the params argument. Values specified
+#'   here will take precedence over default values specified in YAML headers of
+#'   the reports. Note that the set of parameter is used for all compiled
+#'   reports. 
 #' @param quiet A logical indicating if messages from R Markdown compilation
 #'   should be displayed; `TRUE` by default.
-#' @param timestamp timevalue used in the folder structure of the report output.
-#'   If NULL, `format(Sys.time(), "%Y-%m-%d_T%H-%M-%S")` will be used and it's
-#'   evaluation forced immediately.
+#' @param timestamp A character indicating the date-time format to be used for
+#'   timestamps. Timestamps are used in the folder structure of outputs. If
+#'   NULL, the format format(Sys.time(), "%Y-%m-%d_T%H-%M-%S") will be used.
+#'   Note that the timestamp corresponds to the time of the call to 
+#'   compile_reports(), so that multiple reports compiled using a single call
+#'   to the function will have identical timestamps.
 #' @param subfolder Name of subfolder to store results.  Not required but helps
-#'   distinguish output if mapping over multiple parameters.
+#'   distinguish output if mapping over multiple parameters.  If provided,
+#'   "subfolder" will be placed before the timestamp when storing compilation
+#'   outputs.
 #' @param ... further arguments passed to `rmarkdown::render()`
 #' 
 #' @importFrom utils write.table
@@ -27,8 +33,7 @@ compile_reports <- function(factory = ".", reports = NULL,
                             timestamp = format(Sys.time(), "%Y-%m-%d_T%H-%M-%S"), 
                             ...) {
   
-  # force timestamp to evaluate as soon as function called - needed due to the
-  # `Sys.time` call within the default argument.
+  # force timestamp to evaluate as soon as function called
   force(timestamp)
   
   # move in to factory

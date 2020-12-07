@@ -9,7 +9,7 @@ output:
 
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, fig.width = 8, fig.height = 6, dpi = 150)
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, fig.width = 8, fig.height = 6, dpi = 70)
 ```
 
 This is an example report to illustrate how `reportfactory` can be used.  It

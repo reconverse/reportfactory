@@ -25,10 +25,10 @@ new_factory(
 will default to the current directory.}
 
 \item{report_sources}{The name of the folder to be used for report
-templates.  Defaults to 'report_sources/'.}
+templates; defaults to 'report_sources/'.}
 
 \item{outputs}{The name of the folder to be used for saving the built
-reports.  Defaults to 'outputs/'.}
+reports; defaults to 'outputs/'.}
 
 \item{move_in}{A \code{logical} indicating if the current session should move into
 the created factory; defaults to \code{TRUE}.}
@@ -47,10 +47,10 @@ create folders to store data; defaults to TRUE.}
 create folders to store R scripts; defaults to TRUE.}
 
 \item{use_here}{a \code{logical} indicating if \code{new_factory()} should create
-a \code{.here} that can be used with \code{here::here()}.}
+a \code{.here} that can be used with \code{here::here()}; defaults to TRUE.}
 
 \item{create_gitignore}{a \code{logical} indicating if \code{new_factory()} should create
-a minimal '.gitignore' file;; defaults to TRUE.}
+a minimal '.gitignore' file; defaults to TRUE.}
 }
 \value{
 the report factory folder location (invisibly)

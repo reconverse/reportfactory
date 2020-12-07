@@ -2,7 +2,7 @@
 % Please edit documentation in R/compile_reports.R
 \name{compile_reports}
 \alias{compile_reports}
-\title{Compile an R Markdown report}
+\title{Compile one or several R Markdown reports}
 \usage{
 compile_reports(
   factory = ".",
@@ -20,27 +20,33 @@ factory. Defaults to the current directory.}
 
 \item{reports}{Either a regular expression (passed directly to \code{grep()}) that
 matches to the report paths you would like to compile or an integer/logical
-vector.  If \code{reports} is an integer or character vector then a call of
+vector.  If \code{reports} is an integer or logical vector then a call of
 \code{compile_reports(factory, reports = idx)} is equivalent to
 \code{compile_reports(factory, list_reports(factory)[idx])}.}
 
-\item{params}{A named list of parameters to be fed to each report that
-matches the regular expression.  If a report has default parameters set in
-it's yaml heading and their are duplicates then preference is given to the
-value supplied here.}
+\item{params}{A named list of parameters to be used for compiling reports,
+passed to \code{rmarkdown::render()} as the params argument. Values specified
+here will take precedence over default values specified in YAML headers of
+the reports. Note that the set of parameter is used for all compiled
+reports.}
 
 \item{quiet}{A logical indicating if messages from R Markdown compilation
 should be displayed; \code{TRUE} by default.}
 
 \item{subfolder}{Name of subfolder to store results.  Not required but helps
-distinguish output if mapping over multiple parameters.}
+distinguish output if mapping over multiple parameters.  If provided,
+"subfolder" will be placed before the timestamp when storing compilation
+outputs.}
 
-\item{timestamp}{timevalue used in the folder structure of the report output.
-If NULL, \code{format(Sys.time(), "\%Y-\%m-\%d_T\%H-\%M-\%S")} will be used and it's
-evaluation forced immediately.}
+\item{timestamp}{A character indicating the date-time format to be used for
+timestamps. Timestamps are used in the folder structure of outputs. If
+NULL, the format format(Sys.time(), "\%Y-\%m-\%d_T\%H-\%M-\%S") will be used.
+Note that the timestamp corresponds to the time of the call to
+compile_reports(), so that multiple reports compiled using a single call
+to the function will have identical timestamps.}
 
 \item{...}{further arguments passed to \code{rmarkdown::render()}}
 }
 \description{
-Compile an R Markdown report
+Compile one or several R Markdown reports
 }

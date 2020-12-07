@@ -102,8 +102,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> example_report/2020-12-02_T21-42-07/example_report.Rmd
-#> example_report/2020-12-02_T21-42-07/example_report.html
+#> example_report/2020-12-07_T09-27-46/example_report.Rmd
+#> example_report/2020-12-07_T09-27-46/example_report.html
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -120,10 +120,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> example_report/2020-12-02_T21-42-07/example_report.Rmd
-#> example_report/2020-12-02_T21-42-07/example_report.html
-#> example_report/regional/2020-12-02_T21-42-08/example_report.Rmd
-#> example_report/regional/2020-12-02_T21-42-08/example_report.html
+#> example_report/2020-12-07_T09-27-46/example_report.Rmd
+#> example_report/2020-12-07_T09-27-46/example_report.html
+#> example_report/regional/2020-12-07_T09-27-47/example_report.Rmd
+#> example_report/regional/2020-12-07_T09-27-47/example_report.html
 ```
 
 If you want to have an overview of your entire factory then you can use
@@ -140,11 +140,11 @@ fs::dir_tree()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-02_T21-42-07
+#> │       ├── 2020-12-07_T09-27-46
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-02_T21-42-08
+#> │           └── 2020-12-07_T09-27-47
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources

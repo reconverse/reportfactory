@@ -8,9 +8,9 @@
 #' @param path The folder where the report factory should be created.  This
 #'   will default to the current directory.
 #' @param report_sources The name of the folder to be used for report
-#'   templates.  Defaults to 'report_sources/'.
+#'   templates; defaults to 'report_sources/'.
 #' @param outputs The name of the folder to be used for saving the built
-#'   reports.  Defaults to 'outputs/'.
+#'   reports; defaults to 'outputs/'.
 #' @param move_in A `logical` indicating if the current session should move into
 #'   the created factory; defaults to `TRUE`.
 #' @param create_README A `logical` indicating if a 'README' file should be
@@ -23,9 +23,9 @@
 #' @param create_scripts_folder a `logical` indicating if `new_factory()` should
 #'   create folders to store R scripts; defaults to TRUE.
 #' @param use_here a `logical` indicating if `new_factory()` should create
-#'   a `.here` that can be used with `here::here()`.
+#'   a `.here` that can be used with `here::here()`; defaults to TRUE.
 #' @param create_gitignore a `logical` indicating if `new_factory()` should create
-#'   a minimal '.gitignore' file;; defaults to TRUE.
+#'   a minimal '.gitignore' file; defaults to TRUE.
 
 #' @return the report factory folder location (invisibly)
 #'

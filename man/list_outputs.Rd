@@ -17,6 +17,5 @@ patterns in report names.}
 }
 \description{
 This function can be used to list available report outputs stored in the
-factory, in inside the \code{outputs} folder (or any subfolder
-within).
+factory, in inside the \code{outputs} folder (or any subfolder within).
 }

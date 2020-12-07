@@ -21,5 +21,5 @@ This function can be used to install package dependencies based on the
 reports within the factory.
 }
 \seealso{
-\code{\link{list_deps}} to list dependencies of packages
+\code{list_deps()} to list dependencies of packages
 }
