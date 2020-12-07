@@ -4,7 +4,7 @@ The factory will help you handle multiple `rmarkdown` reports at the
 same time. Put your `.Rmd` files in `report_sources`, refer to any
 external files in the `.Rmd` using `here::here()`, and you’re sorted.
 
-## How the factory is organised
+## How the default factory is organised
 
   - `report_sources`: (mandatory) put your `.Rmd` documents there
     (subfolders are OK)
@@ -32,7 +32,9 @@ external files in the `.Rmd` using `here::here()`, and you’re sorted.
     all reports can be compiled if the argument is left empty.  Compiled reports
     will be stored in `outputs/`.
 
-## Suggested workflow
+## Basic workflow
+Below is a basic workflow to get you started.  For more information consult
+[https://www.repidemicsconsortium.org/reportfactory/]
 
 1.  create a new factory using `new_factory()` and move into this new
     folder
