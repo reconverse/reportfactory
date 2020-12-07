@@ -53,6 +53,32 @@ test_that("parameteriesed report with missing param output but input", {
   expect_snapshot_file(md_file, "missing_param_report_check.md", binary = FALSE)
 })
 
+test_that("non parameteriesed report with param input", {
+  
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+  
+  # copy test reports over
+  file_copy(
+    path("test_reports", "simple2.Rmd"),
+    path(f, "report_sources")
+  )
+  
+  # compile report
+  compile_reports(
+    f,
+    "simple",
+    params = list(test2 = "four", test3 = "five")
+  )
+
+  # check the output
+  md_file <- grep("\\.md", list_outputs(f), value = TRUE)
+  md_file <- path(f, "outputs", md_file)
+  skip_on_os("windows")
+  expect_snapshot_file(md_file, "nonparameterised_with_params.md", binary = FALSE)
+})
+
 test_that("parameteriesed report with missing param (but in environment)", {
   
   # create factory
