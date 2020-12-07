@@ -42,7 +42,7 @@ load_scripts <- function(factory = ".", folder = "scripts", quiet = FALSE) {
   
   if (length(script_files)) {
     for (file in script_files) {
-      filename <- path_rel(file, scripts_dir)
+      filename <- fs::path_rel(file, scripts_dir)
       if (!quiet) {
         msg <- sprintf("Loading %s\n", filename)
       }
