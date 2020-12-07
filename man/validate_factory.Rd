@@ -4,14 +4,11 @@
 \alias{validate_factory}
 \title{Inspect and validate the content of a factory}
 \usage{
-validate_factory(factory = ".", allow_duplicates = TRUE)
+validate_factory(factory = ".")
 }
 \arguments{
 \item{factory}{The path to the report factory or a folder within the desired
 factory. Defaults to the current directory.}
-
-\item{allow_duplicates}{A logical indicating duplicate filenames are
-allowed across folders.}
 }
 \value{
 A list with 4 entries:
@@ -34,7 +31,5 @@ Checks run on the factory include:
 \item the factory_config file exist;
 \item all mandatory folders exist - by default these are 'report_sources/'
 and 'outputs/';
-\item (optionally) all .Rmd reports have unique names once outside their
-folders.
 }
 }

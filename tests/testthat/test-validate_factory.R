@@ -54,19 +54,3 @@ test_that("validate factory - config tests", {
     "Folder 'bob' does not exist."
   )
 })
-
-test_that("validate factory - duplicate filenames", {
-  f <- new_factory(path = path_temp(), move_in = FALSE)
-  on.exit(dir_delete(f))
-  dir_create(f, "report_sources", "nested")
-  file_copy(
-    path(f, "report_sources","example_report.Rmd"),
-    path(f, "report_sources","nested","example_report.Rmd")
-  )
-  expect_error(
-    validate_factory(f, allow_duplicates = FALSE),
-    "Be aware that the following reports have duplicated"
-  )
-})
-
-

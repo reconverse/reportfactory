@@ -5,8 +5,6 @@
 #' that will error if a problem is found.
 #' 
 #' @inheritParams compile_reports
-#' @param allow_duplicates A logical indicating duplicate filenames are
-#'   allowed across folders.
 #'
 #' @details
 #' Checks run on the factory include:
@@ -14,8 +12,6 @@
 #'   * the factory_config file exist;
 #'   * all mandatory folders exist - by default these are 'report_sources/'
 #'     and 'outputs/';
-#'   * (optionally) all .Rmd reports have unique names once outside their
-#'     folders.
 #' 
 #' @return A list with 4 entries:
 #'   * root - the root folder path of the factory;
@@ -24,7 +20,7 @@
 #'   * outputs - the name of the outputs folder.
 #'
 #' @export
-validate_factory <- function(factory = ".", allow_duplicates = TRUE) {
+validate_factory <- function(factory = ".") {
 
   # this finds the folder containing factory_config or errors if not possible
   root <- factory_root(factory)
@@ -99,30 +95,6 @@ validate_factory <- function(factory = ".", allow_duplicates = TRUE) {
       ),
       call. = FALSE
     )
-  }
-    
-  # optionally, check for duplicate filenames
-  if (!allow_duplicates) {
-    # check that all reports are unique
-    filepaths <- fs::dir_ls(
-      fs::path(root, report_sources),
-      type = "file",
-      recurse = TRUE,
-      regexp = "\\.[rR]md$"
-    )
-
-    if (length(filepaths) > 0) {
-      filenames <- tolower(fs::path_file(filepaths))
-      dups <- duplicated(filenames) | duplicated(filenames, fromLast = TRUE)
-      dups <- filepaths[dups]
-      if (length(dups) > 0) {
-        msg <- sprintf(
-          "Be aware that the following reports have duplicated filename:\n%s",
-          paste(dups, collapse = "\n")
-        )
-        stop(msg, call. = FALSE)
-      }
-    }
   }
 
   list(
