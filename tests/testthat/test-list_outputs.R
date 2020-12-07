@@ -35,6 +35,21 @@ test_that("list_output works with nested and unnested files", {
         mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
       )
     )
+
+
+    output_files <- list_outputs(f, "simple")
+    expected_files <- c(
+      "simple\\/(.*)\\/simple.Rmd",
+      "simple\\/(.*)\\/simple.html",
+      "simple\\/(.*)\\/simple.md",
+      "simple\\/(.*)\\/simple_files\\/figure-gfm\\/pressure-1.png"
+    )
+
+    expect_true(
+      all(
+        mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
+      )
+    )
 })
 
 
