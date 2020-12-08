@@ -1,0 +1,13 @@
+---
+title: "Testing package calls"
+output:
+  github_document:
+    html_preview: false
+---
+
+test `r purrr::map(mtcars, mean)`
+```{r cars}
+library(readxl)
+fs::file_exists("bob")
+```
+

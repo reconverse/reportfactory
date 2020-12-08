@@ -4,20 +4,18 @@
 \alias{list_outputs}
 \title{List outputs of the factory}
 \usage{
-list_outputs(factory = getwd(), pattern = NULL)
+list_outputs(factory = ".", pattern = NULL, ...)
 }
 \arguments{
-\item{factory}{the path to a report factory; defaults to the current working
-directory}
+\item{factory}{The path to the report factory or a folder within the desired
+factory. Defaults to the current directory.}
 
-\item{pattern}{an optional regular expression used to look for specific
-patterns in report names}
+\item{pattern}{An optional regular expression used to look for specific
+patterns in report names.}
+
+\item{...}{additional parameters to pass to \code{grep()}}
 }
 \description{
 This function can be used to list available report outputs stored in the
-factory, in inside the \code{report_outputs} folder (or any subfolder
-within).
-}
-\author{
-Thibaut Jombart \email{thibautjombart@gmail.com}
+factory, in inside the \code{outputs} folder (or any subfolder within).
 }

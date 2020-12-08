@@ -1,0 +1,35 @@
+---
+title: "Example Report"
+author: "Joe Bloggs"
+params:
+  grouped_plot: TRUE
+output:
+  html_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, fig.width = 8, fig.height = 6, dpi = 70)
+```
+
+This is an example report to illustrate how `reportfactory` can be used.  It
+uses a cutdown snapshot of [NHS pathways data](https://digital.nhs.uk/dashboards/nhs-pathways)
+that is available in the [outbreaks](https://cran.r-project.org/web/packages/outbreaks/index.html)
+package. These data include all reports classified as ‘potential COVID-19 cases’
+notified via calls to 111, 999, and 111-online systems. These data are not
+confirmed cases, and are subject to unknown reporting biases. 
+
+```{r, echo = FALSE, message = FALSE}
+library(here)
+library(incidence2)
+dat <- read.csv(here("data", "raw", "example_data.csv"))
+inci <- incidence(dat, date, groups = nhs_region, count = count)
+if (params$grouped_plot) {
+  plot(inci, angle = 45, ylab = "", title = "Reports by date", centre_ticks = TRUE)
+} else {
+  facet_plot(inci, angle = 45, ylab = "", title = "Reports by day", centre_ticks = TRUE)
+}
+
+```
+
+

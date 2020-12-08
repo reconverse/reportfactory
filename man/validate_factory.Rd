@@ -4,40 +4,32 @@
 \alias{validate_factory}
 \title{Inspect and validate the content of a factory}
 \usage{
-validate_factory(factory = getwd(), warnings = TRUE, errors = TRUE)
+validate_factory(factory = ".")
 }
 \arguments{
-\item{factory}{the path to a report factory; defaults to the current working
-directory}
-
-\item{warnings}{A logical indicating if warnings should be issued;
-defaults to \code{TRUE}.}
-
-\item{errors}{A logical indicating if errors should be issued;
-defaults to \code{TRUE}.}
+\item{factory}{The path to the report factory or a folder within the desired
+factory. Defaults to the current directory.}
+}
+\value{
+A list with 4 entries:
+\itemize{
+\item root - the root folder path of the factory;
+\item factory_name - the name of the report factory;
+\item report_sources - the name of the report_sources folder; and
+\item outputs - the name of the outputs folder.
+}
 }
 \description{
-This function can be used to inspect the content of a factory and make sure
-it looks fine. This includes various sanity checks listed in details. The
-function returns a list of error and warning messages.
+\code{validate_factory()} can be used to inspect the content of a factory and make
+everything looks fine. This includes various sanity checks listed in details
+that will error if a problem is found.
 }
 \details{
-Checks ran on the factory include
-(the result of a failure is indicated in brackets):
-
+Checks run on the factory include:
 \itemize{
-
- \item the directory exists [error]
-
- \item all mandatory files exist: .here, .gitignore [error]
-
- \item all mandatory folders exist: report_sources/ [error]
-
- \item all .Rmd reports have unique names once outside their folders (to
- avoid conflicts in outputs) [warning]
-
+\item the factory directory exists;
+\item the factory_config file exist;
+\item all mandatory folders exist - by default these are 'report_sources/'
+and 'outputs/';
 }
-}
-\author{
-Thibaut Jombart \email{thibautjombart@gmail.com}
 }

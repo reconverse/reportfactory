@@ -1,27 +1,30 @@
-
 #' List outputs of the factory
 #'
 #' This function can be used to list available report outputs stored in the
-#' factory, in inside the \code{report_outputs} folder (or any subfolder
-#' within).
-#'
-#' @export
-#'
-#' @author Thibaut Jombart \email{thibautjombart@@gmail.com}
+#' factory, in inside the `outputs` folder (or any subfolder within).
 #'
 #' @inheritParams list_reports
-#'
+#' @export
+list_outputs <- function(factory = ".", pattern = NULL, ...) {
 
-list_outputs <- function(factory = getwd(), pattern = NULL) {
+  # get the root directory of the factory
+  tmp <- validate_factory(factory)
+  root <- tmp$root
+  outputs <- tmp$outputs
 
-  odir <- getwd()
-  on.exit(setwd(odir))
-  setwd(factory)
-
-  out <- dir(factory_path("report_outputs"), recursive = TRUE)
-
+  # get a listing of all files and folders in report_sources
+  out <- fs::path_rel(
+    fs::dir_ls(
+      fs::path(root, outputs),
+      all = TRUE,
+      recurse = TRUE,
+      type = "file"
+    ),
+    fs::path(root, outputs)
+  )
+  
   if (!is.null(pattern)) {
-    out <- grep(pattern, out, value = TRUE)
+    out <- grep(pattern, out, value = TRUE, ...)
   }
 
   out
