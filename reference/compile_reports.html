@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List outputs of the factory — list_outputs • reportfactory</title>
+<title>Compile one or several R Markdown reports — compile_reports • reportfactory</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="List outputs of the factory — list_outputs" />
-<meta property="og:description" content="This function can be used to list available report outputs stored in the
-factory, in inside the outputs folder (or any subfolder within)." />
+<meta property="og:title" content="Compile one or several R Markdown reports — compile_reports" />
+<meta property="og:description" content="Compile one or several R Markdown reports" />
 
 
 
@@ -109,17 +108,24 @@ factory, in inside the outputs folder (or any subfolder within)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List outputs of the factory</h1>
-    <small class="dont-index">Source: <a href='https://github.com/reconhub/reportfactory/blob/master/R/list_outputs.R'><code>R/list_outputs.R</code></a></small>
-    <div class="hidden name"><code>list_outputs.Rd</code></div>
+    <h1>Compile one or several R Markdown reports</h1>
+    <small class="dont-index">Source: <a href='https://github.com/reconhub/reportfactory/blob/master/R/compile_reports.R'><code>R/compile_reports.R</code></a></small>
+    <div class="hidden name"><code>compile_reports.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function can be used to list available report outputs stored in the
-factory, in inside the <code>outputs</code> folder (or any subfolder within).</p>
+    <p>Compile one or several R Markdown reports</p>
     </div>
 
-    <pre class="usage"><span class='fu'>list_outputs</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='st'>"."</span>, pattern <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>compile_reports</span><span class='op'>(</span>
+  factory <span class='op'>=</span> <span class='st'>"."</span>,
+  reports <span class='op'>=</span> <span class='cn'>NULL</span>,
+  params <span class='op'>=</span> <span class='cn'>NULL</span>,
+  quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  subfolder <span class='op'>=</span> <span class='cn'>NULL</span>,
+  timestamp <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/format.html'>format</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Sys.time.html'>Sys.time</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"%Y-%m-%d_T%H-%M-%S"</span><span class='op'>)</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -130,13 +136,45 @@ factory, in inside the <code>outputs</code> folder (or any subfolder within).</p
 factory. Defaults to the current directory.</p></td>
     </tr>
     <tr>
-      <th>pattern</th>
-      <td><p>An optional regular expression used to look for specific
-patterns in report names.</p></td>
+      <th>reports</th>
+      <td><p>Either a regular expression (passed directly to <code><a href='https://rdrr.io/r/base/grep.html'>grep()</a></code>) that
+matches to the report paths you would like to compile or an integer/logical
+vector.  If <code>reports</code> is an integer or logical vector then a call of
+<code>compile_reports(factory, reports = idx)</code> is equivalent to
+<code>compile_reports(factory, list_reports(factory)[idx])</code>.</p></td>
+    </tr>
+    <tr>
+      <th>params</th>
+      <td><p>A named list of parameters to be used for compiling reports,
+passed to <code><a href='https://rdrr.io/pkg/rmarkdown/man/render.html'>rmarkdown::render()</a></code> as the params argument. Values specified
+here will take precedence over default values specified in YAML headers of
+the reports. Note that the set of parameter is used for all compiled
+reports.</p></td>
+    </tr>
+    <tr>
+      <th>quiet</th>
+      <td><p>A logical indicating if messages from R Markdown compilation
+should be displayed; <code>TRUE</code> by default.</p></td>
+    </tr>
+    <tr>
+      <th>subfolder</th>
+      <td><p>Name of subfolder to store results.  Not required but helps
+distinguish output if mapping over multiple parameters.  If provided,
+"subfolder" will be placed before the timestamp when storing compilation
+outputs.</p></td>
+    </tr>
+    <tr>
+      <th>timestamp</th>
+      <td><p>A character indicating the date-time format to be used for
+timestamps. Timestamps are used in the folder structure of outputs. If
+NULL, the format format(Sys.time(), "%Y-%m-%d_T%H-%M-%S") will be used.
+Note that the timestamp corresponds to the time of the call to
+compile_reports(), so that multiple reports compiled using a single call
+to the function will have identical timestamps.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional parameters to pass to <code><a href='https://rdrr.io/r/base/grep.html'>grep()</a></code></p></td>
+      <td><p>further arguments passed to <code><a href='https://rdrr.io/pkg/rmarkdown/man/render.html'>rmarkdown::render()</a></code></p></td>
     </tr>
     </table>
 

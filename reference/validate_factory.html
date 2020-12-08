@@ -40,9 +40,9 @@
 
 
 <meta property="og:title" content="Inspect and validate the content of a factory — validate_factory" />
-<meta property="og:description" content="This function can be used to inspect the content of a factory and make sure
-it looks fine. This includes various sanity checks listed in details. The
-function returns a list of error and warning messages." />
+<meta property="og:description" content="validate_factory() can be used to inspect the content of a factory and make
+everything looks fine. This includes various sanity checks listed in details
+that will error if a problem is found." />
 
 
 
@@ -74,35 +74,20 @@ function returns a list of error and warning messages." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
      
-    <span class="caret"></span>
   </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/faqs.html">Frequently Asked Questions (FAQs)</a>
-    </li>
-    <li>
-      <a href="../articles/gettingstarted.html">Getting started with reportfactory</a>
-    </li>
-    <li>
-      <a href="../articles/howitworks.html">How reportfactory works</a>
-    </li>
-  </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -131,48 +116,41 @@ function returns a list of error and warning messages." />
     </div>
 
     <div class="ref-description">
-    <p>This function can be used to inspect the content of a factory and make sure
-it looks fine. This includes various sanity checks listed in details. The
-function returns a list of error and warning messages.</p>
+    <p><code>validate_factory()</code> can be used to inspect the content of a factory and make
+everything looks fine. This includes various sanity checks listed in details
+that will error if a problem is found.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>validate_factory</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span><span class='op'>(</span><span class='op'>)</span>, warnings <span class='op'>=</span> <span class='cn'>TRUE</span>, errors <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>validate_factory</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='st'>"."</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>factory</th>
-      <td><p>the path to a report factory; defaults to the current working
-directory</p></td>
-    </tr>
-    <tr>
-      <th>warnings</th>
-      <td><p>A logical indicating if warnings should be issued;
-defaults to <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>errors</th>
-      <td><p>A logical indicating if errors should be issued;
-defaults to <code>TRUE</code>.</p></td>
+      <td><p>The path to the report factory or a folder within the desired
+factory. Defaults to the current directory.</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Checks ran on the factory include
-(the result of a failure is indicated in brackets):</p>
-<ul>
-<li><p>the directory exists [error]</p></li>
-<li><p>all mandatory files exist: .here, .gitignore [error]</p></li>
-<li><p>all mandatory folders exist: report_sources/ [error]</p></li>
-<li><p>all .Rmd reports have unique names once outside their folders (to
- avoid conflicts in outputs) [warning]</p></li>
+    <p>A list with 4 entries:</p><ul>
+<li><p>root - the root folder path of the factory;</p></li>
+<li><p>factory_name - the name of the report factory;</p></li>
+<li><p>report_sources - the name of the report_sources folder; and</p></li>
+<li><p>outputs - the name of the outputs folder.</p></li>
 </ul>
 
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Thibaut Jombart <a href='mailto:thibautjombart@gmail.com'>thibautjombart@gmail.com</a></p>
+    <p>Checks run on the factory include:</p><ul>
+<li><p>the factory directory exists;</p></li>
+<li><p>the factory_config file exist;</p></li>
+<li><p>all mandatory folders exist - by default these are 'report_sources/'
+and 'outputs/';</p></li>
+</ul>
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -185,11 +163,11 @@ defaults to <code>TRUE</code>.</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Thibaut Jombart.</p>
+  <p>Developed by Thibaut Jombart, Zhian N. Kamvar, Tim Taylor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List outputs of the factory — list_outputs • reportfactory</title>
+<title>Generate an overview of a report factory — factory_overview • reportfactory</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,8 @@
 
 
 
-<meta property="og:title" content="List outputs of the factory — list_outputs" />
-<meta property="og:description" content="This function can be used to list available report outputs stored in the
-factory, in inside the outputs folder (or any subfolder within)." />
+<meta property="og:title" content="Generate an overview of a report factory — factory_overview" />
+<meta property="og:description" content="Generate an overview of a report factory" />
 
 
 
@@ -109,34 +108,28 @@ factory, in inside the outputs folder (or any subfolder within)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>List outputs of the factory</h1>
-    <small class="dont-index">Source: <a href='https://github.com/reconhub/reportfactory/blob/master/R/list_outputs.R'><code>R/list_outputs.R</code></a></small>
-    <div class="hidden name"><code>list_outputs.Rd</code></div>
+    <h1>Generate an overview of a report factory</h1>
+    <small class="dont-index">Source: <a href='https://github.com/reconhub/reportfactory/blob/master/R/factory_overview.R'><code>R/factory_overview.R</code></a></small>
+    <div class="hidden name"><code>factory_overview.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function can be used to list available report outputs stored in the
-factory, in inside the <code>outputs</code> folder (or any subfolder within).</p>
+    <p>Generate an overview of a report factory</p>
     </div>
 
-    <pre class="usage"><span class='fu'>list_outputs</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='st'>"."</span>, pattern <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>factory_overview</span><span class='op'>(</span>path <span class='op'>=</span> <span class='st'>"."</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>factory</th>
+      <th>path</th>
       <td><p>The path to the report factory or a folder within the desired
 factory. Defaults to the current directory.</p></td>
     </tr>
     <tr>
-      <th>pattern</th>
-      <td><p>An optional regular expression used to look for specific
-patterns in report names.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>additional parameters to pass to <code><a href='https://rdrr.io/r/base/grep.html'>grep()</a></code></p></td>
+      <td><p>Additional arguments passed to <code><a href='http://fs.r-lib.org/reference/dir_tree.html'>fs::dir_tree()</a></code>.</p></td>
     </tr>
     </table>
 

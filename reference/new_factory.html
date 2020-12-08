@@ -74,35 +74,20 @@ moved to the newly created factory." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.7</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
+  <a href="../index.html">
+    <span class="fas fa fas fa-home fa-lg"></span>
      
-    <span class="caret"></span>
   </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/faqs.html">Frequently Asked Questions (FAQs)</a>
-    </li>
-    <li>
-      <a href="../articles/gettingstarted.html">Getting started with reportfactory</a>
-    </li>
-    <li>
-      <a href="../articles/howitworks.html">How reportfactory works</a>
-    </li>
-  </ul>
 </li>
 <li>
-  <a href="../news/index.html">Changelog</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -137,74 +122,115 @@ moved to the newly created factory.</p>
     </div>
 
     <pre class="usage"><span class='fu'>new_factory</span><span class='op'>(</span>
-  destination <span class='op'>=</span> <span class='st'>"new_factory"</span>,
-  include_template <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  move_in <span class='op'>=</span> <span class='cn'>TRUE</span>
+  factory <span class='op'>=</span> <span class='st'>"new_factory"</span>,
+  path <span class='op'>=</span> <span class='st'>"."</span>,
+  report_sources <span class='op'>=</span> <span class='st'>"report_sources"</span>,
+  outputs <span class='op'>=</span> <span class='st'>"outputs"</span>,
+  move_in <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  create_README <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  create_example_report <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  create_data_folders <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  create_scripts_folder <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  use_here <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  create_gitignore <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>destination</th>
-      <td><p>the name of the report factory folder to be created</p></td>
+      <th>factory</th>
+      <td><p>The name of the report factory to be created.</p></td>
     </tr>
     <tr>
-      <th>include_template</th>
-      <td><p>a logical indicating if a template of report
-and folders structure shoud be added to the factory; defaults to `TRUE`</p></td>
+      <th>path</th>
+      <td><p>The folder where the report factory should be created.  This
+will default to the current directory.</p></td>
+    </tr>
+    <tr>
+      <th>report_sources</th>
+      <td><p>The name of the folder to be used for report
+templates; defaults to 'report_sources/'.</p></td>
+    </tr>
+    <tr>
+      <th>outputs</th>
+      <td><p>The name of the folder to be used for saving the built
+reports; defaults to 'outputs/'.</p></td>
     </tr>
     <tr>
       <th>move_in</th>
-      <td><p>a `logical` indicating if the current session should move into
-the created factory; defaults to `TRUE`</p></td>
+      <td><p>A <code>logical</code> indicating if the current session should move into
+the created factory; defaults to <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>create_README</th>
+      <td><p>A <code>logical</code> indicating if a 'README' file should be
+created; defaults to TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>create_example_report</th>
+      <td><p>A <code>logical</code> indicating if <code>new_factory()</code> should
+create an example report in the 'report_sources' folder along with some
+example data in the 'data/raw' folder; defaults to TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>create_data_folders</th>
+      <td><p>a <code>logical</code> indicating if <code>new_factory()</code> should
+create folders to store data; defaults to TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>create_scripts_folder</th>
+      <td><p>a <code>logical</code> indicating if <code>new_factory()</code> should
+create folders to store R scripts; defaults to TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>use_here</th>
+      <td><p>a <code>logical</code> indicating if <code>new_factory()</code> should create
+a <code>.here</code> that can be used with <code>here::here()</code>; defaults to TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>create_gitignore</th>
+      <td><p>a <code>logical</code> indicating if <code>new_factory()</code> should create
+a minimal '.gitignore' file; defaults to TRUE.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>the report factory folder location (invisibly)</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The default factory includes:</p>
-<ul>
-<li><p><code>data/</code>: a folder storing data</p></li>
-<li><p><code>report_sources/</code>: a folder storing the reports, named after the
-convention described in <code><a href='update_reports.html'>update_reports</a></code>, and stored in
-subfolders <code>contacts</code> and <code>epicurves</code></p></li>
-<li><p><code>.gitignore</code>: a file used to tell git to ignore the produced
-outputs in <code>report_outputs</code></p></li>
-<li><p><code>open.Rproj</code>: an Rproject to open the factory using Rstudio</p></li>
-<li><p><code>.here</code>: an empty file used as anchor by <code><a href='https://here.r-lib.org//reference/here.html'>here</a></code></p></li>
+    <p>Assuming the default names are used then <code>new_factory</code> will create a report
+factory folder (called "new_factory") that includes:</p><ul>
+<li><p><code>report_sources</code>: a folder for storing the .Rmd reports</p></li>
+<li><p><code>outputs</code>: a folder storing the compiled reports</p></li>
+<li><p><code>factory_config</code>: a control file used to anchor a report factory</p></li>
 </ul>
 
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+<p>Depending on the values of the logical arguments, the factory may also
+include:</p><ul>
+<li><p><code>README.md</code>: Example README with instructions on how to use report factory.</p></li>
+<li><p><code>.gitignore</code>: a file used to tell git to ignore certain files including the
+produced outputs in <code>outputs()</code>.</p></li>
+<li><p><code>data/raw/</code>: a folder for storing raw data</p></li>
+<li><p><code>data/raw/example_data.csv</code>: a set of data for use with the example report</p></li>
+<li><p><code>data/clean/</code>: a folder for storing cleaned data</p></li>
+<li><p><code>scripts/</code>: a folder to store additional code that may be called in reports</p></li>
+<li><p><code>report_sources/example_report.Rmd</code>: an example .Rmd report template</p></li>
+<li><p><code>.here</code>: a file to anchor calls to <code>here::here()</code></p></li>
+</ul>
 
-    <p>Thibaut Jombart <a href='mailto:thibautjombart@gmail.com'>thibautjombart@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='va'>destination</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='st'>"new_factory"</span><span class='op'>)</span>
-<span class='va'>destination</span>
-<span class='fu'>new_factory</span><span class='op'>(</span><span class='va'>destination</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/list.files.html'>dir</a></span><span class='op'>(</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='va'>.old_wd</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>f1</span> <span class='op'>&lt;-</span> <span class='fu'>new_factory</span><span class='op'>(</span><span class='st'>"new_factory_1"</span>, move_in <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>f2</span> <span class='op'>&lt;-</span> <span class='fu'>new_factory</span><span class='op'>(</span><span class='st'>"new_factory_2"</span>, move_in <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='co'># \dontshow{</span>
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>f1</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span><span class='op'>(</span><span class='va'>f2</span>, recursive <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>setwd</a></span><span class='op'>(</span><span class='va'>.old_wd</span><span class='op'>)</span>
+<span class='co'># }</span>
 
-<span class='co'>## check content</span>
-<span class='fu'><a href='list_reports.html'>list_reports</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='list_outputs.html'>list_outputs</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## check dependencies</span>
-<span class='fu'><a href='list_deps.html'>list_deps</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='install_deps.html'>install_deps</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## compile a single report:</span>
-
-<span class='fu'><a href='compile_report.html'>compile_report</a></span><span class='op'>(</span><span class='st'>"contacts_2017-10-29"</span>, quiet <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='fu'><a href='list_outputs.html'>list_outputs</a></span><span class='op'>(</span><span class='op'>)</span>
-
-<span class='co'>## compile all reports (only most recent versions):</span>
-
-<span class='fu'><a href='update_reports.html'>update_reports</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='fu'><a href='list_outputs.html'>list_outputs</a></span><span class='op'>(</span><span class='op'>)</span>
-<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -217,11 +243,11 @@ outputs in <code>report_outputs</code></p></li>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Thibaut Jombart.</p>
+  <p>Developed by Thibaut Jombart, Zhian N. Kamvar, Tim Taylor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
