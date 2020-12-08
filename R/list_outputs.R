@@ -13,16 +13,16 @@ list_outputs <- function(factory = ".", pattern = NULL, ...) {
   outputs <- tmp$outputs
 
   # get a listing of all files and folders in report_sources
-  # out <- fs::path_rel(
-  #   fs::dir_ls(
-  #     fs::path(root, outputs),
-  #     all = TRUE,
-  #     recurse = TRUE,
-  #     type = "file"
-  #   ),
-  #   fs::path(root, outputs)
-  # )
-  out <- list.files(fs::path(root, outputs), recursive = TRUE) 
+  out <- fs::path_rel(
+    fs::dir_ls(
+      fs::path(root, outputs),
+      all = TRUE,
+      recurse = TRUE,
+      type = "file"
+    ),
+    fs::path(root, outputs)
+  )
+  
   
   if (!is.null(pattern)) {
     out <- grep(pattern, out, value = TRUE, ...)
