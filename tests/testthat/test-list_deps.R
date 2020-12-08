@@ -1,14 +1,12 @@
-library(fs)
-
 test_that("list_deps works", {
 
-  f <- new_factory(path = path_temp(), move_in = FALSE)
-  on.exit(dir_delete(f))
+  f <- new_factory(path = tempdir(), move_in = FALSE)
+  on.exit(unlink(f, recursive = TRUE))
   
   # copy test reports over (as this has inline code)
-  file_copy(
-    path("test_reports", "package_calls.Rmd"),
-    path(f, "report_sources")
+  file.copy(
+    file.path("test_reports", "package_calls.Rmd"),
+    file.path(f, "report_sources")
   )
   
   expected_deps_package_calls <- c("purrr", "readxl", "fs")

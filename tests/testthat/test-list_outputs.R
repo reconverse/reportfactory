@@ -1,23 +1,21 @@
-library(fs)
-
 test_that("list_output works with nested and unnested files", {
-  f <- new_factory(path = path_temp(), move_in = FALSE)
-  on.exit(dir_delete(f))
+  f <- new_factory(path = tempdir(), move_in = FALSE)
+  on.exit(unlink(f, recursive = TRUE))
 
   # copy test reports over
-  file_copy(
-    path("test_reports", "simple.Rmd"),
-    path(f, "report_sources")
+  file.copy(
+    file.path("test_reports", "simple.Rmd"),
+    file.path(f, "report_sources")
   )
-  nested_dir <- path(f, "report_sources", "nested")
-  dir_create(nested_dir)
-  file_copy(
-    path("test_reports", "parameterised.Rmd"),
+  nested_dir <- file.path(f, "report_sources", "nested")
+  dir.create(nested_dir)
+  file.copy(
+    file.path("test_reports", "parameterised.Rmd"),
     nested_dir
   )
 
   # remove the other example report
-  file_delete(path(f, "report_sources", "example_report.Rmd"))
+  file.remove(file.path(f, "report_sources", "example_report.Rmd"))
 
   compile_reports(f)
   output_files <- list_outputs(f)
@@ -54,14 +52,14 @@ test_that("list_output works with nested and unnested files", {
 
 
 test_that("list_output works, one file compiled", {
-  f <- new_factory(path = path_temp(), move_in = FALSE)
-  on.exit(dir_delete(f))
+  f <- new_factory(path = tempdir(), move_in = FALSE)
+  on.exit(unlink(f, recursive = TRUE))
 
   # copy test reports over
-  nested_dir <- path(f, "report_sources", "nested")
-  dir_create(nested_dir)
-  file_copy(
-    path("test_reports", "parameterised.Rmd"),
+  nested_dir <- file.path(f, "report_sources", "nested")
+  dir.create(nested_dir)
+  file.copy(
+    file.path("test_reports", "parameterised.Rmd"),
     nested_dir
   )
 
@@ -81,14 +79,14 @@ test_that("list_output works, one file compiled", {
 
 
 test_that("list_output works, with subfolders", {
-  f <- new_factory(path = path_temp(), move_in = FALSE)
-  on.exit(dir_delete(f))
+  f <- new_factory(path = tempdir(), move_in = FALSE)
+  on.exit(unlink(f, recursive = TRUE))
 
   # copy test reports over
-  nested_dir <- path(f, "report_sources", "nested")
-  dir_create(nested_dir)
-  file_copy(
-    path("test_reports", "parameterised.Rmd"),
+  nested_dir <- file.path(f, "report_sources", "nested")
+  dir.create(nested_dir)
+  file.copy(
+    file.path("test_reports", "parameterised.Rmd"),
     nested_dir
   )
 
