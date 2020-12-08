@@ -124,7 +124,7 @@ test_that("integer index for reports", {
 
   file_copy(
     path("test_reports", "simple.Rmd"),
-    path(f, "report_sources", "simple2.Rmd")
+    path(f, "report_sources", "dimple.Rmd")
   )
 
   file_delete(path(f, "report_sources", "example_report.Rmd"))
@@ -134,14 +134,21 @@ test_that("integer index for reports", {
   # compile report
   idx <- c(1, 3)
   compile_reports(f, idx)
+  nms <- path_ext_remove(list_reports(f))[idx] 
+  nms <- paste(nms, collapse = "|")
   expected_files <- c(
-    "simple2\\/(.*)\\/simple2.Rmd",
-    "simple2\\/(.*)\\/simple2.html",
-    "simple2\\/(.*)\\/simple2.md",
-    "simple2\\/(.*)\\/simple2_files\\/figure-gfm\\/pressure-1.png",
+    "simple\\/(.*)\\/simple.Rmd",
+    "simple\\/(.*)\\/simple.html",
+    "simple\\/(.*)\\/simple.md",
+    "simple\\/(.*)\\/simple_files\\/figure-gfm\\/pressure-1.png",
+    "dimple\\/(.*)\\/dimple.Rmd",
+    "dimple\\/(.*)\\/dimple.html",
+    "dimple\\/(.*)\\/dimple.md",
+    "dimple\\/(.*)\\/dimple_files\\/figure-gfm\\/pressure-1.png",
     "parameterised\\/(.*)\\/parameterised.Rmd",
     "parameterised\\/(.*)\\/parameterised.md"
   )
+  expected_files <- expected_files[grepl(nms, expected_files)]
   
   output_files <- list_outputs(f)
   expect_true(
@@ -170,7 +177,7 @@ test_that("logical index for reports", {
 
   file_copy(
     path("test_reports", "simple.Rmd"),
-    path(f, "report_sources", "simple2.Rmd")
+    path(f, "report_sources", "dimple.Rmd")
   )
 
   file_delete(path(f, "report_sources", "example_report.Rmd"))
@@ -180,14 +187,21 @@ test_that("logical index for reports", {
   # compile report
   idx <- c(TRUE, FALSE)
   compile_reports(f, idx)
+  nms <- path_ext_remove(list_reports(f))[idx] 
+  nms <- paste(nms, collapse = "|")
   expected_files <- c(
-    "simple2\\/(.*)\\/simple2.Rmd",
-    "simple2\\/(.*)\\/simple2.html",
-    "simple2\\/(.*)\\/simple2.md",
-    "simple2\\/(.*)\\/simple2_files\\/figure-gfm\\/pressure-1.png",
+    "dimple\\/(.*)\\/dimple.Rmd",
+    "dimple\\/(.*)\\/dimple.html",
+    "dimple\\/(.*)\\/dimple.md",
+    "dimple\\/(.*)\\/dimple_files\\/figure-gfm\\/pressure-1.png",
+    "simple\\/(.*)\\/simple.Rmd",
+    "simple\\/(.*)\\/simple.html",
+    "simple\\/(.*)\\/simple.md",
+    "simple\\/(.*)\\/simple_files\\/figure-gfm\\/pressure-1.png",
     "parameterised\\/(.*)\\/parameterised.Rmd",
     "parameterised\\/(.*)\\/parameterised.md"
   )
+  expected_files <- expected_files[grepl(nms, expected_files)]
   
   output_files <- list_outputs(f)
   expect_true(
