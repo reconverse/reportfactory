@@ -11,7 +11,7 @@ test_that("new_factory generates the right files - defaults + no move_in", {
   expected_location <- path(path_temp(), "new_factory")
   
   expect_true(dir_exists(expected_location))
-  expect_equal(f, expected_location)
+  expect_equal(f, unclass(expected_location))
 
   all_files <- list.files(
     path(path_temp(), "new_factory"),
@@ -50,7 +50,7 @@ test_that("new_factory generates the right files - empty factory + move_in", {
 
   expected_location <- path(path_temp(), "new_factory")
   expect_true(dir.exists(expected_location))
-  expect_equal(f, expected_location)
+  expect_equal(f, unclass(expected_location))
   if (unname(Sys.info()['sysname'] == "Darwin")) {
     expect_equal(paste0("/private", unclass(f)), getwd())
   } else {
