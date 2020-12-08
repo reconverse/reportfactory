@@ -1,5 +1,5 @@
 Package: reportfactory
-Title: Lightweight Infrastructure for Handling Multiple Rmarkdown Documents
+Title: Lightweight Infrastructure for Handling Multiple R Markdown Documents
 Version: 0.0.7
 Authors@R: c(
   person("Thibaut", "Jombart", role = "aut", email = "thibautjombart@gmail.com"), 
@@ -8,9 +8,9 @@ Authors@R: c(
   person("Tim", "Taylor", role =c("aut", "cre"), email = "tim.taylor@hiddenelephants.co.uk",
          comment = c(ORCID = "0000-0002-8587-7113"))
  )
-Description: Provides an infrastructure for handling multiple reports
-  using \code{rmarkdown::render}, including automated curation and time-stamping
-  of outputs, parametrisation, dependencies, and some helper functions.
+Description: Provides an infrastructure for handling multiple R Markdown
+  reports, including automated curation and time-stamping of outputs,
+  parameterisation and provision of helper functions to manage dependencies.
 License: MIT + file LICENSE
 URL: https://github.com/reconhub/reportfactory
 BugReports: https://github.com/reconhub/reportfactory/issues
