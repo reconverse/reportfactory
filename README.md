@@ -40,9 +40,6 @@ There a few key principles it adheres to:
   - *Time-saving* Easy convenience functions to reports based on regular
     expressions.
 
-![reportfactory
-diagram](https://raw.githubusercontent.com/reconhub/reportfactory/master/artwork/workflow.png)
-
 ## Installing the package
 
 To install the development version of the package, use:
@@ -104,8 +101,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2020-12-09_T10-51-37/example_report.html"
-#> [2] "example_report/2020-12-09_T10-51-37/example_report.Rmd"
+#> [1] "example_report/2020-12-09_T16-58-24/example_report.html"
+#> [2] "example_report/2020-12-09_T16-58-24/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -122,10 +119,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2020-12-09_T10-51-37/example_report.html"         
-#> [2] "example_report/2020-12-09_T10-51-37/example_report.Rmd"          
-#> [3] "example_report/regional/2020-12-09_T10-51-38/example_report.html"
-#> [4] "example_report/regional/2020-12-09_T10-51-38/example_report.Rmd"
+#> [1] "example_report/2020-12-09_T16-58-24/example_report.html"         
+#> [2] "example_report/2020-12-09_T16-58-24/example_report.Rmd"          
+#> [3] "example_report/regional/2020-12-09_T16-58-25/example_report.html"
+#> [4] "example_report/regional/2020-12-09_T16-58-25/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -143,7 +140,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/RtmprQ5OLv/my_factory
+#> /tmp/RtmpmHXSoR/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -152,11 +149,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-09_T10-51-37
+#> │       ├── 2020-12-09_T16-58-24
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-09_T10-51-38
+#> │           └── 2020-12-09_T16-58-25
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources

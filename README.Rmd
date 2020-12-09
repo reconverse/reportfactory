@@ -48,9 +48,6 @@ There a few key principles it adheres to:
 - *Time-saving* Easy convenience functions to reports based on regular
   expressions.
 
-
-![reportfactory diagram](https://raw.githubusercontent.com/reconhub/reportfactory/master/artwork/workflow.png)
-
 ## Installing the package
 
 To install the development version of the package, use:
