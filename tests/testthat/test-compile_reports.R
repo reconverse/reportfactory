@@ -1,13 +1,15 @@
+library(fs)
+
 test_that("test parameteriesed report output", {
   
   # create factory
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
   
   # copy test reports over
-  file.copy(
-    file.path("test_reports", "parameterised.Rmd"),
-    file.path(f, "report_sources")
+  file_copy(
+    path("test_reports", "parameterised.Rmd"),
+    path(f, "report_sources")
   )
   
   # compile report
@@ -19,7 +21,7 @@ test_that("test parameteriesed report output", {
 
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
-  md_file <- file.path(f, "outputs", md_file)
+  md_file <- path(f, "outputs", md_file)
   skip_on_os("windows")
   expect_snapshot_file(md_file, "param_report_check.md", binary = FALSE)
 })
@@ -28,13 +30,13 @@ test_that("test parameteriesed report output", {
 test_that("parameteriesed report with missing param output but input", {
   
   # create factory
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
   
   # copy test reports over
-  file.copy(
-    file.path("test_reports", "parameterised_with_missing.Rmd"),
-    file.path(f, "report_sources")
+  file_copy(
+    path("test_reports", "parameterised_with_missing.Rmd"),
+    path(f, "report_sources")
   )
   
   # compile report
@@ -46,7 +48,7 @@ test_that("parameteriesed report with missing param output but input", {
 
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
-  md_file <- file.path(f, "outputs", md_file)
+  md_file <- path(f, "outputs", md_file)
   skip_on_os("windows")
   expect_snapshot_file(md_file, "missing_param_report_check.md", binary = FALSE)
 })
@@ -54,13 +56,13 @@ test_that("parameteriesed report with missing param output but input", {
 test_that("non parameteriesed report with param input", {
   
   # create factory
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
   
   # copy test reports over
-  file.copy(
-    file.path("test_reports", "simple2.Rmd"),
-    file.path(f, "report_sources")
+  file_copy(
+    path("test_reports", "simple2.Rmd"),
+    path(f, "report_sources")
   )
   
   # compile report
@@ -72,7 +74,7 @@ test_that("non parameteriesed report with param input", {
 
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
-  md_file <- file.path(f, "outputs", md_file)
+  md_file <- path(f, "outputs", md_file)
   skip_on_os("windows")
   expect_snapshot_file(md_file, "nonparameterised_with_params.md", binary = FALSE)
 })
@@ -80,13 +82,13 @@ test_that("non parameteriesed report with param input", {
 test_that("parameteriesed report with missing param (but in environment)", {
   
   # create factory
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
   
   # copy test reports over
-  file.copy(
-    file.path("test_reports", "parameterised_with_missing.Rmd"),
-    file.path(f, "report_sources")
+  file_copy(
+    path("test_reports", "parameterised_with_missing.Rmd"),
+    path(f, "report_sources")
   )
 
   params = list(test2 = "four", test3 = "five")
@@ -99,7 +101,7 @@ test_that("parameteriesed report with missing param (but in environment)", {
 
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
-  md_file <- file.path(f, "outputs", md_file)
+  md_file <- path(f, "outputs", md_file)
   skip_on_os("windows")
   expect_snapshot_file(md_file, "missing_param_but_envir.md", binary = FALSE)
 })
@@ -108,32 +110,32 @@ test_that("parameteriesed report with missing param (but in environment)", {
 test_that("integer index for reports", {
   
   # create factory
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
   
   # copy test reports over
-  file.copy(
-    from = c(
-      file.path("test_reports", "simple.Rmd"),
-      file.path("test_reports", "parameterised.Rmd")
+  file_copy(
+    path = c(
+      path("test_reports", "simple.Rmd"),
+      path("test_reports", "parameterised.Rmd")
     ),
-    to = file.path(f, "report_sources")
+    path(f, "report_sources")
   )
 
-  file.copy(
-    file.path("test_reports", "simple.Rmd"),
-    file.path(f, "report_sources", "dimple.Rmd")
+  file_copy(
+    path("test_reports", "simple.Rmd"),
+    path(f, "report_sources", "dimple.Rmd")
   )
 
-  file.remove(file.path(f, "report_sources", "example_report.Rmd"))
+  file_delete(path(f, "report_sources", "example_report.Rmd"))
 
 
   
   # compile report
   idx <- c(1, 3)
   compile_reports(f, idx)
-  nms <- sub("\\.[a-zA-Z0-9]*$", "", list_reports(f))
-  nms <- paste(nms[idx], collapse = "|")
+  nms <- path_ext_remove(list_reports(f))[idx] 
+  nms <- paste(nms, collapse = "|")
   expected_files <- c(
     "simple\\/(.*)\\/simple.Rmd",
     "simple\\/(.*)\\/simple.html",
@@ -161,32 +163,32 @@ test_that("integer index for reports", {
 test_that("logical index for reports", {
   
   # create factory
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
   
   # copy test reports over
-  file.copy(
-    from = c(
-      file.path("test_reports", "simple.Rmd"),
-      file.path("test_reports", "parameterised.Rmd")
+  file_copy(
+    path = c(
+      path("test_reports", "simple.Rmd"),
+      path("test_reports", "parameterised.Rmd")
     ),
-    to = file.path(f, "report_sources")
+    path(f, "report_sources")
   )
 
-  file.copy(
-    file.path("test_reports", "simple.Rmd"),
-    file.path(f, "report_sources", "dimple.Rmd")
+  file_copy(
+    path("test_reports", "simple.Rmd"),
+    path(f, "report_sources", "dimple.Rmd")
   )
 
-  file.remove(file.path(f, "report_sources", "example_report.Rmd"))
+  file_delete(path(f, "report_sources", "example_report.Rmd"))
 
 
   
   # compile report
   idx <- c(TRUE, FALSE)
   compile_reports(f, idx)
-  nms <- sub("\\.[a-zA-Z0-9]*$", "", list_reports(f))
-  nms <- paste(nms[idx], collapse = "|")
+  nms <- path_ext_remove(list_reports(f))[idx] 
+  nms <- paste(nms, collapse = "|")
   expected_files <- c(
     "dimple\\/(.*)\\/dimple.Rmd",
     "dimple\\/(.*)\\/dimple.html",
@@ -209,3 +211,5 @@ test_that("logical index for reports", {
     )
 
 })
+
+

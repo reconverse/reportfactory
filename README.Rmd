@@ -75,7 +75,7 @@ new_factory("my_factory", path = tempdir())
 ```
 
 ```{r, setwd, include=FALSE}
-knitr::opts_knit$set(root.dir = file.path(tempdir(), "my_factory"))
+knitr::opts_knit$set(root.dir = fs::path(tempdir(), "my_factory"))
 ```
 
 ### Step 2 - Add your reports

@@ -1,18 +1,20 @@
+library(fs)
+
 test_that("new_factory generates the right files - defaults + no move_in", {
     
   odir <- getwd()
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
 
   expect_identical(odir, getwd())
   
-  expected_location <- file.path(tempdir(), "new_factory")
+  expected_location <- path(path_temp(), "new_factory")
   
-  expect_true(dir.exists(expected_location))
-  expect_equal(f, expected_location)
+  expect_true(dir_exists(expected_location))
+  expect_equal(f, unclass(expected_location))
 
   all_files <- list.files(
-    file.path(tempdir(), "new_factory"),
+    path(path_temp(), "new_factory"),
     all.files = TRUE,
     recursive = TRUE,
     include.dirs = TRUE
@@ -39,20 +41,20 @@ test_that("new_factory generates the right files - defaults + no move_in", {
 test_that("new_factory generates the right files - empty factory + move_in", {
   
   odir <- getwd()
-  f <- new_factory(path = tempdir(), create_README = FALSE, 
+  f <- new_factory(path = path_temp(), create_README = FALSE, 
                    create_example_report = FALSE, create_data_folders = FALSE,
                    create_scripts_folder = FALSE, use_here = FALSE,
                    create_gitignore = FALSE)
   on.exit(setwd(odir))
-  on.exit(unlink(f, recursive = TRUE), add = TRUE, after = TRUE)
+  on.exit(dir_delete(f), add = TRUE, after = TRUE)
 
-  expected_location <- file.path(tempdir(), "new_factory")
+  expected_location <- path(path_temp(), "new_factory")
   expect_true(dir.exists(expected_location))
-  expect_equal(f, expected_location)
+  expect_equal(f, unclass(expected_location))
   if (unname(Sys.info()['sysname'] == "Darwin")) {
-    expect_equal(paste0("/private", f), getwd())
+    expect_equal(paste0("/private", unclass(f)), getwd())
   } else {
-    expect_equal(f, getwd())
+    expect_equal(unclass(f), getwd())
   }
   
   all_files <- list.files(
@@ -72,7 +74,7 @@ test_that("new_factory generates the right files - empty factory + move_in", {
 })
 
 test_that("new_factory won't let you overwrite existing folder", {
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
-  expect_error(new_factory(path = tempdir()), "already exists. Aborting.")
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+  expect_error(new_factory(path = path_temp()), "already exists. Aborting.")
 })

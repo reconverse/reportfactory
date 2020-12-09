@@ -26,7 +26,7 @@ validate_factory <- function(factory = ".") {
   root <- factory_root(factory)
 
   # load configuration
-  config <- as.data.frame(read.dcf(file.path(root, "factory_config")))
+  config <- as.data.frame(read.dcf(fs::path(root, "factory_config")))
 
   # the factory name is present in factory_config
   factory_name <- config$name
@@ -64,8 +64,8 @@ validate_factory <- function(factory = ".") {
   }
 
   # the report_source folder matches the name from factory_config
-  pth <- file.path(root, report_sources)
-  if (!dir.exists(pth)) {
+  pth <- fs::path(root, report_sources)
+  if (!fs::dir_exists(pth)) {
     stop(
       sprintf(
         "Folder '%s' does not exist.  Have you renamed it by mistake?",
@@ -86,8 +86,8 @@ validate_factory <- function(factory = ".") {
   }
 
   # the outputs folder matches the name from factory_config
-  pth <- file.path(root, outputs)
-  if (!dir.exists(pth)) {
+  pth <- fs::path(root, outputs)
+  if (!fs::dir_exists(pth)) {
     stop(
       sprintf(
         "Folder '%s' does not exist.  Have you renamed it by mistake?",

@@ -1,8 +1,10 @@
+library(fs)
+
 test_that("validate factory - config tests", {
   
-  f <- new_factory(path = tempdir(), move_in = FALSE)
-  on.exit(unlink(f, recursive = TRUE))
-  config_path <- file.path(f, "factory_config")
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+  config_path <- path(f, "factory_config")
   original_config <- as.data.frame(read.dcf(config_path))
   original_names <- names(original_config)
 
