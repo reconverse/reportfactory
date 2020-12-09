@@ -6,7 +6,7 @@ test_that("new_factory generates the right files - defaults + no move_in", {
 
   expect_identical(odir, getwd())
   
-  expected_location <- normalizePath(file.path(tempdir(), "new_factory"))
+  expected_location <- file.path(tempdir(), "new_factory")
   
   expect_true(dir.exists(expected_location))
   expect_equal(f, expected_location)
@@ -46,11 +46,15 @@ test_that("new_factory generates the right files - empty factory + move_in", {
   on.exit(setwd(odir))
   on.exit(unlink(f, recursive = TRUE), add = TRUE, after = TRUE)
 
-  expected_location <- normalizePath(file.path(tempdir(), "new_factory"))
+  expected_location <- file.path(tempdir(), "new_factory")
   expect_true(dir.exists(expected_location))
   expect_equal(f, expected_location)
-  expect_equal(f, getwd())
-
+  if (unname(Sys.info()['sysname'] == "Darwin")) {
+    expect_equal(paste0("/private", f), getwd())
+  } else {
+    expect_equal(f, getwd())
+  }
+  
   all_files <- list.files(
     expected_location,
     all.files = TRUE,
