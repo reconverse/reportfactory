@@ -44,8 +44,8 @@ compile_reports <- function(factory = ".", reports = NULL,
   outputs <- tmp$outputs
 
   # get vector of reports to compile
-  report_template_dir <- fs::path(root, report_sources)
-  report_sources <- fs::path(report_template_dir, list_reports(root))
+  report_template_dir <- file.path(root, report_sources)
+  report_sources <- file.path(report_template_dir, list_reports(root))
   if (!is.null(reports)) {
     if ((is.numeric(reports) && is.wholenumber(reports)) || is.logical(reports)) {
       report_sources <- report_sources[reports]
@@ -56,7 +56,7 @@ compile_reports <- function(factory = ".", reports = NULL,
   }
 
   # report output folder
-  report_output_dir <- fs::path(root, outputs)
+  report_output_dir <- file.path(root, outputs)
   params_to_print <- params
 
   # loop over all reports
@@ -78,15 +78,15 @@ compile_reports <- function(factory = ".", reports = NULL,
         other_params <- p[!names(p) %in% names(params)]
         params_input <- append(params, other_params)
       } 
-      out_file <- fs::path(report_template_dir, "_reportfactory_tmp_.Rmd")
-      on.exit(fs::file_delete(out_file), add = TRUE)
+      out_file <- file.path(report_template_dir, "_reportfactory_tmp_.Rmd")
+      on.exit(file.remove(out_file), add = TRUE)
       change_yaml_matter(r, params = params_input, output_file = out_file)
       params_to_print <- params_input
     }
     
     # display just enough information to be useful
-    relative_path <- fs::path_rel(r , report_template_dir)
-    relative_path <- fs::path_ext_remove(relative_path)
+    relative_path <- sub(report_template_dir, "", r)
+    relative_path <- sub("\\.[a-zA-Z0-9]*$", "", relative_path)
     message(">>> Compiling report: ", relative_path)
     if (!is.null(names(params_to_print))) {
       message(
@@ -97,13 +97,13 @@ compile_reports <- function(factory = ".", reports = NULL,
 
     # create an additional subfolder if desired
     if (is.null(subfolder)) {
-      output_folder <- fs::path(
+      output_folder <- file.path(
         report_output_dir,
         relative_path,
         timestamp
       )
     } else {
-      output_folder <- fs::path(
+      output_folder <- file.path(
         report_output_dir,
         relative_path,
         subfolder,
@@ -148,7 +148,7 @@ compile_reports <- function(factory = ".", reports = NULL,
         args = list(
           input = out_file,
           output_folder = output_folder,
-          out_file = fs::path_file(relative_path),
+          out_file = file.path(relative_path),
           quiet = quiet,
           ...
         )
@@ -156,7 +156,7 @@ compile_reports <- function(factory = ".", reports = NULL,
     }
 
     # make a copy of the report
-    fs::file_copy(r, output_folder)
+    file.copy(r, output_folder)
   }
 
   message("All done!\n")

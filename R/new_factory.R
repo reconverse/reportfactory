@@ -70,18 +70,18 @@ new_factory <- function(factory = "new_factory", path = ".",
                         create_gitignore = TRUE) {
 
   # create report factory folder
-  root <- fs::path(path, factory)
-  if (fs::dir_exists(root)) {
+  root <- file.path(path, factory)
+  if (dir.exists(root)) {
 		stop("Directory '", factory, "' already exists. Aborting.", call. = FALSE)
 	} else {
-		fs::dir_create(root)
+		dir.create(root)
 	}
 
   # create report outputs folder
-  fs::dir_create(fs::path(root, report_sources))
+  dir.create(file.path(root, report_sources))
 
   # create report_sources folder
-  fs::dir_create(fs::path(root, outputs))
+  dir.create(file.path(root, outputs))
 
   # create the factory configuration file
   write.dcf(
@@ -90,7 +90,7 @@ new_factory <- function(factory = "new_factory", path = ".",
       report_sources = report_sources,
       outputs = outputs
     ),
-    file = fs::path(root, "factory_config")
+    file = file.path(root, "factory_config")
   )
 
   # conditionally create the README
@@ -100,15 +100,15 @@ new_factory <- function(factory = "new_factory", path = ".",
 
     # conditionally create the data folders
   if (create_data_folders) {
-    clean_folder <- fs::path(root, "data", "clean")
-    fs::dir_create(clean_folder)
-    raw_folder <- fs::path(root, "data", "raw")
-    fs::dir_create(raw_folder)
+    clean_folder <- file.path(root, "data", "clean")
+    dir.create(clean_folder, recursive = TRUE)
+    raw_folder <- file.path(root, "data", "raw")
+    dir.create(raw_folder, recursive = TRUE)
   }
 
   # conditionally create the scripts folder
   if (create_scripts_folder) {
-    fs::dir_create(fs::path(root, "scripts"))
+    dir.create(file.path(root, "scripts"))
   }
 
   # create .here file
@@ -118,14 +118,22 @@ new_factory <- function(factory = "new_factory", path = ".",
 
   # copy over skeleton .gitignore
   if (create_gitignore) {
-    copy_skeleton_file("skeleton.gitignore", dest = fs::path(root, ".gitignore"))
+    copy_skeleton_file("skeleton.gitignore", dest = file.path(root, ".gitignore"))
   }
 
   # conditionally copy over the example report and data
   if (create_example_report) {
-    copy_skeleton_file("example_report.Rmd", fs::path(root, report_sources))
-    f <- fs::path_package("reportfactory", "extdata", "example_data.csv")
-    fs::file_copy(f, fs::path(root, "data", "raw"))
+    if (create_data_folders) {
+      copy_skeleton_file("example_report.Rmd", file.path(root, report_sources))
+      f <- system.file(
+        "extdata", "example_data.csv",
+        package = "reportfactory",
+        mustWork = TRUE
+      )
+      file.copy(f, raw_folder)
+    } else {
+      stop("The example report can only be created if create_data_folders = TRUE")
+    }
   }
 
   if (move_in) {

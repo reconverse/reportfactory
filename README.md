@@ -74,7 +74,7 @@ The helper functions below show the state of the factory.
 
 ``` r
 list_reports()       # list all available report sources
-#> example_report.Rmd
+#> [1] "example_report.Rmd"
 list_deps()          # list all of the dependencies of the reports
 #> [1] "here"       "incidence2"
 list_outputs()       # currently empty
@@ -96,7 +96,7 @@ always clear what will be built.
 compile_reports( 
   reports = "example_report.Rmd"
 )
-#> >>> Compiling report: example_report
+#> >>> Compiling report: /example_report
 #> All done!
 ```
 
@@ -104,8 +104,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> example_report/2020-12-08_T18-28-10/example_report.Rmd
-#> example_report/2020-12-08_T18-28-10/example_report.html
+#> [1] "example_report/2020-12-09_T10-51-37/example_report.html"
+#> [2] "example_report/2020-12-09_T10-51-37/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -118,14 +118,14 @@ compile_reports(
   params = list(grouped_plot = FALSE),
   subfolder = "regional"
 )
-#> >>> Compiling report: example_report
+#> >>> Compiling report: /example_report
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> example_report/2020-12-08_T18-28-10/example_report.Rmd
-#> example_report/2020-12-08_T18-28-10/example_report.html
-#> example_report/regional/2020-12-08_T18-28-11/example_report.Rmd
-#> example_report/regional/2020-12-08_T18-28-11/example_report.html
+#> [1] "example_report/2020-12-09_T10-51-37/example_report.html"         
+#> [2] "example_report/2020-12-09_T10-51-37/example_report.Rmd"          
+#> [3] "example_report/regional/2020-12-09_T10-51-38/example_report.html"
+#> [4] "example_report/regional/2020-12-09_T10-51-38/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -143,7 +143,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/RtmpCasrBj/my_factory
+#> /tmp/RtmprQ5OLv/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -152,11 +152,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-08_T18-28-10
+#> │       ├── 2020-12-09_T10-51-37
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-08_T18-28-11
+#> │           └── 2020-12-09_T10-51-38
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources

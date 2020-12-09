@@ -9,14 +9,14 @@
 #' @keywords internal
 factory_root <- function(directory = ".") {
   
-  if (!fs::file_exists(directory)) {
+  if (!file.exists(directory)) {
     stop(
       sprintf("directory '%s' does not exist!\n", directory),
       call. = FALSE
     )
   }
 
-  if (fs::is_file(directory)) {
+  if (!dir.exists(directory)) {
     stop(
       sprintf("'%s' is a file, not a directory! Please correct\n", directory),
       call. = FALSE
@@ -54,8 +54,8 @@ is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  {
 #' 
 #' @noRd 
 copy_skeleton_file <- function(file, dest) {
-  f <- fs::path_package("reportfactory", "skeletons", file)
-  fs::file_copy(f, dest)
+  f <- system.file("skeletons", file, package = "reportfactory")
+  file.copy(f, dest)
 }
 
 

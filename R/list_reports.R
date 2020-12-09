@@ -18,16 +18,13 @@ list_reports <- function(factory = ".", pattern = NULL, ...) {
 
 
   # get a listing of all files and folders in report_sources
-  out <- fs::path_rel(
-    fs::dir_ls(
-      fs::path(root, report_sources),
-      all = TRUE,
-      recurse = TRUE,
-      regexp = "\\.Rmd$"
-    ),
-    fs::path(root, report_sources)
+  out <- list.files(
+    file.path(root, report_sources),
+    pattern = "\\.Rmd$",
+    recursive = TRUE
   )
   
+  # filter with grep
   if (!is.null(pattern)) {
     out <- grep(pattern, out, value = TRUE, ...)
   }
