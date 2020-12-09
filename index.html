@@ -117,7 +117,7 @@
 <p>Here we’ve already created some with most of the default arguments being set to TRUE (the default). These default settings include both an example report and some associated data (<code>report_sources/example_report.Rmd</code> and <code>data/raw/example_data.csv</code>). The helper functions below show the state of the factory.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/list_reports.html">list_reports</a></span><span class="op">(</span><span class="op">)</span>       <span class="co"># list all available report sources</span>
-<span class="co">#&gt; example_report.Rmd</span>
+<span class="co">#&gt; [1] "example_report.Rmd"</span>
 <span class="fu"><a href="reference/list_deps.html">list_deps</a></span><span class="op">(</span><span class="op">)</span>          <span class="co"># list all of the dependencies of the reports</span>
 <span class="co">#&gt; [1] "here"       "incidence2"</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>       <span class="co"># currently empty</span>
@@ -132,13 +132,13 @@
 <code class="sourceCode R"><span class="fu"><a href="reference/compile_reports.html">compile_reports</a></span><span class="op">(</span> 
   reports <span class="op">=</span> <span class="st">"example_report.Rmd"</span>
 <span class="op">)</span>
-<span class="co">#&gt; &gt;&gt;&gt; Compiling report: example_report</span>
+<span class="co">#&gt; &gt;&gt;&gt; Compiling report: /example_report</span>
 <span class="co">#&gt; All done!</span></code></pre></div>
 <p>Use <code>list_ouputs()</code> to view the report outputs.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; example_report/2020-12-08_T18-28-10/example_report.Rmd</span>
-<span class="co">#&gt; example_report/2020-12-08_T18-28-10/example_report.html</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2020-12-09_T10-51-37/example_report.html"</span>
+<span class="co">#&gt; [2] "example_report/2020-12-09_T10-51-37/example_report.Rmd"</span></code></pre></div>
 <p><code><a href="reference/compile_reports.html">compile_reports()</a></code> can also be used to pass a set of parameters to use with a parameterised report (here we use a subfolder argument to distinguish the parameterised reports).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/compile_reports.html">compile_reports</a></span><span class="op">(</span>
@@ -146,14 +146,14 @@
   params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>grouped_plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,
   subfolder <span class="op">=</span> <span class="st">"regional"</span>
 <span class="op">)</span>
-<span class="co">#&gt; &gt;&gt;&gt; Compiling report: example_report</span>
+<span class="co">#&gt; &gt;&gt;&gt; Compiling report: /example_report</span>
 <span class="co">#&gt;       - with parameters: grouped_plot = FALSE</span>
 <span class="co">#&gt; All done!</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; example_report/2020-12-08_T18-28-10/example_report.Rmd</span>
-<span class="co">#&gt; example_report/2020-12-08_T18-28-10/example_report.html</span>
-<span class="co">#&gt; example_report/regional/2020-12-08_T18-28-11/example_report.Rmd</span>
-<span class="co">#&gt; example_report/regional/2020-12-08_T18-28-11/example_report.html</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2020-12-09_T10-51-37/example_report.html"         </span>
+<span class="co">#&gt; [2] "example_report/2020-12-09_T10-51-37/example_report.Rmd"          </span>
+<span class="co">#&gt; [3] "example_report/regional/2020-12-09_T10-51-38/example_report.html"</span>
+<span class="co">#&gt; [4] "example_report/regional/2020-12-09_T10-51-38/example_report.Rmd"</span></code></pre></div>
 <p>Note that reports can also be an integer or a logical vector, in which case it is interpreted as a subset of files output by list_reports(). For instance:</p>
 <ul>
 <li>
@@ -168,7 +168,7 @@
 <p>If you want to have an overview of your entire factory then you can use the <code><a href="reference/factory_overview.html">factory_overview()</a></code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/factory_overview.html">factory_overview</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; /tmp/RtmpCasrBj/my_factory</span>
+<span class="co">#&gt; /tmp/RtmprQ5OLv/my_factory</span>
 <span class="co">#&gt; ├── README.md</span>
 <span class="co">#&gt; ├── data</span>
 <span class="co">#&gt; │   ├── clean</span>
@@ -177,11 +177,11 @@
 <span class="co">#&gt; ├── factory_config</span>
 <span class="co">#&gt; ├── outputs</span>
 <span class="co">#&gt; │   └── example_report</span>
-<span class="co">#&gt; │       ├── 2020-12-08_T18-28-10</span>
+<span class="co">#&gt; │       ├── 2020-12-09_T10-51-37</span>
 <span class="co">#&gt; │       │   ├── example_report.Rmd</span>
 <span class="co">#&gt; │       │   └── example_report.html</span>
 <span class="co">#&gt; │       └── regional</span>
-<span class="co">#&gt; │           └── 2020-12-08_T18-28-11</span>
+<span class="co">#&gt; │           └── 2020-12-09_T10-51-38</span>
 <span class="co">#&gt; │               ├── example_report.Rmd</span>
 <span class="co">#&gt; │               └── example_report.html</span>
 <span class="co">#&gt; ├── report_sources</span>
