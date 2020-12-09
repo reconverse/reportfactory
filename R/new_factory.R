@@ -70,11 +70,11 @@ new_factory <- function(factory = "new_factory", path = ".",
                         create_gitignore = TRUE) {
 
   # create report factory folder
-  root <- file.path(path, factory)
+  root <- normalizePath(file.path(path, factory))
   if (dir.exists(root)) {
 		stop("Directory '", factory, "' already exists. Aborting.", call. = FALSE)
 	} else {
-		dir.create(root)
+		dir.create(root, recursive = TRUE)
 	}
 
   # create report outputs folder
