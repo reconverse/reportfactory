@@ -42,7 +42,7 @@ https://github.com/reconhub/reportfactory/releases/tag/old_version.
 in well-organised, timestamped folders. This is illustrated in the figure below:
 
 <br>
-<img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="80%" alt="workflow">
+<img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow">
 <br>
 
 There a few key principles it adheres to:

@@ -34,7 +34,7 @@ storing outputs in well-organised, timestamped folders. This is
 illustrated in the figure below:
 
 <br>
-<img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="80%" alt="workflow">
+<img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow">
 <br>
 
 There a few key principles it adheres to:
@@ -116,8 +116,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2020-12-10_T15-34-25/example_report.html"
-#> [2] "example_report/2020-12-10_T15-34-25/example_report.Rmd"
+#> [1] "example_report/2020-12-10_T17-14-40/example_report.html"
+#> [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -134,10 +134,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2020-12-10_T15-34-25/example_report.html"         
-#> [2] "example_report/2020-12-10_T15-34-25/example_report.Rmd"          
-#> [3] "example_report/regional/2020-12-10_T15-34-26/example_report.html"
-#> [4] "example_report/regional/2020-12-10_T15-34-26/example_report.Rmd"
+#> [1] "example_report/2020-12-10_T17-14-40/example_report.html"         
+#> [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"          
+#> [3] "example_report/regional/2020-12-10_T17-14-41/example_report.html"
+#> [4] "example_report/regional/2020-12-10_T17-14-41/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -155,7 +155,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/RtmpbnS6PY/my_factory
+#> /tmp/Rtmpm0vIol/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -164,11 +164,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-10_T15-34-25
+#> │       ├── 2020-12-10_T17-14-40
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-10_T15-34-26
+#> │           └── 2020-12-10_T17-14-41
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources
