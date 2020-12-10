@@ -28,17 +28,32 @@ You can also download it directly from
 
 ## reportfactory in a nutshell
 
-{reportfactory} is a R package which facilitates a workflow for
-compiling multiple `.Rmd` reports within a folder.
+{reportfactory} is a R package which facilitates workflows for handling
+multiple `.Rmd` reports, compiling one or several reports in one go, and
+storing outputs in well-organised, timestamped folders. This is
+illustrated in the figure below:
+
+<br>
+<img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="80%" alt="workflow">
+<br>
 
 There a few key principles it adheres to:
 
-  - *Simplicity* Only focusses on the compilation of reports not data
-    management.
-  - *Reproducible* Time-stamped folder structure and customisable
-    subfolder make viewing the same report over time a breeze.
-  - *Time-saving* Easy convenience functions to reports based on regular
-    expressions.
+  - *Simple*: only focusses on the compilation of reports with minimum
+    overhead for the user.
+
+  - *Non-invasive*: `.Rmd` documents need no alteration to work within
+    the factory.
+
+  - *Reproducible*: time-stamped folder structure and customisable
+    subfolders make viewing the same report over time a breeze; handling
+    of package dependencies facilitates the deployment of factories on
+    multiple computers.
+
+  - *Time-saving*: easy compilation of multiple reports using regular
+    expressions; book-keeping is handled by the factory and ensures
+    that: i) every report is compiled in a clean environment and ii) all
+    outputs are stored in a dedicated folder
 
 ## Installing the package
 
@@ -101,8 +116,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2020-12-09_T16-58-24/example_report.html"
-#> [2] "example_report/2020-12-09_T16-58-24/example_report.Rmd"
+#> [1] "example_report/2020-12-10_T15-34-25/example_report.html"
+#> [2] "example_report/2020-12-10_T15-34-25/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -119,10 +134,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2020-12-09_T16-58-24/example_report.html"         
-#> [2] "example_report/2020-12-09_T16-58-24/example_report.Rmd"          
-#> [3] "example_report/regional/2020-12-09_T16-58-25/example_report.html"
-#> [4] "example_report/regional/2020-12-09_T16-58-25/example_report.Rmd"
+#> [1] "example_report/2020-12-10_T15-34-25/example_report.html"         
+#> [2] "example_report/2020-12-10_T15-34-25/example_report.Rmd"          
+#> [3] "example_report/regional/2020-12-10_T15-34-26/example_report.html"
+#> [4] "example_report/regional/2020-12-10_T15-34-26/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -140,7 +155,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/RtmpmHXSoR/my_factory
+#> /tmp/RtmpbnS6PY/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -149,11 +164,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-09_T16-58-24
+#> │       ├── 2020-12-10_T15-34-25
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-09_T16-58-25
+#> │           └── 2020-12-10_T15-34-26
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources
