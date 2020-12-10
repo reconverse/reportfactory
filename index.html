@@ -82,7 +82,7 @@
 <h2 class="hasAnchor">
 <a href="#reportfactory-in-a-nutshell" class="anchor"></a>reportfactory in a nutshell</h2>
 <p>{reportfactory} is a R package which facilitates workflows for handling multiple <code>.Rmd</code> reports, compiling one or several reports in one go, and storing outputs in well-organised, timestamped folders. This is illustrated in the figure below:</p>
-<p><br><img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="80%" alt="workflow"><br></p>
+<p><br><img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow"><br></p>
 <p>There a few key principles it adheres to:</p>
 <ul>
 <li><p><em>Simple</em>: only focusses on the compilation of reports with minimum overhead for the user.</p></li>
@@ -135,8 +135,8 @@
 <p>Use <code>list_ouputs()</code> to view the report outputs.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2020-12-10_T15-34-25/example_report.html"</span>
-<span class="co">#&gt; [2] "example_report/2020-12-10_T15-34-25/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2020-12-10_T17-14-40/example_report.html"</span>
+<span class="co">#&gt; [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"</span></code></pre></div>
 <p><code><a href="reference/compile_reports.html">compile_reports()</a></code> can also be used to pass a set of parameters to use with a parameterised report (here we use a subfolder argument to distinguish the parameterised reports).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/compile_reports.html">compile_reports</a></span><span class="op">(</span>
@@ -148,10 +148,10 @@
 <span class="co">#&gt;       - with parameters: grouped_plot = FALSE</span>
 <span class="co">#&gt; All done!</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2020-12-10_T15-34-25/example_report.html"         </span>
-<span class="co">#&gt; [2] "example_report/2020-12-10_T15-34-25/example_report.Rmd"          </span>
-<span class="co">#&gt; [3] "example_report/regional/2020-12-10_T15-34-26/example_report.html"</span>
-<span class="co">#&gt; [4] "example_report/regional/2020-12-10_T15-34-26/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2020-12-10_T17-14-40/example_report.html"         </span>
+<span class="co">#&gt; [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"          </span>
+<span class="co">#&gt; [3] "example_report/regional/2020-12-10_T17-14-41/example_report.html"</span>
+<span class="co">#&gt; [4] "example_report/regional/2020-12-10_T17-14-41/example_report.Rmd"</span></code></pre></div>
 <p>Note that reports can also be an integer or a logical vector, in which case it is interpreted as a subset of files output by list_reports(). For instance:</p>
 <ul>
 <li>
@@ -166,7 +166,7 @@
 <p>If you want to have an overview of your entire factory then you can use the <code><a href="reference/factory_overview.html">factory_overview()</a></code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/factory_overview.html">factory_overview</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; /tmp/RtmpbnS6PY/my_factory</span>
+<span class="co">#&gt; /tmp/Rtmpm0vIol/my_factory</span>
 <span class="co">#&gt; ├── README.md</span>
 <span class="co">#&gt; ├── data</span>
 <span class="co">#&gt; │   ├── clean</span>
@@ -175,11 +175,11 @@
 <span class="co">#&gt; ├── factory_config</span>
 <span class="co">#&gt; ├── outputs</span>
 <span class="co">#&gt; │   └── example_report</span>
-<span class="co">#&gt; │       ├── 2020-12-10_T15-34-25</span>
+<span class="co">#&gt; │       ├── 2020-12-10_T17-14-40</span>
 <span class="co">#&gt; │       │   ├── example_report.Rmd</span>
 <span class="co">#&gt; │       │   └── example_report.html</span>
 <span class="co">#&gt; │       └── regional</span>
-<span class="co">#&gt; │           └── 2020-12-10_T15-34-26</span>
+<span class="co">#&gt; │           └── 2020-12-10_T17-14-41</span>
 <span class="co">#&gt; │               ├── example_report.Rmd</span>
 <span class="co">#&gt; │               └── example_report.html</span>
 <span class="co">#&gt; ├── report_sources</span>
