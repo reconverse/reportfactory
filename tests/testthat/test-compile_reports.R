@@ -133,29 +133,33 @@ test_that("integer index for reports", {
   
   # compile report
   idx <- c(1, 3)
-  compile_reports(f, idx)
+  compile_reports(f, idx, timestamp = "test")
   nms <- path_ext_remove(list_reports(f))[idx] 
   nms <- paste(nms, collapse = "|")
   expected_files <- c(
-    "simple\\/(.*)\\/simple.Rmd",
-    "simple\\/(.*)\\/simple.html",
-    "simple\\/(.*)\\/simple.md",
-    "simple\\/(.*)\\/simple_files\\/figure-gfm\\/pressure-1.png",
-    "dimple\\/(.*)\\/dimple.Rmd",
-    "dimple\\/(.*)\\/dimple.html",
-    "dimple\\/(.*)\\/dimple.md",
-    "dimple\\/(.*)\\/dimple_files\\/figure-gfm\\/pressure-1.png",
-    "parameterised\\/(.*)\\/parameterised.Rmd",
-    "parameterised\\/(.*)\\/parameterised.md"
+    file.path("simple", "test", "simple.Rmd"),
+    file.path("simple", "test", "simple.html"),
+    file.path("simple", "test", "simple.md"),
+    file.path("simple", "test", "simple_files", "figure-gfm", "pressure-1.png"),
+    file.path("dimple", "test", "dimple.Rmd"),
+    file.path("dimple", "test", "dimple.html"),
+    file.path("dimple", "test", "dimple.md"),
+    file.path("dimple", "test", "dimple_files", "figure-gfm", "pressure-1.png"),
+    file.path("parameterised", "test", "parameterised.Rmd"),
+    file.path("parameterised", "test", "parameterised.md")
   )
   expected_files <- expected_files[grepl(nms, expected_files)]
   
   output_files <- list_outputs(f)
-  expect_true(
-      all(
-        mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
-      )
+  expect_true(all(
+    mapply(
+      grepl,
+      pattern = sort(expected_files),
+      x = sort(output_files),
+      MoreArgs = list(fixed = TRUE)
     )
+  ))
+  
 
 })
 
@@ -186,29 +190,32 @@ test_that("logical index for reports", {
   
   # compile report
   idx <- c(TRUE, FALSE)
-  compile_reports(f, idx)
+  compile_reports(f, idx, timestamp = "test")
   nms <- path_ext_remove(list_reports(f))[idx] 
   nms <- paste(nms, collapse = "|")
   expected_files <- c(
-    "dimple\\/(.*)\\/dimple.Rmd",
-    "dimple\\/(.*)\\/dimple.html",
-    "dimple\\/(.*)\\/dimple.md",
-    "dimple\\/(.*)\\/dimple_files\\/figure-gfm\\/pressure-1.png",
-    "simple\\/(.*)\\/simple.Rmd",
-    "simple\\/(.*)\\/simple.html",
-    "simple\\/(.*)\\/simple.md",
-    "simple\\/(.*)\\/simple_files\\/figure-gfm\\/pressure-1.png",
-    "parameterised\\/(.*)\\/parameterised.Rmd",
-    "parameterised\\/(.*)\\/parameterised.md"
+    file.path("simple", "test", "simple.Rmd"),
+    file.path("simple", "test", "simple.html"),
+    file.path("simple", "test", "simple.md"),
+    file.path("simple", "test", "simple_files", "figure-gfm", "pressure-1.png"),
+    file.path("dimple", "test", "dimple.Rmd"),
+    file.path("dimple", "test", "dimple.html"),
+    file.path("dimple", "test", "dimple.md"),
+    file.path("dimple", "test", "dimple_files", "figure-gfm", "pressure-1.png"),
+    file.path("parameterised", "test", "parameterised.Rmd"),
+    file.path("parameterised", "test", "parameterised.md")
   )
   expected_files <- expected_files[grepl(nms, expected_files)]
   
   output_files <- list_outputs(f)
-  expect_true(
-      all(
-        mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
-      )
+  expect_true(all(
+    mapply(
+      grepl,
+      pattern = sort(expected_files),
+      x = sort(output_files),
+      MoreArgs = list(fixed = TRUE)
     )
+  ))
 
 })
 

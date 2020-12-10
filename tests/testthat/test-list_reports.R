@@ -9,9 +9,9 @@ test_that("list_reports works from outside factory", {
   file_create(path(nested_dir, "nested.Rmd"))
   file_create(path(nested_dir, "nested.noshow"))
 
-  expected_reports <- c("example_report.Rmd", "nested/nested.Rmd")
+  expected_reports <- c("example_report.Rmd", file.path("nested", "nested.Rmd"))
   expect_equal(sort(unclass(list_reports(f))), sort(expected_reports))
-  expect_equal(unclass(list_reports(f, "nested")), "nested/nested.Rmd")
+  expect_equal(unclass(list_reports(f, "nested")), file.path("nested", "nested.Rmd"))
 })
 
 test_that("list_reports works from inside factory", {
@@ -27,6 +27,6 @@ test_that("list_reports works from inside factory", {
   file_create(path(nested_dir, "nested", ext = "Rmd"))
   file_create(path(nested_dir, "nested", ext = ".noshow"))
 
-  expected_reports <- c("example_report.Rmd", "nested/nested.Rmd")
+  expected_reports <- c("example_report.Rmd", file.path("nested", "nested.Rmd"))
   expect_equal(sort(unclass(list_reports())), sort(expected_reports))
 })

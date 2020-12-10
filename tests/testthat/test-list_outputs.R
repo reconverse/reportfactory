@@ -19,37 +19,42 @@ test_that("list_output works with nested and unnested files", {
   # remove the other example report
   file_delete(path(f, "report_sources", "example_report.Rmd"))
 
-  compile_reports(f)
+  compile_reports(f, timestamp = "test")
   output_files <- list_outputs(f)
   expected_files <- c(
-    "simple\\/(.*)\\/simple.Rmd",
-    "simple\\/(.*)\\/simple.html",
-    "simple\\/(.*)\\/simple.md",
-    "simple\\/(.*)\\/simple_files\\/figure-gfm\\/pressure-1.png",
-    "nested\\/parameterised\\/(.*)\\/parameterised.Rmd",
-    "nested\\/parameterised\\/(.*)\\/parameterised.md"
+    file.path("simple", "test", "simple.Rmd"),
+    file.path("simple", "test", "simple.html"),
+    file.path("simple", "test", "simple.md"),
+    file.path("simple", "test", "simple_files", "figure-gfm", "pressure-1.png"),
+    file.path("nested", "parameterised", "test", "parameterised.Rmd"),
+    file.path("nested", "parameterised", "test", "parameterised.md")
+  )
+  
+  expect_true(all(
+    mapply(
+      grepl,
+      pattern = sort(expected_files),
+      x = sort(output_files),
+      MoreArgs = list(fixed = TRUE)
     )
+  ))
+  
+  output_files <- list_outputs(f, "simple")
+  expected_files <- c(
+    file.path("simple", "test", "simple.Rmd"),
+    file.path("simple", "test", "simple.html"),
+    file.path("simple", "test", "simple.md"),
+    file.path("simple", "test", "simple_files", "figure-gfm", "pressure-1.png")
+  )
 
-    expect_true(
-      all(
-        mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
-      )
+   expect_true(all(
+    mapply(
+      grepl,
+      pattern = sort(expected_files),
+      x = sort(output_files),
+      MoreArgs = list(fixed = TRUE)
     )
-
-
-    output_files <- list_outputs(f, "simple")
-    expected_files <- c(
-      "simple\\/(.*)\\/simple.Rmd",
-      "simple\\/(.*)\\/simple.html",
-      "simple\\/(.*)\\/simple.md",
-      "simple\\/(.*)\\/simple_files\\/figure-gfm\\/pressure-1.png"
-    )
-
-    expect_true(
-      all(
-        mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
-      )
-    )
+  ))
 })
 
 
@@ -65,18 +70,22 @@ test_that("list_output works, one file compiled", {
     nested_dir
   )
 
-  compile_reports(f, "parameterised")
+  compile_reports(f, "parameterised", timestamp = "test")
   output_files <- list_outputs(f)
   expected_files <- c(
-    "nested\\/parameterised\\/(.*)\\/parameterised.Rmd",
-    "nested\\/parameterised\\/(.*)\\/parameterised.md"
-    )
+    file.path("nested", "parameterised", "test", "parameterised.Rmd"),
+    file.path("nested", "parameterised", "test", "parameterised.md")
+  )
 
-    expect_true(
-      all(
-        mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
-      )
+  expect_true(all(
+    mapply(
+      grepl,
+      pattern = sort(expected_files),
+      x = sort(output_files),
+      MoreArgs = list(fixed = TRUE)
     )
+  ))
+
 })
 
 
@@ -92,16 +101,19 @@ test_that("list_output works, with subfolders", {
     nested_dir
   )
 
-  compile_reports(f, "parameterised", subfolder = "bob")
+  compile_reports(f, "parameterised", timestamp = "test", subfolder = "bob")
   output_files <- list_outputs(f)
   expected_files <- c(
-    "nested\\/parameterised\\/bob\\/(.*)\\/parameterised.Rmd",
-    "nested\\/parameterised\\/bob\\/(.*)\\/parameterised.md"
-    )
+    file.path("nested", "parameterised", "bob", "test", "parameterised.Rmd"),
+    file.path("nested", "parameterised", "bob", "test", "parameterised.md")
+  )
 
-    expect_true(
-      all(
-        mapply(grepl, pattern = sort(expected_files), x = sort(output_files))
-      )
+  expect_true(all(
+    mapply(
+      grepl,
+      pattern = sort(expected_files),
+      x = sort(output_files),
+      MoreArgs = list(fixed = TRUE)
     )
+  ))
 })

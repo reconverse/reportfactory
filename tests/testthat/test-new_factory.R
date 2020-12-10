@@ -22,16 +22,16 @@ test_that("new_factory generates the right files - defaults + no move_in", {
   
   expected_files <- c(
     "report_sources",
-    "report_sources/example_report.Rmd",
+    file.path("report_sources", "example_report.Rmd"),
     "outputs",
     "factory_config",
     ".here",
     ".gitignore",
     "README.md",
     "data",
-    "data/clean",
-    "data/raw",
-    "data/raw/example_data.csv",
+    file.path("data", "clean"),
+    file.path("data", "raw"),
+    file.path("data", "raw", "example_data.csv"),
     "scripts"
     )
     

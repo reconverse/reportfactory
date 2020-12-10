@@ -13,12 +13,13 @@ list_outputs <- function(factory = ".", pattern = NULL, ...) {
   outputs <- tmp$outputs
 
   # get a listing of all files and folders in report_sources
-  out <- list.files(file.path(root, outputs), recursive = TRUE)
-  
-  # filter with grep
+  out <- list.files(path = file.path(root, outputs), recursive = TRUE)
+
+  # grep to filter file paths
   if (!is.null(pattern)) {
     out <- grep(pattern, out, value = TRUE, ...)
   }
 
   out
+
 }
