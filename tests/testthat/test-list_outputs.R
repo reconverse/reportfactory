@@ -1,6 +1,7 @@
 library(fs)
 
 test_that("list_output works with nested and unnested files", {
+  skip_on_os("windows")
   f <- new_factory(path = path_temp(), move_in = FALSE)
   on.exit(dir_delete(f))
 
@@ -29,7 +30,7 @@ test_that("list_output works with nested and unnested files", {
     file.path("nested", "parameterised", "test", "parameterised.Rmd"),
     file.path("nested", "parameterised", "test", "parameterised.md")
   )
-  
+
   expect_true(all(
     mapply(
       grepl,
@@ -38,7 +39,7 @@ test_that("list_output works with nested and unnested files", {
       MoreArgs = list(fixed = TRUE)
     )
   ))
-  
+
   output_files <- list_outputs(f, "simple")
   expected_files <- c(
     file.path("simple", "test", "simple.Rmd"),
