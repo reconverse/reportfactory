@@ -1,6 +1,7 @@
 library(fs)
 
 test_that("test parameteriesed report output", {
+  skip_on_os("windows")
 
   # create factory
   f <- new_factory(path = path_temp(), move_in = FALSE)
@@ -22,12 +23,13 @@ test_that("test parameteriesed report output", {
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
-  skip_on_os("windows")
+
   expect_snapshot_file(md_file, "param_report_check.md", binary = FALSE)
 })
 
 
 test_that("parameteriesed report with missing param output but input", {
+  skip_on_os("windows")
 
   # create factory
   f <- new_factory(path = path_temp(), move_in = FALSE)
@@ -49,11 +51,12 @@ test_that("parameteriesed report with missing param output but input", {
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
-  skip_on_os("windows")
+
   expect_snapshot_file(md_file, "missing_param_report_check.md", binary = FALSE)
 })
 
 test_that("non parameteriesed report with param input", {
+  skip_on_os("windows")
 
   # create factory
   f <- new_factory(path = path_temp(), move_in = FALSE)
@@ -75,11 +78,12 @@ test_that("non parameteriesed report with param input", {
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
-  skip_on_os("windows")
+
   expect_snapshot_file(md_file, "nonparameterised_with_params.md", binary = FALSE)
 })
 
 test_that("parameteriesed report with missing param (but in environment)", {
+  skip_on_os("windows")
 
   # create factory
   f <- new_factory(path = path_temp(), move_in = FALSE)
@@ -102,14 +106,15 @@ test_that("parameteriesed report with missing param (but in environment)", {
   # check the output
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
-  skip_on_os("windows")
+
   expect_snapshot_file(md_file, "missing_param_but_envir.md", binary = FALSE)
 })
 
 
 test_that("integer index for reports", {
   skip_on_os("windows")
-  # create factory
+
+    # create factory
   f <- new_factory(path = path_temp(), move_in = FALSE)
   on.exit(dir_delete(f))
 
@@ -128,8 +133,6 @@ test_that("integer index for reports", {
   )
 
   file_delete(path(f, "report_sources", "example_report.Rmd"))
-
-
 
   # compile report
   idx <- c(1, 3)

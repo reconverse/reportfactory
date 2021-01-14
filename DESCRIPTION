@@ -1,6 +1,6 @@
 Package: reportfactory
 Title: Lightweight Infrastructure for Handling Multiple R Markdown Documents
-Version: 0.0.7
+Version: 0.1.0
 Authors@R: c(
   person("Thibaut", "Jombart", role = "aut", email = "thibautjombart@gmail.com"), 
   person("Zhian N.", "Kamvar", role = "aut", email = "zkamvar@gmail.com"),
