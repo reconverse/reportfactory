@@ -15,6 +15,10 @@ patterns in report names.}
 
 \item{...}{additional parameters to pass to \code{grep()}}
 }
+\value{
+A character vector containing the names of the reports in the
+specified factory (empty if there were no files).
+}
 \description{
 This function can be used to list available reports stored in the factory, in
 inside the \code{report_sources} folder (or any subfolder within).

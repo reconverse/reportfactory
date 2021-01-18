@@ -2,11 +2,13 @@
 #'
 #' This function can be used to list package dependencies based of the reports
 #' within the factory. It is a wrapper for \code{checkpoint::scanForPackages}.
-#' 
+#'
 #' @inheritParams compile_reports
 #' @param missing A logical indicating if only missing dependencies should be
 #'   listed (`TRUE`); otherwise, all packages needed in the reports are listed;
 #'   defaults to `FALSE`
+#'
+#' @return A character vector of package dependencies.
 #'
 #' @export
 list_deps <- function(factory = ".", missing = FALSE) {
@@ -16,16 +18,16 @@ list_deps <- function(factory = ".", missing = FALSE) {
 
   op <- options(knitr.purl.inline = TRUE)
   on.exit(options(op))
-    
+
   deps <- checkpoint::scanForPackages(
-    project = root, 
+    project = root,
     use.knitr = TRUE,
     scan.rnw.with.knitr = TRUE
   )
   deps <- deps$pkgs
-  
+
   if (missing) {
-    installed <- utils::installed.packages()[, "Package"]
+    installed <- basename(find.package(deps))
     deps <- setdiff(deps, installed)
   }
 

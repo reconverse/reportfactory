@@ -12,6 +12,10 @@ factory. Defaults to the current directory.}
 
 \item{...}{Additional arguments passed to \code{fs::dir_tree()}.}
 }
+\value{
+Invisibly returns a character of the files and directories within the
+desired folder.
+}
 \description{
-Generate an overview of a report factory
+Print contents of directories in a tree-like format.
 }

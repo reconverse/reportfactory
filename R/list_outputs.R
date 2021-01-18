@@ -4,6 +4,10 @@
 #' factory, in inside the `outputs` folder (or any subfolder within).
 #'
 #' @inheritParams list_reports
+#'
+#' @return A character vector containing the names of the reports in the
+#'   specified factory (empty if there were no files).
+#'
 #' @export
 list_outputs <- function(factory = ".", pattern = NULL, ...) {
 

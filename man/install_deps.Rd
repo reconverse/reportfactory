@@ -16,6 +16,9 @@ installed; defaults to \code{FALSE}.}
 
 \item{...}{Arguments to be passed to \code{install.packages()}.}
 }
+\value{
+Invisble NULL (called for side effects only).
+}
 \description{
 This function can be used to install package dependencies based on the
 reports within the factory.

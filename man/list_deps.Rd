@@ -14,6 +14,9 @@ factory. Defaults to the current directory.}
 listed (\code{TRUE}); otherwise, all packages needed in the reports are listed;
 defaults to \code{FALSE}}
 }
+\value{
+A character vector of package dependencies.
+}
 \description{
 This function can be used to list package dependencies based of the reports
 within the factory. It is a wrapper for \code{checkpoint::scanForPackages}.

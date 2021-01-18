@@ -47,6 +47,9 @@ to the function will have identical timestamps.}
 
 \item{...}{further arguments passed to \code{rmarkdown::render()}}
 }
+\value{
+Invisble NULL (called for side effects only).
+}
 \description{
 Compile one or several R Markdown reports
 }
