@@ -36,6 +36,12 @@ compile_reports <- function(factory = ".", reports = NULL,
                             timestamp = format(Sys.time(), "%Y-%m-%d_T%H-%M-%S"),
                             ...) {
 
+  # Added this as Brian Ripley raised issues with portability and solaris
+  # Check to see if pandoc is installed
+  if(!rmarkdown::pandoc_available()) {
+    stop("Pandoc is not installed; please install before proceeding")
+  }
+
   # force timestamp to evaluate as soon as function called - needed due to the
   # `Sys.time` call within the default argument
   force(timestamp)

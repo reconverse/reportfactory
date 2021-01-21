@@ -1,6 +1,7 @@
 library(fs)
 
 test_that("test parameteriesed report output", {
+  skip_if_pandoc_not_installed()
   skip_on_os("windows")
 
   # create factory
@@ -29,6 +30,7 @@ test_that("test parameteriesed report output", {
 
 
 test_that("parameteriesed report with missing param output but input", {
+  skip_if_pandoc_not_installed()
   skip_on_os("windows")
 
   # create factory
@@ -56,6 +58,7 @@ test_that("parameteriesed report with missing param output but input", {
 })
 
 test_that("non parameteriesed report with param input", {
+  skip_if_pandoc_not_installed()
   skip_on_os("windows")
 
   # create factory
@@ -83,6 +86,7 @@ test_that("non parameteriesed report with param input", {
 })
 
 test_that("parameteriesed report with missing param (but in environment)", {
+  skip_if_pandoc_not_installed()
   skip_on_os("windows")
 
   # create factory
@@ -112,6 +116,7 @@ test_that("parameteriesed report with missing param (but in environment)", {
 
 
 test_that("integer index for reports", {
+  skip_if_pandoc_not_installed()
   skip_on_os("windows")
 
     # create factory
@@ -169,6 +174,7 @@ test_that("integer index for reports", {
 
 
 test_that("logical index for reports", {
+  skip_if_pandoc_not_installed()
   skip_on_os("windows")
 
   # create factory

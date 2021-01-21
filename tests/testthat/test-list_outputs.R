@@ -1,6 +1,7 @@
 library(fs)
 
 test_that("list_output works with nested and unnested files", {
+  skip_if_pandoc_not_installed()
   skip_on_os("windows")
   f <- new_factory(path = path_temp(), move_in = FALSE)
   on.exit(dir_delete(f))
@@ -60,6 +61,7 @@ test_that("list_output works with nested and unnested files", {
 
 
 test_that("list_output works, one file compiled", {
+  skip_if_pandoc_not_installed()
   f <- new_factory(path = path_temp(), move_in = FALSE)
   on.exit(dir_delete(f))
 
@@ -91,6 +93,7 @@ test_that("list_output works, one file compiled", {
 
 
 test_that("list_output works, with subfolders", {
+  skip_if_pandoc_not_installed()
   f <- new_factory(path = path_temp(), move_in = FALSE)
   on.exit(dir_delete(f))
 

@@ -1,20 +1,16 @@
-## This is a resubmission
-Further to Gregor's email on 2020-01-18 I have made the following corrections
-to the initial submission:
-
-* Have added \value{} entries for all documentation.
-* I have replaced the call to installed.packages() with a call to
-  find.packages() as suggested.
-* I was unable to find any occurrences of writing to user's home filespace
-  within either the tests or the examples.  Within the examples I use tempdir()
-  (hidden from the user with \dontshow{}) and within the tests I'm using
-  fs::path_temp (using fs here mainly as a sanity check for myself).
+Further to Brian Ripley's email on 21-01-2020 I have added a System
+Requirement on Pandoc along with additional, user facing code, that errors
+if it is not installed.  Check's requiring pandoc are now skipped on Solaris.
 
 ## Tested on
 * Fedora 33, local R installation, R 4.0.3 (2020-10-10)
+* Solaris via RHub (unsure of version but I believe it is the current release)
 * Fedora 33, local R installation, (unstable) (2021-01-14 r79827)
-* Windows 10, local R installation, R Under Development
 
 ### R CMD check results for above environments
 0 errors | 0 warnings | 1 note
-* This is a new release.
+
+Days since last update: 0 
+
+Hopefully this is ok as at request of Brian Ripley
+
