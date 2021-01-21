@@ -35,6 +35,22 @@ remotes::install_github("reconhub/reportfactory@old_version")
 You can also download it directly from
 https://github.com/reconhub/reportfactory/releases/tag/old_version.
 
+You can install the current version of the package from 
+[CRAN](https://cran.r-project.org/) with:
+
+```{r, eval=FALSE}
+install.packages("reportfactory")
+```
+
+The development version can be installed from [GitHub](https://github.com/) with:
+
+```{r, eval=FALSE}
+if (!require(remotes)) {
+  install.packages("remotes")
+}
+remotes::install_github("reconhub/reportfactory", build_vignettes = TRUE)
+
+
 ## reportfactory in a nutshell 
 
 {reportfactory} is a R package which facilitates workflows for handling multiple

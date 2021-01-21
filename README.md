@@ -26,12 +26,28 @@ remotes::install_github("reconhub/reportfactory@old_version")
 You can also download it directly from
 <https://github.com/reconhub/reportfactory/releases/tag/old_version>.
 
-## reportfactory in a nutshell
+You can install the current version of the package from
+[CRAN](https://cran.r-project.org/) with:
 
-{reportfactory} is a R package which facilitates workflows for handling
-multiple `.Rmd` reports, compiling one or several reports in one go, and
-storing outputs in well-organised, timestamped folders. This is
-illustrated in the figure below:
+``` r
+install.packages("reportfactory")
+```
+
+The development version can be installed from
+[GitHub](https://github.com/) with:
+
+``` r
+if (!require(remotes)) {
+  install.packages("remotes")
+}
+remotes::install_github("reconhub/reportfactory", build_vignettes = TRUE)
+
+
+## reportfactory in a nutshell 
+
+{reportfactory} is a R package which facilitates workflows for handling multiple
+`.Rmd` reports, compiling one or several reports in one go, and storing outputs
+in well-organised, timestamped folders. This is illustrated in the figure below:
 
 <br>
 <img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow">
@@ -39,25 +55,26 @@ illustrated in the figure below:
 
 There a few key principles it adheres to:
 
-  - *Simple*: only focusses on the compilation of reports with minimum
-    overhead for the user.
+- *Simple*: only focusses on the compilation of reports with minimum overhead
+   for the user.
 
-  - *Non-invasive*: `.Rmd` documents need no alteration to work within
-    the factory.
+- *Non-invasive*: `.Rmd` documents need no alteration to work within the factory.
 
-  - *Reproducible*: time-stamped folder structure and customisable
-    subfolders make viewing the same report over time a breeze; handling
-    of package dependencies facilitates the deployment of factories on
-    multiple computers.
+- *Reproducible*: time-stamped folder structure and customisable subfolders make
+  viewing the same report over time a breeze; handling of package dependencies
+  facilitates the deployment of factories on multiple computers.
 
-  - *Time-saving*: easy compilation of multiple reports using regular
-    expressions; book-keeping is handled by the factory and ensures
-    that: i) every report is compiled in a clean environment and ii) all
-    outputs are stored in a dedicated folder
+- *Time-saving*: easy compilation of multiple reports using regular expressions;
+  book-keeping is handled by the factory and ensures that: i) every report is
+  compiled in a clean environment and ii) all outputs are stored in a dedicated
+  folder
+
+
 
 ## Installing the package
 
 To install the development version of the package, use:
+```
 
 ``` r
 remotes::install_github("reconhub/reportfactory")
@@ -116,8 +133,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2020-12-10_T17-14-40/example_report.html"
-#> [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"
+#> [1] "example_report/2021-01-21_T10-35-17/example_report.html"
+#> [2] "example_report/2021-01-21_T10-35-17/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -134,10 +151,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2020-12-10_T17-14-40/example_report.html"         
-#> [2] "example_report/2020-12-10_T17-14-40/example_report.Rmd"          
-#> [3] "example_report/regional/2020-12-10_T17-14-41/example_report.html"
-#> [4] "example_report/regional/2020-12-10_T17-14-41/example_report.Rmd"
+#> [1] "example_report/2021-01-21_T10-35-17/example_report.html"         
+#> [2] "example_report/2021-01-21_T10-35-17/example_report.Rmd"          
+#> [3] "example_report/regional/2021-01-21_T10-35-18/example_report.html"
+#> [4] "example_report/regional/2021-01-21_T10-35-18/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -155,7 +172,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/Rtmpm0vIol/my_factory
+#> /tmp/RtmpNchGBn/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -164,11 +181,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2020-12-10_T17-14-40
+#> │       ├── 2021-01-21_T10-35-17
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2020-12-10_T17-14-41
+#> │           └── 2021-01-21_T10-35-18
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources
