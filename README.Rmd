@@ -49,7 +49,7 @@ if (!require(remotes)) {
   install.packages("remotes")
 }
 remotes::install_github("reconhub/reportfactory", build_vignettes = TRUE)
-
+```
 
 ## reportfactory in a nutshell 
 
