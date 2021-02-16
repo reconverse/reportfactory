@@ -29,6 +29,39 @@ test_that("test parameteriesed report output", {
 })
 
 
+test_that("test output folder gets recreated if not there", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+  skip_on_os("mac")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  # copy test reports over
+  file_copy(
+    path("test_reports", "parameterised.Rmd"),
+    path(f, "report_sources")
+  )
+
+  # delete outputs folder
+  file.remove(file.path(f, "outputs"))
+
+  # compile report
+  compile_reports(
+    f,
+    "parameterised",
+    params = list(test1 = "three", test2 = "four")
+  )
+
+  # check the output
+  md_file <- grep("\\.md", list_outputs(f), value = TRUE)
+  md_file <- path(f, "outputs", md_file)
+
+  expect_snapshot_file(md_file, "outputs_deleted_param_report_check.md", binary = FALSE)
+})
+
+
 test_that("parameteriesed report with missing param output but input", {
   skip_if_pandoc_not_installed()
   skip_on_os("windows")

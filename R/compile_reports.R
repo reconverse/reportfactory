@@ -64,8 +64,12 @@ compile_reports <- function(factory = ".", reports = NULL,
     }
   }
 
-  # report output folder
+  # report output folder (create if it does not already exist)
   report_output_dir <- file.path(root, outputs)
+  if (!dir.exists(report_output_dir)) {
+    dir.create(report_output_dir)
+  }
+
   params_to_print <- params
 
   # loop over all reports

@@ -1,7 +1,7 @@
 library(fs)
 
 test_that("validate factory - config tests", {
-  
+
   f <- new_factory(path = path_temp(), move_in = FALSE)
   on.exit(dir_delete(f))
   config_path <- path(f, "factory_config")
@@ -49,7 +49,7 @@ test_that("validate factory - config tests", {
   tmp <- original_config
   tmp$outputs = "bob"
   write.dcf(tmp, config_path)
-  expect_error(
+  expect_message(
     validate_factory(f),
     "Folder 'bob' does not exist."
   )

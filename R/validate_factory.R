@@ -3,7 +3,7 @@
 #' `validate_factory()` can be used to inspect the content of a factory and make
 #' everything looks fine. This includes various sanity checks listed in details
 #' that will error if a problem is found.
-#' 
+#'
 #' @inheritParams compile_reports
 #'
 #' @details
@@ -12,7 +12,7 @@
 #'   * the factory_config file exist;
 #'   * all mandatory folders exist - by default these are 'report_sources/'
 #'     and 'outputs/';
-#' 
+#'
 #' @return A list with 4 entries:
 #'   * root - the root folder path of the factory;
 #'   * factory_name - the name of the report factory;
@@ -44,9 +44,9 @@ validate_factory <- function(factory = ".") {
     stop(
       "Have you renamed the factory?\n",
       sprintf(
-        "Expecting factory to be called '%s' not '%s'. Please rename", 
+        "Expecting factory to be called '%s' not '%s'. Please rename",
         factory_name,
-        folder      
+        folder
       ),
       call. = FALSE
     )
@@ -73,7 +73,7 @@ validate_factory <- function(factory = ".") {
       call. = FALSE
     )
   }
-  
+
   # outputs is present in factory_config
   outputs <- config$outputs
   if (is.null(outputs)) {
@@ -87,12 +87,9 @@ validate_factory <- function(factory = ".") {
   # the outputs folder matches the name from factory_config
   pth <- file.path(root, outputs)
   if (!dir.exists(pth)) {
-    stop(
-      sprintf(
-        "Folder '%s' does not exist.  Have you renamed it by mistake?",
-        outputs
-      ),
-      call. = FALSE
+    message(
+      sprintf("Folder '%s' does not exist.", outputs),
+      " It will be created the first time 'compile_reports' is run"
     )
   }
 
