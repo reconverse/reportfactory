@@ -1,5 +1,6 @@
-# reportfactory (development version)
+# reportfactory 0.1.3
 
+* Implements slighlty less strict folder validation.
 * Fix for CRAN. One additional test skipped on macs.
 
 # reportfactory 0.1.2
