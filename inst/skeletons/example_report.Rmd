@@ -25,9 +25,9 @@ library(incidence2)
 dat <- read.csv(here("data", "raw", "example_data.csv"))
 inci <- incidence(dat, date, groups = nhs_region, count = count)
 if (params$grouped_plot) {
-  plot(inci, angle = 45, ylab = "", title = "Reports by date", centre_ticks = TRUE)
+  plot(inci, angle = 45, ylab = "", title = "Reports by date")
 } else {
-  facet_plot(inci, angle = 45, ylab = "", title = "Reports by day", centre_ticks = TRUE)
+  facet_plot(inci, angle = 45, ylab = "", title = "Reports by day")
 }
 
 ```
