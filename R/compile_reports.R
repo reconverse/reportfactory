@@ -113,50 +113,6 @@ compile_reports <- function(factory = ".", reports = NULL,
       )
     }
 
-    # render a report in a cleaner environment using `callr::r`.
-    # the calls below are a little verbose but currently work (can simplify
-    # later if we desire)
-    if (is.null(params)) {
-      callr::r(
-        function(input, quiet, ...) {
-          rmarkdown::render(
-            input,
-            output_format = "all",
-            envir = globalenv(),
-            quiet = quiet,
-            ...)
-        },
-        args = list(
-          input = r,
-          quiet = quiet,
-          ...
-        )
-      )
-    } else {
-      callr::r(
-        function(input, out_file, quiet, ...) {
-          rmarkdown::render(
-            input,
-            output_format = "all",
-            params = NULL,
-            envir = globalenv(),
-            quiet = quiet,
-            ...)
-        },
-        args = list(
-          input = out_file,
-          quiet = quiet,
-          ...
-        )
-      )
-    }
-
-    # get files present in report folder and timestamps
-    files_at_end <- list_report_folder_files(report_template_dir)
-
-    # work out which files are new
-    new_files <- rows_in_x_not_in_y(files_at_end, files_at_start)$files
-
     # create an additional subfolder if desired
     if (is.null(subfolder)) {
       output_folder <- file.path(
@@ -172,7 +128,60 @@ compile_reports <- function(factory = ".", reports = NULL,
         timestamp
       )
     }
-    dir.create(output_folder, recursive = TRUE)
+    #dir.create(output_folder, recursive = TRUE)
+
+    # render a report in a cleaner environment using `callr::r`.
+    # the calls below are a little verbose but currently work (can simplify
+    # later if we desire)
+    if (is.null(params)) {
+      callr::r(
+        function(input, output_folder, quiet, ...) {
+          rmarkdown::render(
+            input,
+            output_format = "all",
+            output_dir = output_folder,
+            envir = globalenv(),
+            quiet = quiet,
+            ...)
+        },
+        args = list(
+          input = r,
+          output_folder = output_folder,
+          quiet = quiet,
+          ...
+        )
+      )
+    } else {
+      callr::r(
+        function(input, output_folder, out_file, quiet, ...) {
+          rmarkdown::render(
+            input,
+            output_format = "all",
+            output_file = out_file,
+            output_dir = output_folder,
+            params = NULL,
+            envir = globalenv(),
+            quiet = quiet,
+            ...)
+        },
+        args = list(
+          input = out_file,
+          output_folder = output_folder,
+          out_file = file.path(relative_path),
+          quiet = quiet,
+          ...
+        )
+      )
+    }
+
+    # remove the temporary outfile if present
+    if (!is.null(params)) file.remove(out_file)
+
+    # get files present in report folder and timestamps
+    files_at_end <- list_report_folder_files(report_template_dir)
+
+    # work out which files are new
+    new_files <- rows_in_x_not_in_y(files_at_end, files_at_start)$files
 
     # make a copy of the report and the new files
     file.copy(r, output_folder)
