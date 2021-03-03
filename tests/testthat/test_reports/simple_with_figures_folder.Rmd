@@ -1,0 +1,17 @@
+---
+title: "Simple Report with figures folder"
+output:
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(fig.path = "figures/")
+```
+
+# Test Plot
+You can also embed plots, for example:
+
+```{r pressure, echo = FALSE}
+plot(pressure)
+```
+

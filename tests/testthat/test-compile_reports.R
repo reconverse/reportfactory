@@ -265,3 +265,44 @@ test_that("logical index for reports", {
 })
 
 
+test_that("figures folders copied correctly reports", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  # copy test reports over
+  file_copy(
+    path = path("test_reports", "simple_with_figures_folder.Rmd"),
+    path(f, "report_sources")
+  )
+
+  file_delete(path(f, "report_sources", "example_report.Rmd"))
+
+  # compile report
+  compile_reports(f, timestamp = "test")
+  nms <- path_ext_remove(list_reports(f))
+  nms <- paste(nms, collapse = "|")
+  expected_files <- c(
+    file.path("simple_with_figures_folder", "test", "simple_with_figures_folder.Rmd"),
+    file.path("simple_with_figures_folder", "test", "simple_with_figures_folder.html"),
+    file.path("simple_with_figures_folder", "test", "figures", "pressure-1.png")
+  )
+  expected_files <- expected_files[grepl(nms, expected_files)]
+
+
+  output_files <- list_outputs(f)
+  expect_true(all(
+    mapply(
+      grepl,
+      pattern = sort(expected_files),
+      x = sort(output_files),
+      MoreArgs = list(fixed = TRUE)
+    )
+  ))
+
+})
+
+

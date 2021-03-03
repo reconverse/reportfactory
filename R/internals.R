@@ -8,7 +8,7 @@
 #' @noRd
 #' @keywords internal
 factory_root <- function(directory = ".") {
-  
+
   if (!file.exists(directory)) {
     stop(
       sprintf("directory '%s' does not exist!\n", directory),
@@ -22,7 +22,7 @@ factory_root <- function(directory = ".") {
       call. = FALSE
     )
   }
-    
+
   odir <- setwd(directory)
   on.exit(setwd(odir))
   root <- tryCatch(
@@ -36,23 +36,23 @@ factory_root <- function(directory = ".") {
   )
   root
 }
-   
+
 #' check whether a vector is "integer-like" to a given precision
-#' 
+#'
 #' @param x vector to check
 #' @param tol desired tolerance
-#' 
-#' @noRd 
+#'
+#' @noRd
 is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  {
   all(abs(x - round(x)) < tol)
 }
 
 #' copy a file from the skeleton directory
-#' 
+#'
 #' @param file name of the file you want to copy
 #' @param dest destination to copy to
-#' 
-#' @noRd 
+#'
+#' @noRd
 copy_skeleton_file <- function(file, dest) {
   f <- system.file("skeletons", file, package = "reportfactory")
   file.copy(f, dest)
@@ -60,14 +60,14 @@ copy_skeleton_file <- function(file, dest) {
 
 
 #' Change part of the front yaml matter from an Rmarkdown file
-#' 
+#'
 #' This function was provided on Stack Overflow by user r2evans.
 #' link: https://stackoverflow.com/a/62096216
-#' user: 
+#' user:
 #' @param input_file the .Rmd file
 #' @param output_file where to save the changed output
 #' @param ... named list of yaml to change
-#' 
+#'
 #' @noRd
 change_yaml_matter <- function(input_file, ..., output_file) {
   input_lines <- readLines(input_file, warn = FALSE)
@@ -101,4 +101,19 @@ change_yaml_matter <- function(input_file, ..., output_file) {
     writeLines(output_lines, con = output_file)
     return(invisible(output_lines))
   }
+}
+
+
+#' Return rows of one data.frame not in another
+#'
+#' @param x data.frame
+#' @param y data.frame
+#'
+#' @return data.frame of rows of x not in y
+#'
+#' @noRd
+rows_in_x_not_in_y <- function(x,y) {
+  xx <- apply(x, 1, paste0, collapse = "")
+  yy <- apply(y, 1, paste0, collapse = "")
+  x[!xx %in% yy,]
 }

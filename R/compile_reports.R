@@ -64,7 +64,7 @@ compile_reports <- function(factory = ".", reports = NULL,
     }
   }
 
-  # report output folder (create if it does not already exist)
+  # create output directory
   report_output_dir <- file.path(root, outputs)
   if (!dir.exists(report_output_dir)) {
     dir.create(report_output_dir)
@@ -74,6 +74,10 @@ compile_reports <- function(factory = ".", reports = NULL,
 
   # loop over all reports
   for (r in report_sources) {
+
+    # get files present in report folder and timestamps
+    files_at_start <- list_report_folder_files(report_template_dir)
+    dirs_at_start <- list_report_folder_files(report_template_dir, directories = TRUE)
 
     # pull yaml from the report
     yaml <- rmarkdown::yaml_front_matter(r)
@@ -92,7 +96,7 @@ compile_reports <- function(factory = ".", reports = NULL,
         params_input <- append(params, other_params)
       }
       out_file <- file.path(report_template_dir, "_reportfactory_tmp_.Rmd")
-      on.exit(file.remove(out_file), add = TRUE)
+      on.exit(suppressWarnings(file.remove(out_file)), add = TRUE)
       change_yaml_matter(r, params = params_input, output_file = out_file)
       params_to_print <- params_input
     }
@@ -100,6 +104,7 @@ compile_reports <- function(factory = ".", reports = NULL,
     # display just enough information to be useful
     relative_path <- sub(report_template_dir, "", r)
     relative_path <- sub("\\.[a-zA-Z0-9]*$", "", relative_path)
+    relative_path <- sub("^/", "", relative_path)
     message(">>> Compiling report: ", relative_path)
     if (!is.null(names(params_to_print))) {
       message(
@@ -123,6 +128,7 @@ compile_reports <- function(factory = ".", reports = NULL,
         timestamp
       )
     }
+    #dir.create(output_folder, recursive = TRUE)
 
     # render a report in a cleaner environment using `callr::r`.
     # the calls below are a little verbose but currently work (can simplify
@@ -168,8 +174,32 @@ compile_reports <- function(factory = ".", reports = NULL,
       )
     }
 
-    # make a copy of the report
+    # remove the temporary outfile if present
+    if (!is.null(params)) file.remove(out_file)
+
+    # get files present in report folder and timestamps
+    files_at_end <- list_report_folder_files(report_template_dir)
+
+    # work out which files are new
+    new_files <- rows_in_x_not_in_y(files_at_end, files_at_start)$files
+
+    # make a copy of the report and the new files
     file.copy(r, output_folder)
+    new_locations <- sub(dirname(r), output_folder, new_files)
+    for (d in dirname(new_locations))
+      if (!dir.exists(d)) {
+        dir.create(d, recursive = TRUE)
+      }
+    file.rename(new_files, new_locations)
+
+    # remove left over folders
+    dirs_at_end <- list_report_folder_files(report_template_dir, directories = TRUE)
+
+    # work out which files are new
+    new_dirs <- rows_in_x_not_in_y(dirs_at_end, dirs_at_start)$files
+
+    # remove new directories
+    unlink(new_dirs, recursive = TRUE)
   }
 
   message("All done!\n")
