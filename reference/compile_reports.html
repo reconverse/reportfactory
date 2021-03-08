@@ -121,8 +121,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>compile_reports</span><span class='op'>(</span>
-  factory <span class='op'>=</span> <span class='st'>"."</span>,
   reports <span class='op'>=</span> <span class='cn'>NULL</span>,
+  factory <span class='op'>=</span> <span class='st'>"."</span>,
   params <span class='op'>=</span> <span class='cn'>NULL</span>,
   quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
   subfolder <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -134,17 +134,17 @@
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>factory</th>
-      <td><p>The path to the report factory or a folder within the desired
-factory. Defaults to the current directory.</p></td>
-    </tr>
-    <tr>
       <th>reports</th>
       <td><p>Either a regular expression (passed directly to <code><a href='https://rdrr.io/r/base/grep.html'>grep()</a></code>) that
 matches to the report paths you would like to compile or an integer/logical
 vector.  If <code>reports</code> is an integer or logical vector then a call of
 <code>compile_reports(factory, reports = idx)</code> is equivalent to
 <code>compile_reports(factory, list_reports(factory)[idx])</code>.</p></td>
+    </tr>
+    <tr>
+      <th>factory</th>
+      <td><p>The path to the report factory or a folder within the desired
+factory. Defaults to the current directory.</p></td>
     </tr>
     <tr>
       <th>params</th>
