@@ -21,7 +21,7 @@ test_that("list_output works with nested and unnested files", {
   # remove the other example report
   file_delete(path(f, "report_sources", "example_report.Rmd"))
 
-  compile_reports(f, timestamp = "test")
+  compile_reports(factory = f, timestamp = "test")
   output_files <- list_outputs(f)
   expected_files <- c(
     file.path("simple", "test", "simple.Rmd"),
@@ -73,7 +73,7 @@ test_that("list_output works, one file compiled", {
     nested_dir
   )
 
-  compile_reports(f, "parameterised", timestamp = "test")
+  compile_reports(factory = f, "parameterised", timestamp = "test")
   output_files <- list_outputs(f)
   expected_files <- c(
     file.path("nested", "parameterised", "test", "parameterised.Rmd"),
@@ -105,7 +105,7 @@ test_that("list_output works, with subfolders", {
     nested_dir
   )
 
-  compile_reports(f, "parameterised", timestamp = "test", subfolder = "bob")
+  compile_reports(factory = f, "parameterised", timestamp = "test", subfolder = "bob")
   output_files <- list_outputs(f)
   expected_files <- c(
     file.path("nested", "parameterised", "bob", "test", "parameterised.Rmd"),

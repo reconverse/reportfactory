@@ -1,12 +1,12 @@
 #' Compile one or several R Markdown reports
 #'
-#' @param factory The path to the report factory or a folder within the desired
-#'   factory. Defaults to the current directory.
 #' @param reports Either a regular expression (passed directly to `grep()`) that
 #'   matches to the report paths you would like to compile or an integer/logical
 #'   vector.  If `reports` is an integer or logical vector then a call of
 #'   `compile_reports(factory, reports = idx)` is equivalent to
 #'   `compile_reports(factory, list_reports(factory)[idx])`.
+#' @param factory The path to the report factory or a folder within the desired
+#'   factory. Defaults to the current directory.
 #' @param params A named list of parameters to be used for compiling reports,
 #'   passed to `rmarkdown::render()` as the params argument. Values specified
 #'   here will take precedence over default values specified in YAML headers of
@@ -31,7 +31,7 @@
 #'
 #' @importFrom utils write.table
 #' @export
-compile_reports <- function(factory = ".", reports = NULL,
+compile_reports <- function(reports = NULL, factory = ".",
                             params = NULL, quiet = TRUE, subfolder = NULL,
                             timestamp = format(Sys.time(), "%Y-%m-%d_T%H-%M-%S"),
                             ...) {

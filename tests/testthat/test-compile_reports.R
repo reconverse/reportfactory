@@ -16,8 +16,8 @@ test_that("test parameteriesed report output", {
 
   # compile report
   compile_reports(
-    f,
     "parameterised",
+    f,
     params = list(test1 = "three", test2 = "four")
   )
 
@@ -49,8 +49,8 @@ test_that("test output folder gets recreated if not there", {
 
   # compile report
   compile_reports(
-    f,
     "parameterised",
+    f,
     params = list(test1 = "three", test2 = "four")
   )
 
@@ -78,8 +78,8 @@ test_that("parameteriesed report with missing param output but input", {
 
   # compile report
   compile_reports(
-    f,
     "parameterised",
+    f,
     params = list(test2 = "four", test3 = "five")
   )
 
@@ -106,8 +106,8 @@ test_that("non parameteriesed report with param input", {
 
   # compile report
   compile_reports(
-    f,
     "simple",
+    f,
     params = list(test2 = "four", test3 = "five")
   )
 
@@ -136,8 +136,8 @@ test_that("parameteriesed report with missing param (but in environment)", {
 
   # compile report
   compile_reports(
-    f,
-    "parameterised"
+    "parameterised",
+    f
   )
 
   # check the output
@@ -174,7 +174,7 @@ test_that("integer index for reports", {
 
   # compile report
   idx <- c(1, 3)
-  compile_reports(f, idx, timestamp = "test")
+  compile_reports(idx, f, timestamp = "test")
   nms <- path_ext_remove(list_reports(f))[idx]
   nms <- paste(nms, collapse = "|")
   expected_files <- c(
@@ -234,7 +234,7 @@ test_that("logical index for reports", {
 
   # compile report
   idx <- c(TRUE, FALSE)
-  compile_reports(f, idx, timestamp = "test")
+  compile_reports(idx, f, timestamp = "test")
   nms <- path_ext_remove(list_reports(f))[idx]
   nms <- paste(nms, collapse = "|")
   expected_files <- c(
@@ -282,7 +282,7 @@ test_that("figures folders copied correctly reports", {
   file_delete(path(f, "report_sources", "example_report.Rmd"))
 
   # compile report
-  compile_reports(f, timestamp = "test")
+  compile_reports(factory = f, timestamp = "test")
   nms <- path_ext_remove(list_reports(f))
   nms <- paste(nms, collapse = "|")
   expected_files <- c(
