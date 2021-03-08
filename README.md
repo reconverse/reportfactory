@@ -125,7 +125,7 @@ always clear what will be built.
 compile_reports( 
   reports = "example_report.Rmd"
 )
-#> >>> Compiling report: /example_report
+#> >>> Compiling report: example_report
 #> All done!
 ```
 
@@ -133,8 +133,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2021-01-21_T10-44-57/example_report.html"
-#> [2] "example_report/2021-01-21_T10-44-57/example_report.Rmd"
+#> [1] "example_report/2021-03-08_T09-16-24/example_report.html"
+#> [2] "example_report/2021-03-08_T09-16-24/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -147,14 +147,14 @@ compile_reports(
   params = list(grouped_plot = FALSE),
   subfolder = "regional"
 )
-#> >>> Compiling report: /example_report
+#> >>> Compiling report: example_report
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2021-01-21_T10-44-57/example_report.html"         
-#> [2] "example_report/2021-01-21_T10-44-57/example_report.Rmd"          
-#> [3] "example_report/regional/2021-01-21_T10-44-58/example_report.html"
-#> [4] "example_report/regional/2021-01-21_T10-44-58/example_report.Rmd"
+#> [1] "example_report/2021-03-08_T09-16-24/example_report.html"         
+#> [2] "example_report/2021-03-08_T09-16-24/example_report.Rmd"          
+#> [3] "example_report/regional/2021-03-08_T09-16-25/example_report.html"
+#> [4] "example_report/regional/2021-03-08_T09-16-25/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -172,7 +172,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/Rtmp1gGdYE/my_factory
+#> /tmp/RtmpWSy7OS/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -181,11 +181,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2021-01-21_T10-44-57
+#> │       ├── 2021-03-08_T09-16-24
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2021-01-21_T10-44-58
+#> │           └── 2021-03-08_T09-16-25
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources

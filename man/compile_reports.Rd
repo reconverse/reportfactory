@@ -5,8 +5,8 @@
 \title{Compile one or several R Markdown reports}
 \usage{
 compile_reports(
-  factory = ".",
   reports = NULL,
+  factory = ".",
   params = NULL,
   quiet = TRUE,
   subfolder = NULL,
@@ -15,14 +15,14 @@ compile_reports(
 )
 }
 \arguments{
-\item{factory}{The path to the report factory or a folder within the desired
-factory. Defaults to the current directory.}
-
 \item{reports}{Either a regular expression (passed directly to \code{grep()}) that
 matches to the report paths you would like to compile or an integer/logical
 vector.  If \code{reports} is an integer or logical vector then a call of
 \code{compile_reports(factory, reports = idx)} is equivalent to
 \code{compile_reports(factory, list_reports(factory)[idx])}.}
+
+\item{factory}{The path to the report factory or a folder within the desired
+factory. Defaults to the current directory.}
 
 \item{params}{A named list of parameters to be used for compiling reports,
 passed to \code{rmarkdown::render()} as the params argument. Values specified
