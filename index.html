@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -54,7 +54,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/reconhub/reportfactory/">
+  <a href="https://github.com/reconverse/reportfactory/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -79,8 +79,8 @@
 <p><br><strong><span style="color: red;">NOTE</span></strong></p>
 <p>This version of {reportfactory} works in a very different way to the previous unreleased version. For those already using {reportfactory} in their pipelines you can obtain the old version using the {remotes} package:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"reconhub/reportfactory@old_version"</span><span class="op">)</span></code></pre></div>
-<p>You can also download it directly from <a href="https://github.com/reconhub/reportfactory/releases/tag/old_version" class="uri">https://github.com/reconhub/reportfactory/releases/tag/old_version</a>.</p>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"reconverse/reportfactory@old_version"</span><span class="op">)</span></code></pre></div>
+<p>You can also download it directly from <a href="https://github.com/reconverse/reportfactory/releases/tag/old_version" class="uri">https://github.com/reconverse/reportfactory/releases/tag/old_version</a>.</p>
 <p>You can install the current version of the package from <a href="https://cran.r-project.org/">CRAN</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"reportfactory"</span><span class="op">)</span></code></pre></div>
@@ -89,12 +89,12 @@
 <code class="sourceCode R"><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html">require</a></span><span class="op">(</span><span class="va"><a href="https://remotes.r-lib.org">remotes</a></span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"remotes"</span><span class="op">)</span>
 <span class="op">}</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"reconhub/reportfactory"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"reconverse/reportfactory"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <div id="reportfactory-in-a-nutshell" class="section level2">
 <h2 class="hasAnchor">
 <a href="#reportfactory-in-a-nutshell" class="anchor"></a>reportfactory in a nutshell</h2>
 <p>{reportfactory} is a R package which facilitates workflows for handling multiple <code>.Rmd</code> reports, compiling one or several reports in one go, and storing outputs in well-organised, timestamped folders. This is illustrated in the figure below:</p>
-<p><br><img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow"><br></p>
+<p><br><img src="https://github.com/reconverse/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow"><br></p>
 <p>There a few key principles it adheres to:</p>
 <ul>
 <li><p><em>Simple</em>: only focusses on the compilation of reports with minimum overhead for the user.</p></li>
@@ -108,7 +108,7 @@
 <a href="#installing-the-package" class="anchor"></a>Installing the package</h2>
 <p>To install the development version of the package, use:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"reconhub/reportfactory"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"reconverse/reportfactory"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="quick-start" class="section level2">
 <h2 class="hasAnchor">
@@ -118,7 +118,7 @@
 <a href="#step-1---create-a-new-factory" class="anchor"></a>Step 1 - Create a new factory</h3>
 <p>Create and open a new factory. Here, we create the factory with mostly the default settings but stay in our current working directory (set <code>move_in</code> to TRUE to switch directories).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/reconhub/reportfactory">reportfactory</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/reconverse/reportfactory">reportfactory</a></span><span class="op">)</span>
 <span class="fu"><a href="reference/new_factory.html">new_factory</a></span><span class="op">(</span><span class="st">"my_factory"</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="step-2---add-your-reports" class="section level3">
@@ -147,8 +147,8 @@
 <p>Use <code>list_ouputs()</code> to view the report outputs.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2021-03-08_T09-16-24/example_report.html"</span>
-<span class="co">#&gt; [2] "example_report/2021-03-08_T09-16-24/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2021-03-11_T09-55-40/example_report.html"</span>
+<span class="co">#&gt; [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"</span></code></pre></div>
 <p><code><a href="reference/compile_reports.html">compile_reports()</a></code> can also be used to pass a set of parameters to use with a parameterised report (here we use a subfolder argument to distinguish the parameterised reports).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/compile_reports.html">compile_reports</a></span><span class="op">(</span>
@@ -160,10 +160,10 @@
 <span class="co">#&gt;       - with parameters: grouped_plot = FALSE</span>
 <span class="co">#&gt; All done!</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2021-03-08_T09-16-24/example_report.html"         </span>
-<span class="co">#&gt; [2] "example_report/2021-03-08_T09-16-24/example_report.Rmd"          </span>
-<span class="co">#&gt; [3] "example_report/regional/2021-03-08_T09-16-25/example_report.html"</span>
-<span class="co">#&gt; [4] "example_report/regional/2021-03-08_T09-16-25/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2021-03-11_T09-55-40/example_report.html"         </span>
+<span class="co">#&gt; [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"          </span>
+<span class="co">#&gt; [3] "example_report/regional/2021-03-11_T09-55-41/example_report.html"</span>
+<span class="co">#&gt; [4] "example_report/regional/2021-03-11_T09-55-41/example_report.Rmd"</span></code></pre></div>
 <p>Note that reports can also be an integer or a logical vector, in which case it is interpreted as a subset of files output by list_reports(). For instance:</p>
 <ul>
 <li>
@@ -178,7 +178,7 @@
 <p>If you want to have an overview of your entire factory then you can use the <code><a href="reference/factory_overview.html">factory_overview()</a></code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/factory_overview.html">factory_overview</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; /tmp/RtmpWSy7OS/my_factory</span>
+<span class="co">#&gt; /tmp/Rtmp1gxZ7u/my_factory</span>
 <span class="co">#&gt; ├── README.md</span>
 <span class="co">#&gt; ├── data</span>
 <span class="co">#&gt; │   ├── clean</span>
@@ -187,11 +187,11 @@
 <span class="co">#&gt; ├── factory_config</span>
 <span class="co">#&gt; ├── outputs</span>
 <span class="co">#&gt; │   └── example_report</span>
-<span class="co">#&gt; │       ├── 2021-03-08_T09-16-24</span>
+<span class="co">#&gt; │       ├── 2021-03-11_T09-55-40</span>
 <span class="co">#&gt; │       │   ├── example_report.Rmd</span>
 <span class="co">#&gt; │       │   └── example_report.html</span>
 <span class="co">#&gt; │       └── regional</span>
-<span class="co">#&gt; │           └── 2021-03-08_T09-16-25</span>
+<span class="co">#&gt; │           └── 2021-03-11_T09-55-41</span>
 <span class="co">#&gt; │               ├── example_report.Rmd</span>
 <span class="co">#&gt; │               └── example_report.html</span>
 <span class="co">#&gt; ├── report_sources</span>
@@ -219,9 +219,9 @@
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=reportfactory">https://​cloud.r-project.org/​package=reportfactory</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/reconhub/reportfactory/">https://​github.com/​reconhub/​reportfactory/​</a>
+<li>Browse source code at <br><a href="https://github.com/reconverse/reportfactory/">https://​github.com/​reconverse/​reportfactory/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/reconhub/reportfactory/issues">https://​github.com/​reconhub/​reportfactory/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/reconverse/reportfactory/issues">https://​github.com/​reconverse/​reportfactory/​issues</a>
 </li>
 </ul>
 </div>
@@ -250,9 +250,9 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/reconhub/reportfactory/actions"><img src="https://github.com/reconhub/reportfactory/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://codecov.io/gh/reconhub/reportfactory?branch=master"><img src="https://codecov.io/gh/reconhub/reportfactory/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://github.com/reconhub/reportfactory/actions"><img src="https://github.com/reconhub/reportfactory/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://github.com/reconverse/reportfactory/actions"><img src="https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://codecov.io/gh/reconverse/reportfactory?branch=master"><img src="https://codecov.io/gh/reconverse/reportfactory/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/reconverse/reportfactory/actions"><img src="https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
 </div>
