@@ -3,11 +3,11 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/reconhub/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/reportfactory/actions)
+[![R-CMD-check](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 [![Codecov test
-coverage](https://codecov.io/gh/reconhub/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/reportfactory?branch=master)
+coverage](https://codecov.io/gh/reconverse/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconverse/reportfactory?branch=master)
 [![R build
-status](https://github.com/reconhub/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/reportfactory/actions)
+status](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 <!-- badges: end -->
 
 # Welcome to reportfactory\!
@@ -20,11 +20,11 @@ their pipelines you can obtain the old version using the {remotes}
 package:
 
 ``` r
-remotes::install_github("reconhub/reportfactory@old_version")
+remotes::install_github("reconverse/reportfactory@old_version")
 ```
 
 You can also download it directly from
-<https://github.com/reconhub/reportfactory/releases/tag/old_version>.
+<https://github.com/reconverse/reportfactory/releases/tag/old_version>.
 
 You can install the current version of the package from
 [CRAN](https://cran.r-project.org/) with:
@@ -40,7 +40,7 @@ The development version can be installed from
 if (!require(remotes)) {
   install.packages("remotes")
 }
-remotes::install_github("reconhub/reportfactory", build_vignettes = TRUE)
+remotes::install_github("reconverse/reportfactory", build_vignettes = TRUE)
 ```
 
 ## reportfactory in a nutshell
@@ -51,7 +51,7 @@ storing outputs in well-organised, timestamped folders. This is
 illustrated in the figure below:
 
 <br>
-<img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow">
+<img src="https://github.com/reconverse/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow">
 <br>
 
 There a few key principles it adheres to:
@@ -77,7 +77,7 @@ There a few key principles it adheres to:
 To install the development version of the package, use:
 
 ``` r
-remotes::install_github("reconhub/reportfactory")
+remotes::install_github("reconverse/reportfactory")
 ```
 
 ## Quick start
@@ -133,8 +133,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2021-03-08_T09-16-24/example_report.html"
-#> [2] "example_report/2021-03-08_T09-16-24/example_report.Rmd"
+#> [1] "example_report/2021-03-11_T09-55-40/example_report.html"
+#> [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -151,10 +151,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2021-03-08_T09-16-24/example_report.html"         
-#> [2] "example_report/2021-03-08_T09-16-24/example_report.Rmd"          
-#> [3] "example_report/regional/2021-03-08_T09-16-25/example_report.html"
-#> [4] "example_report/regional/2021-03-08_T09-16-25/example_report.Rmd"
+#> [1] "example_report/2021-03-11_T09-55-40/example_report.html"         
+#> [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"          
+#> [3] "example_report/regional/2021-03-11_T09-55-41/example_report.html"
+#> [4] "example_report/regional/2021-03-11_T09-55-41/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -172,7 +172,7 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/RtmpWSy7OS/my_factory
+#> /tmp/Rtmp1gxZ7u/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
@@ -181,11 +181,11 @@ factory_overview()
 #> ├── factory_config
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2021-03-08_T09-16-24
+#> │       ├── 2021-03-11_T09-55-40
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2021-03-08_T09-16-25
+#> │           └── 2021-03-11_T09-55-41
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources

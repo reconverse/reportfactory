@@ -1,4 +1,4 @@
-# reportfactory (development version)
+# reportfactory 0.2.0
 
 ## Bug fixes
 * Fixes (#74) where files generated within the Rmd were not being copied

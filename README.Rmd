@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/reconhub/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/reportfactory/actions)
-[![Codecov test coverage](https://codecov.io/gh/reconhub/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconhub/reportfactory?branch=master)
-[![R build status](https://github.com/reconhub/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconhub/reportfactory/actions)
+[![R-CMD-check](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
+[![Codecov test coverage](https://codecov.io/gh/reconverse/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconverse/reportfactory?branch=master)
+[![R build status](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 <!-- badges: end -->
 
 # Welcome to reportfactory!
@@ -29,11 +29,11 @@ unreleased version.  For those already using {reportfactory} in their pipelines
 you can obtain the old version using the {remotes} package:
 
 ```{r installold, eval = FALSE}
-remotes::install_github("reconhub/reportfactory@old_version")
+remotes::install_github("reconverse/reportfactory@old_version")
 ``` 
 
 You can also download it directly from
-https://github.com/reconhub/reportfactory/releases/tag/old_version.
+https://github.com/reconverse/reportfactory/releases/tag/old_version.
 
 You can install the current version of the package from 
 [CRAN](https://cran.r-project.org/) with:
@@ -48,7 +48,7 @@ The development version can be installed from [GitHub](https://github.com/) with
 if (!require(remotes)) {
   install.packages("remotes")
 }
-remotes::install_github("reconhub/reportfactory", build_vignettes = TRUE)
+remotes::install_github("reconverse/reportfactory", build_vignettes = TRUE)
 ```
 
 ## reportfactory in a nutshell 
@@ -58,7 +58,7 @@ remotes::install_github("reconhub/reportfactory", build_vignettes = TRUE)
 in well-organised, timestamped folders. This is illustrated in the figure below:
 
 <br>
-<img src="https://github.com/reconhub/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow">
+<img src="https://github.com/reconverse/reportfactory/raw/master/artwork/workflow.png" width="100%" alt="workflow">
 <br>
 
 There a few key principles it adheres to:
@@ -84,7 +84,7 @@ There a few key principles it adheres to:
 To install the development version of the package, use:
 
 ```{r install2, eval = FALSE}
-remotes::install_github("reconhub/reportfactory")
+remotes::install_github("reconverse/reportfactory")
 ```
 
 

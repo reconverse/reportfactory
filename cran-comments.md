@@ -1,12 +1,12 @@
 ## Reason for update
-* minor bugfix/workflow improvement.
-* resolves a failing test I noticed on the macos checks.
+* Important bug fix and minor workflow improvement
 
 ## Tested on
-* Fedora 33, local R installation, R 4.0.3 (2020-10-10)
-* win-builder, R Under development (unstable) (2021-02-13 r80000)
+* Fedora 33, R Under development (unstable) (2021-03-10 r80084)
+* win-builder, R Under development (unstable) (2021-03-10 r80084)
 
 ### R CMD check results for above environments
+Status: OK
 0 errors | 0 warnings | 0 note
 
 
