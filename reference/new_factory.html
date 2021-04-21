@@ -135,6 +135,7 @@ moved to the newly created factory.</p>
   create_data_folders <span class='op'>=</span> <span class='cn'>TRUE</span>,
   create_scripts_folder <span class='op'>=</span> <span class='cn'>TRUE</span>,
   use_here <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  use_rproj <span class='op'>=</span> <span class='cn'>TRUE</span>,
   create_gitignore <span class='op'>=</span> <span class='cn'>TRUE</span>
 <span class='op'>)</span></pre>
 
@@ -163,7 +164,8 @@ reports; defaults to 'outputs/'.</p></td>
     <tr>
       <th>move_in</th>
       <td><p>A <code>logical</code> indicating if the current session should move into
-the created factory; defaults to <code>TRUE</code>.</p></td>
+the created factory; defaults to <code>TRUE</code>. If <code>use_rproj</code> is also TRUE and
+RStudio is being used then the corresponding project will be opened.</p></td>
     </tr>
     <tr>
       <th>create_README</th>
@@ -189,7 +191,12 @@ create folders to store R scripts; defaults to TRUE.</p></td>
     <tr>
       <th>use_here</th>
       <td><p>a <code>logical</code> indicating if <code>new_factory()</code> should create
-a <code>.here</code> that can be used with <code>here::here()</code>; defaults to TRUE.</p></td>
+a <code>.here</code> file that can be used with <code>here::here()</code>; defaults to TRUE.</p></td>
+    </tr>
+    <tr>
+      <th>use_rproj</th>
+      <td><p>a <code>logical</code> indicating if <code>new_factory()</code> should create
+a <code>.Rproj</code> file that can be used with RStudio; defaults to TRUE.</p></td>
     </tr>
     <tr>
       <th>create_gitignore</th>
