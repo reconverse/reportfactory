@@ -15,6 +15,7 @@ new_factory(
   create_data_folders = TRUE,
   create_scripts_folder = TRUE,
   use_here = TRUE,
+  use_rproj = TRUE,
   create_gitignore = TRUE
 )
 }
@@ -31,7 +32,8 @@ templates; defaults to 'report_sources/'.}
 reports; defaults to 'outputs/'.}
 
 \item{move_in}{A \code{logical} indicating if the current session should move into
-the created factory; defaults to \code{TRUE}.}
+the created factory; defaults to \code{TRUE}. If \code{use_rproj} is also TRUE and
+RStudio is being used then the corresponding project will be opened.}
 
 \item{create_README}{A \code{logical} indicating if a 'README' file should be
 created; defaults to TRUE.}
@@ -47,7 +49,10 @@ create folders to store data; defaults to TRUE.}
 create folders to store R scripts; defaults to TRUE.}
 
 \item{use_here}{a \code{logical} indicating if \code{new_factory()} should create
-a \code{.here} that can be used with \code{here::here()}; defaults to TRUE.}
+a \code{.here} file that can be used with \code{here::here()}; defaults to TRUE.}
+
+\item{use_rproj}{a \code{logical} indicating if \code{new_factory()} should create
+a \code{.Rproj} file that can be used with RStudio; defaults to TRUE.}
 
 \item{create_gitignore}{a \code{logical} indicating if \code{new_factory()} should create
 a minimal '.gitignore' file; defaults to TRUE.}

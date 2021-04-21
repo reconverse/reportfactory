@@ -12,7 +12,8 @@
 #' @param outputs The name of the folder to be used for saving the built
 #'   reports; defaults to 'outputs/'.
 #' @param move_in A `logical` indicating if the current session should move into
-#'   the created factory; defaults to `TRUE`.
+#'   the created factory; defaults to `TRUE`. If `use_rproj` is also TRUE and
+#'   RStudio is being used then the corresponding project will be opened.
 #' @param create_README A `logical` indicating if a 'README' file should be
 #'   created; defaults to TRUE.
 #' @param create_example_report A `logical` indicating if `new_factory()` should
@@ -23,7 +24,9 @@
 #' @param create_scripts_folder a `logical` indicating if `new_factory()` should
 #'   create folders to store R scripts; defaults to TRUE.
 #' @param use_here a `logical` indicating if `new_factory()` should create
-#'   a `.here` that can be used with `here::here()`; defaults to TRUE.
+#'   a `.here` file that can be used with `here::here()`; defaults to TRUE.
+#' @param use_rproj a `logical` indicating if `new_factory()` should create
+#'   a `.Rproj` file that can be used with RStudio; defaults to TRUE.
 #' @param create_gitignore a `logical` indicating if `new_factory()` should create
 #'   a minimal '.gitignore' file; defaults to TRUE.
 
@@ -67,7 +70,7 @@ new_factory <- function(factory = "new_factory", path = ".",
                         create_README = TRUE, create_example_report = TRUE,
                         create_data_folders = TRUE,
                         create_scripts_folder = TRUE, use_here = TRUE,
-                        create_gitignore = TRUE) {
+                        use_rproj = TRUE, create_gitignore = TRUE) {
 
   # create report factory folder
   root <- file.path(path, factory)
@@ -116,6 +119,15 @@ new_factory <- function(factory = "new_factory", path = ".",
     file.create(file.path(root, ".here"))
   }
 
+  if (use_rproj && rstudioapi::isAvailable()) {
+    rstudioapi::initializeProject(root)
+  } else if (use_rproj) {
+    copy_skeleton_file(
+      "skeletonRproj",
+      dest = file.path(root, paste0(factory, ".Rproj"))
+    )
+  }
+
   # copy over skeleton .gitignore
   if (create_gitignore) {
     copy_skeleton_file("skeleton.gitignore", dest = file.path(root, ".gitignore"))
@@ -136,7 +148,9 @@ new_factory <- function(factory = "new_factory", path = ".",
     }
   }
 
-  if (move_in) {
+  if (move_in && use_rproj && rstudioapi::isAvailable()) {
+    rstudioapi::openProject(file.path(root, paste0(factory, ".Rproj")))
+  } else if (move_in) {
     setwd(root)
   }
   invisible(root)

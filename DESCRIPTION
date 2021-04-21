@@ -27,6 +27,7 @@ Imports:
     utils,
     checkpoint,
     yaml,
-    callr
+    callr,
+    rstudioapi
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 Config/testthat/edition: 3
