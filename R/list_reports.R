@@ -23,7 +23,7 @@ list_reports <- function(factory = ".", pattern = NULL, ...) {
   # get a listing of all files and folders in report_sources
   out <- list.files(
     file.path(root, report_sources),
-    pattern = "\\.Rmd$",
+    pattern = "\\.[Rr]md$",
     recursive = TRUE
   )
 

@@ -27,6 +27,7 @@ test_that("new_factory generates the right files - defaults + no move_in", {
     "factory_config",
     ".here",
     ".gitignore",
+    "new_factory.Rproj",
     "README.md",
     "data",
     file.path("data", "clean"),
@@ -62,7 +63,8 @@ test_that("new_factory generates the right files - empty factory + move_in", {
   expected_files <- c(
     "report_sources",
     "outputs",
-    "factory_config"
+    "factory_config",
+    "new_factory.Rproj"
     )
 
     expect_identical(sort(all_files), sort(expected_files))
