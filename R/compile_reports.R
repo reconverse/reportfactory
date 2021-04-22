@@ -55,12 +55,24 @@ compile_reports <- function(reports = NULL, factory = ".",
   # get vector of reports to compile
   report_template_dir <- file.path(root, report_sources)
   report_sources <- file.path(report_template_dir, list_reports(root))
+
+  # error if report folder empty
+  if (length(report_sources) == 0) {
+    stop(sprintf("No reports found in %s", report_template_dir))
+  }
+
   if (!is.null(reports)) {
     if ((is.numeric(reports) && is.wholenumber(reports)) || is.logical(reports)) {
       report_sources <- report_sources[reports]
+      if (any(is.na(report_sources)) || length(report_sources) == 0) {
+        stop("Unable to match reports with the given index")
+      }
     } else {
       report_sources <- lapply(reports, grep, report_sources, value = TRUE)
       report_sources <- unique(unlist(report_sources))
+      if (any(is.na(report_sources)) || length(report_sources) == 0) {
+        stop("Unable to find matching reports to compile")
+      }
     }
   }
 

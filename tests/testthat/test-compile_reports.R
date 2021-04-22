@@ -306,3 +306,57 @@ test_that("figures folders copied correctly reports", {
 })
 
 
+test_that("compiling with no reports errors correctly", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  # delete only report present
+  file_delete(path(f, "report_sources", "example_report.Rmd"))
+
+  expect_error(
+    compile_reports(factory = f),
+    "No reports found in",
+    fixed = TRUE
+  )
+
+})
+
+
+test_that("compiling with invalid index errors correctly", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  expect_error(
+    compile_reports(2, factory = f),
+    "Unable to match reports with the given index",
+    fixed = TRUE
+  )
+
+})
+
+
+test_that("compiling with incorrect report name errors correctly", {
+  skip_if_pandoc_not_installed()
+  skip_on_os("windows")
+
+  # create factory
+  f <- new_factory(path = path_temp(), move_in = FALSE)
+  on.exit(dir_delete(f))
+
+  expect_error(
+    compile_reports("test", factory = f),
+    "Unable to find matching reports to compile",
+    fixed = TRUE
+  )
+
+})
+
+
