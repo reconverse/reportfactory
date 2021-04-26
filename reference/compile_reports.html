@@ -123,6 +123,7 @@
     <pre class="usage"><span class='fu'>compile_reports</span><span class='op'>(</span>
   reports <span class='op'>=</span> <span class='cn'>NULL</span>,
   factory <span class='op'>=</span> <span class='st'>"."</span>,
+  ignore.case <span class='op'>=</span> <span class='cn'>FALSE</span>,
   params <span class='op'>=</span> <span class='cn'>NULL</span>,
   quiet <span class='op'>=</span> <span class='cn'>TRUE</span>,
   subfolder <span class='op'>=</span> <span class='cn'>NULL</span>,
@@ -145,6 +146,11 @@ vector.  If <code>reports</code> is an integer or logical vector then a call of
       <th>factory</th>
       <td><p>The path to the report factory or a folder within the desired
 factory. Defaults to the current directory.</p></td>
+    </tr>
+    <tr>
+      <th>ignore.case</th>
+      <td><p>if FALSE (default), the report pattern matching is case
+sensitive and if TRUE, case is ignored during matching.</p></td>
     </tr>
     <tr>
       <th>params</th>
