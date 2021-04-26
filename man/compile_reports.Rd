@@ -7,6 +7,7 @@
 compile_reports(
   reports = NULL,
   factory = ".",
+  ignore.case = FALSE,
   params = NULL,
   quiet = TRUE,
   subfolder = NULL,
@@ -23,6 +24,9 @@ vector.  If \code{reports} is an integer or logical vector then a call of
 
 \item{factory}{The path to the report factory or a folder within the desired
 factory. Defaults to the current directory.}
+
+\item{ignore.case}{if FALSE (default), the report pattern matching is case
+sensitive and if TRUE, case is ignored during matching.}
 
 \item{params}{A named list of parameters to be used for compiling reports,
 passed to \code{rmarkdown::render()} as the params argument. Values specified

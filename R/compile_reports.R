@@ -12,6 +12,8 @@
 #'   here will take precedence over default values specified in YAML headers of
 #'   the reports. Note that the set of parameter is used for all compiled
 #'   reports.
+#' @param ignore.case if FALSE (default), the report pattern matching is case
+#'   sensitive and if TRUE, case is ignored during matching.
 #' @param quiet A logical indicating if messages from R Markdown compilation
 #'   should be displayed; `TRUE` by default.
 #' @param timestamp A character indicating the date-time format to be used for
@@ -31,7 +33,7 @@
 #'
 #' @importFrom utils write.table
 #' @export
-compile_reports <- function(reports = NULL, factory = ".",
+compile_reports <- function(reports = NULL, factory = ".", ignore.case = FALSE,
                             params = NULL, quiet = TRUE, subfolder = NULL,
                             timestamp = format(Sys.time(), "%Y-%m-%d_T%H-%M-%S"),
                             ...) {
@@ -68,7 +70,13 @@ compile_reports <- function(reports = NULL, factory = ".",
         stop("Unable to match reports with the given index")
       }
     } else {
-      report_sources <- lapply(reports, grep, report_sources, value = TRUE)
+      report_sources <- lapply(
+        reports,
+        grep,
+        report_sources,
+        value = TRUE,
+        ignore.case = ignore.case
+      )
       report_sources <- unique(unlist(report_sources))
       if (any(is.na(report_sources)) || length(report_sources) == 0) {
         stop("Unable to find matching reports to compile")
