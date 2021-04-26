@@ -1,6 +1,6 @@
 Package: reportfactory
 Title: Lightweight Infrastructure for Handling Multiple R Markdown Documents
-Version: 0.2.0.9000
+Version: 0.3.0
 Authors@R: c(
   person("Thibaut", "Jombart", role = "aut", email = "thibautjombart@gmail.com"),
   person("Amy", "Gimma", role = "ctb", email = "amyg225@gmail.com"),
@@ -14,7 +14,6 @@ License: MIT + file LICENSE
 URL: https://github.com/reconverse/reportfactory
 BugReports: https://github.com/reconverse/reportfactory/issues
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
