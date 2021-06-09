@@ -1,3 +1,5 @@
+# reportfactory (development version)
+
 # reportfactory 0.3.0
 
 * Option added to create an RStudio project file whilst creating a new factory.
