@@ -21,6 +21,7 @@ list_deps <- function(factory = ".", missing = FALSE) {
 
   deps <- checkpoint::scan_project_files(
     project_dir = root,
+    scan_rprofile = FALSE,
     scan_rnw_with_knitr = TRUE
   )
   deps <- deps$pkgs
