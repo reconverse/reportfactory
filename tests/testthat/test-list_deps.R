@@ -13,7 +13,10 @@ test_that("list_deps works", {
   
   expected_deps_package_calls <- c("purrr", "readxl", "fs")
   expected_deps_example_report <- c("here", "incidence2")
-  expected_deps <- c(expected_deps_package_calls, expected_deps_example_report)
+  expected_deps_readme <- "rmarkdown"
+  expected_deps <- c(expected_deps_package_calls,
+                     expected_deps_example_report,
+                     expected_deps_readme)
   deps <- list_deps(f)
   expect_equal(sort(deps), sort(expected_deps))
 })

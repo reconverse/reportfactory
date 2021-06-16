@@ -19,10 +19,9 @@ list_deps <- function(factory = ".", missing = FALSE) {
   op <- options(knitr.purl.inline = TRUE)
   on.exit(options(op))
 
-  deps <- checkpoint::scanForPackages(
-    project = root,
-    use.knitr = TRUE,
-    scan.rnw.with.knitr = TRUE
+  deps <- checkpoint::scan_project_files(
+    project_dir = root,
+    scan_rnw_with_knitr = TRUE
   )
   deps <- deps$pkgs
 
