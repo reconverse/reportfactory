@@ -5,7 +5,6 @@
 
 [![Codecov test
 coverage](https://codecov.io/gh/reconverse/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconverse/reportfactory?branch=master)
-<<<<<<< HEAD
 [![R-CMD-check](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 <!-- badges: end -->
 
@@ -132,8 +131,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2021-07-08_T21-40-43/example_report.html"
-#> [2] "example_report/2021-07-08_T21-40-43/example_report.Rmd"
+#> [1] "example_report/2021-07-08_T21-53-01/example_report.html"
+#> [2] "example_report/2021-07-08_T21-53-01/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -150,10 +149,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2021-07-08_T21-40-43/example_report.html"         
-#> [2] "example_report/2021-07-08_T21-40-43/example_report.Rmd"          
-#> [3] "example_report/regional/2021-07-08_T21-40-44/example_report.html"
-#> [4] "example_report/regional/2021-07-08_T21-40-44/example_report.Rmd"
+#> [1] "example_report/2021-07-08_T21-53-01/example_report.html"         
+#> [2] "example_report/2021-07-08_T21-53-01/example_report.Rmd"          
+#> [3] "example_report/regional/2021-07-08_T21-53-02/example_report.html"
+#> [4] "example_report/regional/2021-07-08_T21-53-02/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -181,11 +180,11 @@ factory_overview()
 #> ├── my_factory.Rproj
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2021-07-08_T21-40-43
+#> │       ├── 2021-07-08_T21-53-01
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2021-07-08_T21-40-44
+#> │           └── 2021-07-08_T21-53-02
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources
