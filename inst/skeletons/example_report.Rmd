@@ -22,8 +22,8 @@ confirmed cases, and are subject to unknown reporting biases.
 ```{r, echo = FALSE, message = FALSE}
 library(here)
 library(incidence2)
-dat <- read.csv(here("data", "raw", "example_data.csv"))
-inci <- incidence(dat, date, groups = nhs_region, count = count)
+dat <- read.csv(here("data", "raw", "example_data.csv"), header = TRUE)
+inci <- incidence(dat, date, groups = nhs_region, counts = count)
 if (params$grouped_plot) {
   plot(inci, angle = 45, ylab = "", title = "Reports by date")
 } else {

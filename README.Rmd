@@ -14,9 +14,8 @@ knitr::opts_chunk$set(
 ```
 
 <!-- badges: start -->
-[![R-CMD-check](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 [![Codecov test coverage](https://codecov.io/gh/reconverse/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconverse/reportfactory?branch=master)
-[![R build status](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
+[![R-CMD-check](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 <!-- badges: end -->
 
 # Welcome to reportfactory!
@@ -92,18 +91,17 @@ remotes::install_github("reconverse/reportfactory")
 ## Quick start
 
 ### Step 1 - Create a new factory
-Create and open a new factory. Here, we create the factory with mostly the
-default settings but stay in our current working directory (set `move_in` to 
-TRUE to switch directories).
+Create and open a new factory. Here, we create the factory with the default settings.
+This will create the factory in our current working directory and then move us in to this new factory.
 
 
 ```{r creation}
 library(reportfactory)
-new_factory("my_factory", path = tempdir())
+new_factory("my_factory")
 ```
 
 ```{r, setwd, include=FALSE}
-knitr::opts_knit$set(root.dir = file.path(tempdir(), "my_factory"))
+knitr::opts_knit$set(root.dir = file.path(getwd(), "my_factory"))
 ```
 
 ### Step 2 - Add your reports

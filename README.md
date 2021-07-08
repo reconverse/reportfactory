@@ -3,11 +3,9 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 [![Codecov test
 coverage](https://codecov.io/gh/reconverse/reportfactory/branch/master/graph/badge.svg)](https://codecov.io/gh/reconverse/reportfactory?branch=master)
-[![R build
-status](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
+[![R-CMD-check](https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg)](https://github.com/reconverse/reportfactory/actions)
 <!-- badges: end -->
 
 # Welcome to reportfactory\!
@@ -84,13 +82,13 @@ remotes::install_github("reconverse/reportfactory")
 
 ### Step 1 - Create a new factory
 
-Create and open a new factory. Here, we create the factory with mostly
-the default settings but stay in our current working directory (set
-`move_in` to TRUE to switch directories).
+Create and open a new factory. Here, we create the factory with the
+default settings. This will create the factory in our current working
+directory and then move us in to this new factory.
 
 ``` r
 library(reportfactory)
-new_factory("my_factory", path = tempdir())
+new_factory("my_factory")
 ```
 
 ### Step 2 - Add your reports
@@ -105,7 +103,7 @@ The helper functions below show the state of the factory.
 list_reports()       # list all available report sources
 #> [1] "example_report.Rmd"
 list_deps()          # list all of the dependencies of the reports
-#> [1] "here"       "incidence2"
+#> [1] "here"       "incidence2" "rmarkdown"
 list_outputs()       # currently empty
 #> character(0)
 ```
@@ -133,8 +131,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2021-03-11_T09-55-40/example_report.html"
-#> [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"
+#> [1] "example_report/2021-07-08_T21-40-43/example_report.html"
+#> [2] "example_report/2021-07-08_T21-40-43/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -151,10 +149,10 @@ compile_reports(
 #>       - with parameters: grouped_plot = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2021-03-11_T09-55-40/example_report.html"         
-#> [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"          
-#> [3] "example_report/regional/2021-03-11_T09-55-41/example_report.html"
-#> [4] "example_report/regional/2021-03-11_T09-55-41/example_report.Rmd"
+#> [1] "example_report/2021-07-08_T21-40-43/example_report.html"         
+#> [2] "example_report/2021-07-08_T21-40-43/example_report.Rmd"          
+#> [3] "example_report/regional/2021-07-08_T21-40-44/example_report.html"
+#> [4] "example_report/regional/2021-07-08_T21-40-44/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -172,20 +170,21 @@ the `factory_overview()` function:
 
 ``` r
 factory_overview()
-#> /tmp/Rtmp1gxZ7u/my_factory
+#> /home/tim/github/reconverse/reportfactory/my_factory
 #> ├── README.md
 #> ├── data
 #> │   ├── clean
 #> │   └── raw
 #> │       └── example_data.csv
 #> ├── factory_config
+#> ├── my_factory.Rproj
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2021-03-11_T09-55-40
+#> │       ├── 2021-07-08_T21-40-43
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2021-03-11_T09-55-41
+#> │           └── 2021-07-08_T21-40-44
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources
