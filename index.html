@@ -116,10 +116,10 @@
 <div id="step-1---create-a-new-factory" class="section level3">
 <h3 class="hasAnchor">
 <a href="#step-1---create-a-new-factory" class="anchor"></a>Step 1 - Create a new factory</h3>
-<p>Create and open a new factory. Here, we create the factory with mostly the default settings but stay in our current working directory (set <code>move_in</code> to TRUE to switch directories).</p>
+<p>Create and open a new factory. Here, we create the factory with the default settings. This will create the factory in our current working directory and then move us in to this new factory.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/reconverse/reportfactory">reportfactory</a></span><span class="op">)</span>
-<span class="fu"><a href="reference/new_factory.html">new_factory</a></span><span class="op">(</span><span class="st">"my_factory"</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="reference/new_factory.html">new_factory</a></span><span class="op">(</span><span class="st">"my_factory"</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="step-2---add-your-reports" class="section level3">
 <h3 class="hasAnchor">
@@ -129,7 +129,7 @@
 <code class="sourceCode R"><span class="fu"><a href="reference/list_reports.html">list_reports</a></span><span class="op">(</span><span class="op">)</span>       <span class="co"># list all available report sources</span>
 <span class="co">#&gt; [1] "example_report.Rmd"</span>
 <span class="fu"><a href="reference/list_deps.html">list_deps</a></span><span class="op">(</span><span class="op">)</span>          <span class="co"># list all of the dependencies of the reports</span>
-<span class="co">#&gt; [1] "here"       "incidence2"</span>
+<span class="co">#&gt; [1] "here"       "incidence2" "rmarkdown"</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>       <span class="co"># currently empty</span>
 <span class="co">#&gt; character(0)</span></code></pre></div>
 </div>
@@ -147,8 +147,8 @@
 <p>Use <code>list_ouputs()</code> to view the report outputs.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2021-03-11_T09-55-40/example_report.html"</span>
-<span class="co">#&gt; [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2021-07-08_T21-53-01/example_report.html"</span>
+<span class="co">#&gt; [2] "example_report/2021-07-08_T21-53-01/example_report.Rmd"</span></code></pre></div>
 <p><code><a href="reference/compile_reports.html">compile_reports()</a></code> can also be used to pass a set of parameters to use with a parameterised report (here we use a subfolder argument to distinguish the parameterised reports).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/compile_reports.html">compile_reports</a></span><span class="op">(</span>
@@ -160,10 +160,10 @@
 <span class="co">#&gt;       - with parameters: grouped_plot = FALSE</span>
 <span class="co">#&gt; All done!</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2021-03-11_T09-55-40/example_report.html"         </span>
-<span class="co">#&gt; [2] "example_report/2021-03-11_T09-55-40/example_report.Rmd"          </span>
-<span class="co">#&gt; [3] "example_report/regional/2021-03-11_T09-55-41/example_report.html"</span>
-<span class="co">#&gt; [4] "example_report/regional/2021-03-11_T09-55-41/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2021-07-08_T21-53-01/example_report.html"         </span>
+<span class="co">#&gt; [2] "example_report/2021-07-08_T21-53-01/example_report.Rmd"          </span>
+<span class="co">#&gt; [3] "example_report/regional/2021-07-08_T21-53-02/example_report.html"</span>
+<span class="co">#&gt; [4] "example_report/regional/2021-07-08_T21-53-02/example_report.Rmd"</span></code></pre></div>
 <p>Note that reports can also be an integer or a logical vector, in which case it is interpreted as a subset of files output by list_reports(). For instance:</p>
 <ul>
 <li>
@@ -178,20 +178,21 @@
 <p>If you want to have an overview of your entire factory then you can use the <code><a href="reference/factory_overview.html">factory_overview()</a></code> function:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/factory_overview.html">factory_overview</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; /tmp/Rtmp1gxZ7u/my_factory</span>
+<span class="co">#&gt; /home/tim/github/reconverse/reportfactory/my_factory</span>
 <span class="co">#&gt; ├── README.md</span>
 <span class="co">#&gt; ├── data</span>
 <span class="co">#&gt; │   ├── clean</span>
 <span class="co">#&gt; │   └── raw</span>
 <span class="co">#&gt; │       └── example_data.csv</span>
 <span class="co">#&gt; ├── factory_config</span>
+<span class="co">#&gt; ├── my_factory.Rproj</span>
 <span class="co">#&gt; ├── outputs</span>
 <span class="co">#&gt; │   └── example_report</span>
-<span class="co">#&gt; │       ├── 2021-03-11_T09-55-40</span>
+<span class="co">#&gt; │       ├── 2021-07-08_T21-53-01</span>
 <span class="co">#&gt; │       │   ├── example_report.Rmd</span>
 <span class="co">#&gt; │       │   └── example_report.html</span>
 <span class="co">#&gt; │       └── regional</span>
-<span class="co">#&gt; │           └── 2021-03-11_T09-55-41</span>
+<span class="co">#&gt; │           └── 2021-07-08_T21-53-02</span>
 <span class="co">#&gt; │               ├── example_report.Rmd</span>
 <span class="co">#&gt; │               └── example_report.html</span>
 <span class="co">#&gt; ├── report_sources</span>
@@ -250,8 +251,8 @@
   <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/reconverse/reportfactory/actions"><img src="https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 <li><a href="https://codecov.io/gh/reconverse/reportfactory?branch=master"><img src="https://codecov.io/gh/reconverse/reportfactory/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/reconverse/reportfactory/actions"><img src="https://github.com/reconverse/reportfactory/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></a></li>
 </ul>
 </div>
 </div>
