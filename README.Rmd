@@ -144,7 +144,7 @@ parameterised reports).
 ```{r compileparams}
 compile_reports(
   reports = "example_report.Rmd",
-  params = list(grouped_plot = FALSE),
+  params = list(graph = FALSE),
   subfolder = "regional"
 )
 list_outputs()

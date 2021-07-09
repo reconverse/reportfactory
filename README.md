@@ -103,7 +103,7 @@ The helper functions below show the state of the factory.
 list_reports()       # list all available report sources
 #> [1] "example_report.Rmd"
 list_deps()          # list all of the dependencies of the reports
-#> [1] "here"       "incidence2" "rmarkdown"
+#> [1] "fs"        "rmarkdown"
 list_outputs()       # currently empty
 #> character(0)
 ```
@@ -131,8 +131,8 @@ Use `list_ouputs()` to view the report outputs.
 
 ``` r
 list_outputs()
-#> [1] "example_report/2021-07-08_T21-53-01/example_report.html"
-#> [2] "example_report/2021-07-08_T21-53-01/example_report.Rmd"
+#> [1] "example_report/2021-07-09_T13-49-08/example_report.html"
+#> [2] "example_report/2021-07-09_T13-49-08/example_report.Rmd"
 ```
 
 `compile_reports()` can also be used to pass a set of parameters to use
@@ -142,17 +142,17 @@ distinguish the parameterised reports).
 ``` r
 compile_reports(
   reports = "example_report.Rmd",
-  params = list(grouped_plot = FALSE),
+  params = list(graph = FALSE),
   subfolder = "regional"
 )
 #> >>> Compiling report: example_report
-#>       - with parameters: grouped_plot = FALSE
+#>       - with parameters: graph = FALSE
 #> All done!
 list_outputs()
-#> [1] "example_report/2021-07-08_T21-53-01/example_report.html"         
-#> [2] "example_report/2021-07-08_T21-53-01/example_report.Rmd"          
-#> [3] "example_report/regional/2021-07-08_T21-53-02/example_report.html"
-#> [4] "example_report/regional/2021-07-08_T21-53-02/example_report.Rmd"
+#> [1] "example_report/2021-07-09_T13-49-08/example_report.html"         
+#> [2] "example_report/2021-07-09_T13-49-08/example_report.Rmd"          
+#> [3] "example_report/regional/2021-07-09_T13-49-08/example_report.html"
+#> [4] "example_report/regional/2021-07-09_T13-49-08/example_report.Rmd"
 ```
 
 Note that reports can also be an integer or a logical vector, in which
@@ -180,11 +180,11 @@ factory_overview()
 #> ├── my_factory.Rproj
 #> ├── outputs
 #> │   └── example_report
-#> │       ├── 2021-07-08_T21-53-01
+#> │       ├── 2021-07-09_T13-49-08
 #> │       │   ├── example_report.Rmd
 #> │       │   └── example_report.html
 #> │       └── regional
-#> │           └── 2021-07-08_T21-53-02
+#> │           └── 2021-07-09_T13-49-08
 #> │               ├── example_report.Rmd
 #> │               └── example_report.html
 #> ├── report_sources
