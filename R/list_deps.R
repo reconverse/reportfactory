@@ -13,23 +13,54 @@
 #' @export
 list_deps <- function(factory = ".", missing = FALSE) {
 
-  tmp <- validate_factory(factory)
+  tmp <- suppressMessages(validate_factory(factory))
   root <- tmp$root
 
+  # Find dependencies in R files
+  r_files <- list.files(root, pattern = "\\.[Rr]$", recursive = TRUE, full.names = TRUE)
+  r_files_deps <- character(0)
+  if (length(r_files)) {
+    r_files_deps <- list_r_file_deps(r_files)
+  }
+
+  # Find dependencies in Rmd files. We knit the files first to ensure only
+  # dependencies of code that is actually run are returned.
   op <- options(knitr.purl.inline = TRUE)
   on.exit(options(op))
+  rmd_files <- list.files(root, pattern = "\\.[Rr]md$", recursive = TRUE, full.names = TRUE)
+  rmd_files_deps <- character(0)
+  if (length(rmd_files)) {
+    d <- tempdir()
+    fd <- sub(pattern = "(.*)\\..*$", replacement = "\\1", basename(rmd_files))
+    fd <- vapply(fd, function(x) file.path(d, x), character(1))
+    mapply(function(x,y) knitr::purl(input = x, output = y, documentation = 0), rmd_files, fd)
+    rmd_files_deps <- c("rmarkdown", list_r_file_deps(fd))
+  }
 
-  deps <- checkpoint::scan_project_files(
-    project_dir = root,
-    scan_rprofile = FALSE,
-    scan_rnw_with_knitr = TRUE
-  )
-  deps <- deps$pkgs
-
+  deps <- unique(c(r_files_deps, rmd_files_deps))
   if (missing) {
     installed <- basename(find.package(deps))
     deps <- setdiff(deps, installed)
   }
 
   deps
+}
+
+list_r_file_deps <- function(filepaths) {
+
+  dat <- vapply(
+    filepaths,
+    function(x) paste(as.character(parse(x)), collapse = "\n"),
+    character(1)
+  )
+
+  colon_string <- r"---{([a-zA-Z][\w.]*)(?=:){2,3}}---"
+  colon_greg <- gregexpr(colon_string, dat, perl = TRUE)
+  colon_deps <- unlist(regmatches(dat, colon_greg), use.names = FALSE)
+
+  lib_string <- r"{(?<=library\(|require\()([a-zA-Z][\w.]*)}"
+  lib_greg <- gregexpr(lib_string, dat, perl = TRUE)
+  lib_deps <- unlist(regmatches(dat, lib_greg), use.names = FALSE)
+
+  unique(c(lib_deps, colon_deps))
 }
