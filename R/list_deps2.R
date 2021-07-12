@@ -49,18 +49,19 @@ list_r_file_deps <- function(filepaths) {
   dat <- vapply(filepaths, function(x) readChar(x, file.size(x)), character(1))
   lib_string <- gregexec(r"{(?:library|require)\(([a-zA-Z][\w.]*)\)}", dat, perl = TRUE)
   colon_string <- gregexec(r"---{([a-zA-Z][\w.]*)\:{2,3}}---", dat, perl = TRUE)
-  lib_deps <- capture_packages(lib_string, dat)
-  colon_deps <- capture_packages(colon_string, dat)
+  lib_deps <- capture_matches(lib_string, dat)
+  colon_deps <- capture_matches(colon_string, dat)
   unique(c(lib_deps, colon_deps))
 }
 
-capture_packages <- function(greg, dat) {
-  pkgs <- regmatches(dat, greg)
-  deps <- character()
-  any_present <- vapply(pkgs, function(x) length(x) > 0, logical(1))
+capture_matches <- function(greg, dat) {
+  matches <- regmatches(dat, greg)
+  out <- character()
+  any_present <- vapply(matches, function(x) length(x) > 0, logical(1))
   if (any(any_present)) {
-    pkgs <- pkgs[any_present]
-    deps <- unlist(lapply(pkgs, function(x) x[2, ]), use.names = FALSE)
+    matches <- matches[any_present]
+    out <- unlist(lapply(matches, function(x) x[2, ]), use.names = FALSE)
   }
+  out
 }
 
