@@ -19,9 +19,11 @@ list_deps2 <- function(factory = ".", missing = FALSE) {
   # Find dependencies in R files
   r_files <- list.files(root, pattern = "\\.[Rr]$", recursive = TRUE, full.names = TRUE)
   r_files_deps <- character(0)
-  if (length(r_files)) r_files_deps <- list_r_file_deps(r_files)
+  if (length(r_files)) {
+    r_files_deps <- list_r_file_deps(r_files)
+  }
 
-    # Find dependencies in Rmd files. We knit the files first to ensure only
+  # Find dependencies in Rmd files. We knit the files first to ensure only
   # dependencies of code that is actually run are returned.
   op <- options(knitr.purl.inline = TRUE)
   on.exit(options(op))
@@ -36,7 +38,6 @@ list_deps2 <- function(factory = ".", missing = FALSE) {
   }
 
   deps <- unique(c(r_files_deps, rmd_files_deps))
-
   if (missing) {
     installed <- basename(find.package(deps))
     deps <- setdiff(deps, installed)
@@ -46,22 +47,20 @@ list_deps2 <- function(factory = ".", missing = FALSE) {
 }
 
 list_r_file_deps <- function(filepaths) {
-  dat <- vapply(filepaths, function(x) readChar(x, file.size(x)), character(1))
-  lib_string <- gregexec(r"{(?:library|require)\(([a-zA-Z][\w.]*)\)}", dat, perl = TRUE)
-  colon_string <- gregexec(r"---{([a-zA-Z][\w.]*)\:{2,3}}---", dat, perl = TRUE)
-  lib_deps <- capture_matches(lib_string, dat)
-  colon_deps <- capture_matches(colon_string, dat)
+
+  dat <- vapply(
+    filepaths,
+    function(x) paste(as.character(parse(x)), collapse = "\n"),
+    character(1)
+  )
+
+  colon_string <- r"---{([a-zA-Z][\w.]*)(?=:){2,3}}---"
+  colon_greg <- gregexpr(colon_string, dat, perl = TRUE)
+  colon_deps <- unlist(regmatches(dat, colon_greg), use.names = FALSE)
+
+  lib_string <- r"{(?<=library\(|require\()([a-zA-Z][\w.]*)}"
+  lib_greg <- gregexpr(lib_string, dat, perl = TRUE)
+  lib_deps <- unlist(regmatches(dat, lib_greg), use.names = FALSE)
+
   unique(c(lib_deps, colon_deps))
 }
-
-capture_matches <- function(greg, dat) {
-  matches <- regmatches(dat, greg)
-  out <- character()
-  any_present <- vapply(matches, function(x) length(x) > 0, logical(1))
-  if (any(any_present)) {
-    matches <- matches[any_present]
-    out <- unlist(lapply(matches, function(x) x[2, ]), use.names = FALSE)
-  }
-  out
-}
-
