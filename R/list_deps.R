@@ -1,7 +1,7 @@
 #' List dependencies of reports within a factory
 #'
 #' This function can be used to list package dependencies based of the reports
-#' within the factory. It is a wrapper for \code{checkpoint::scanForPackages}.
+#'   and R scripts within the factory.
 #'
 #' @inheritParams compile_reports
 #' @param missing A logical indicating if only missing dependencies should be

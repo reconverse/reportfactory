@@ -19,5 +19,5 @@ A character vector of package dependencies.
 }
 \description{
 This function can be used to list package dependencies based of the reports
-within the factory. It is a wrapper for \code{checkpoint::scanForPackages}.
+and R scripts within the factory.
 }
