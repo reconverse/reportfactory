@@ -6,12 +6,17 @@
 #' @inheritParams compile_reports
 #' @param missing A logical indicating if only missing dependencies should be
 #'   listed (`TRUE`); otherwise, all packages needed in the reports are listed;
-#'   defaults to `FALSE`
+#'   defaults to `FALSE`.
+#' @param check_r If true, R scripts contained within the factory will also be
+#'   checked. Note that this will error if the script cannot be parsed.
+#'
+#' @note This function requires that any R scripts present in the factory are
+#'   valid syntax else the function will error.
 #'
 #' @return A character vector of package dependencies.
 #'
 #' @export
-list_deps <- function(factory = ".", missing = FALSE) {
+list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE) {
 
   tmp <- suppressMessages(validate_factory(factory))
   root <- tmp$root
@@ -19,7 +24,7 @@ list_deps <- function(factory = ".", missing = FALSE) {
   # Find dependencies in R files
   r_files <- list.files(root, pattern = "\\.[Rr]$", recursive = TRUE, full.names = TRUE)
   r_files_deps <- character(0)
-  if (length(r_files)) {
+  if (length(r_files) && check_r) {
     r_files_deps <- list_r_file_deps(r_files)
   }
 
