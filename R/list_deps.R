@@ -60,7 +60,7 @@ list_r_file_deps <- function(filepaths) {
     character(1)
   )
 
-  colon_string <- r"---{([a-zA-Z][\w.]*)(?=:){2,3}}---"
+  colon_string <- r"---{([a-zA-Z][\w.]*)(?=:{2,3})}---"
   colon_greg <- gregexpr(colon_string, dat, perl = TRUE)
   colon_deps <- unlist(regmatches(dat, colon_greg), use.names = FALSE)
 
