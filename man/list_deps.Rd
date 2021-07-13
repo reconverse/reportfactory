@@ -4,7 +4,12 @@
 \alias{list_deps}
 \title{List dependencies of reports within a factory}
 \usage{
-list_deps(factory = ".", missing = FALSE, check_r = TRUE)
+list_deps(
+  factory = ".",
+  missing = FALSE,
+  check_r = TRUE,
+  exclude_readme = TRUE
+)
 }
 \arguments{
 \item{factory}{The path to the report factory or a folder within the desired
@@ -16,6 +21,9 @@ defaults to \code{FALSE}.}
 
 \item{check_r}{If true, R scripts contained within the factory will also be
 checked. Note that this will error if the script cannot be parsed.}
+
+\item{exclude_readme}{If TRUE (default) README files will not be checked for
+dependencies.}
 }
 \value{
 A character vector of package dependencies.

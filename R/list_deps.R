@@ -9,6 +9,8 @@
 #'   defaults to `FALSE`.
 #' @param check_r If true, R scripts contained within the factory will also be
 #'   checked. Note that this will error if the script cannot be parsed.
+#' @param exclude_readme If TRUE (default) README files will not be checked for
+#'   dependencies.
 #'
 #' @note This function requires that any R scripts present in the factory are
 #'   valid syntax else the function will error.
@@ -16,7 +18,7 @@
 #' @return A character vector of package dependencies.
 #'
 #' @export
-list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE) {
+list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_readme = TRUE) {
 
   tmp <- suppressMessages(validate_factory(factory))
   root <- tmp$root
@@ -33,6 +35,11 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE) {
   op <- options(knitr.purl.inline = TRUE)
   on.exit(options(op))
   rmd_files <- list.files(root, pattern = "\\.[Rr]md$", recursive = TRUE, full.names = TRUE)
+  if (exclude_readme) {
+    readme <- list.files(pattern = "README\\.Rmd", recursive = TRUE, ignore.case = TRUE, full.names = TRUE)
+    rmd_files <- rmd_files[!rmd_files %in% readme]
+  }
+
   rmd_files_deps <- character(0)
   if (length(rmd_files)) {
     d <- tempdir()
