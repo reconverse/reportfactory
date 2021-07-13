@@ -39,7 +39,7 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE) {
     fd <- sub(pattern = "(.*)\\..*$", replacement = "\\1", basename(rmd_files))
     fd <- vapply(fd, function(x) file.path(d, x), character(1))
     on.exit(unlink(fd), add = TRUE)
-    mapply(function(x,y) knitr::purl(input = x, output = y, documentation = 0), rmd_files, fd)
+    mapply(function(x,y) knitr::purl(input = x, output = y, quiet = TRUE, documentation = 0), rmd_files, fd)
     rmd_files_deps <- c("rmarkdown", list_r_file_deps(fd))
   }
 
