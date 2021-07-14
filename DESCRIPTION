@@ -24,9 +24,9 @@ Imports:
     fs,
     rmarkdown,
     utils,
-    checkpoint (>= 1.0.0),
     yaml,
     callr,
-    rstudioapi
+    rstudioapi,
+    knitr
 SystemRequirements: pandoc (>= 1.14) - http://pandoc.org
 Config/testthat/edition: 3

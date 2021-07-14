@@ -4,7 +4,12 @@
 \alias{list_deps}
 \title{List dependencies of reports within a factory}
 \usage{
-list_deps(factory = ".", missing = FALSE)
+list_deps(
+  factory = ".",
+  missing = FALSE,
+  check_r = TRUE,
+  exclude_readme = TRUE
+)
 }
 \arguments{
 \item{factory}{The path to the report factory or a folder within the desired
@@ -12,12 +17,22 @@ factory. Defaults to the current directory.}
 
 \item{missing}{A logical indicating if only missing dependencies should be
 listed (\code{TRUE}); otherwise, all packages needed in the reports are listed;
-defaults to \code{FALSE}}
+defaults to \code{FALSE}.}
+
+\item{check_r}{If true, R scripts contained within the factory will also be
+checked. Note that this will error if the script cannot be parsed.}
+
+\item{exclude_readme}{If TRUE (default) README files will not be checked for
+dependencies.}
 }
 \value{
 A character vector of package dependencies.
 }
 \description{
 This function can be used to list package dependencies based of the reports
-within the factory. It is a wrapper for \code{checkpoint::scanForPackages}.
+and R scripts within the factory.
+}
+\note{
+This function requires that any R scripts present in the factory are
+valid syntax else the function will error.
 }
