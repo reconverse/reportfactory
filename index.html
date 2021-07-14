@@ -129,7 +129,7 @@
 <code class="sourceCode R"><span class="fu"><a href="reference/list_reports.html">list_reports</a></span><span class="op">(</span><span class="op">)</span>       <span class="co"># list all available report sources</span>
 <span class="co">#&gt; [1] "example_report.Rmd"</span>
 <span class="fu"><a href="reference/list_deps.html">list_deps</a></span><span class="op">(</span><span class="op">)</span>          <span class="co"># list all of the dependencies of the reports</span>
-<span class="co">#&gt; [1] "fs"        "rmarkdown"</span>
+<span class="co">#&gt; [1] "rmarkdown" "fs"        "knitr"</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>       <span class="co"># currently empty</span>
 <span class="co">#&gt; character(0)</span></code></pre></div>
 </div>
@@ -147,8 +147,8 @@
 <p>Use <code>list_ouputs()</code> to view the report outputs.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2021-07-09_T13-49-08/example_report.html"</span>
-<span class="co">#&gt; [2] "example_report/2021-07-09_T13-49-08/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2021-07-13_T12-16-03/example_report.html"</span>
+<span class="co">#&gt; [2] "example_report/2021-07-13_T12-16-03/example_report.Rmd"</span></code></pre></div>
 <p><code><a href="reference/compile_reports.html">compile_reports()</a></code> can also be used to pass a set of parameters to use with a parameterised report (here we use a subfolder argument to distinguish the parameterised reports).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/compile_reports.html">compile_reports</a></span><span class="op">(</span>
@@ -160,10 +160,10 @@
 <span class="co">#&gt;       - with parameters: graph = FALSE</span>
 <span class="co">#&gt; All done!</span>
 <span class="fu"><a href="reference/list_outputs.html">list_outputs</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt; [1] "example_report/2021-07-09_T13-49-08/example_report.html"         </span>
-<span class="co">#&gt; [2] "example_report/2021-07-09_T13-49-08/example_report.Rmd"          </span>
-<span class="co">#&gt; [3] "example_report/regional/2021-07-09_T13-49-08/example_report.html"</span>
-<span class="co">#&gt; [4] "example_report/regional/2021-07-09_T13-49-08/example_report.Rmd"</span></code></pre></div>
+<span class="co">#&gt; [1] "example_report/2021-07-13_T12-16-03/example_report.html"         </span>
+<span class="co">#&gt; [2] "example_report/2021-07-13_T12-16-03/example_report.Rmd"          </span>
+<span class="co">#&gt; [3] "example_report/regional/2021-07-13_T12-16-04/example_report.html"</span>
+<span class="co">#&gt; [4] "example_report/regional/2021-07-13_T12-16-04/example_report.Rmd"</span></code></pre></div>
 <p>Note that reports can also be an integer or a logical vector, in which case it is interpreted as a subset of files output by list_reports(). For instance:</p>
 <ul>
 <li>
@@ -188,11 +188,11 @@
 <span class="co">#&gt; ├── my_factory.Rproj</span>
 <span class="co">#&gt; ├── outputs</span>
 <span class="co">#&gt; │   └── example_report</span>
-<span class="co">#&gt; │       ├── 2021-07-09_T13-49-08</span>
+<span class="co">#&gt; │       ├── 2021-07-13_T12-16-03</span>
 <span class="co">#&gt; │       │   ├── example_report.Rmd</span>
 <span class="co">#&gt; │       │   └── example_report.html</span>
 <span class="co">#&gt; │       └── regional</span>
-<span class="co">#&gt; │           └── 2021-07-09_T13-49-08</span>
+<span class="co">#&gt; │           └── 2021-07-13_T12-16-04</span>
 <span class="co">#&gt; │               ├── example_report.Rmd</span>
 <span class="co">#&gt; │               └── example_report.html</span>
 <span class="co">#&gt; ├── report_sources</span>

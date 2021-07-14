@@ -41,7 +41,7 @@
 
 <meta property="og:title" content="List dependencies of reports within a factory — list_deps" />
 <meta property="og:description" content="This function can be used to list package dependencies based of the reports
-within the factory. It is a wrapper for checkpoint::scanForPackages." />
+and R scripts within the factory." />
 
 
 
@@ -119,10 +119,15 @@ within the factory. It is a wrapper for checkpoint::scanForPackages." />
 
     <div class="ref-description">
     <p>This function can be used to list package dependencies based of the reports
-within the factory. It is a wrapper for <code>checkpoint::scanForPackages</code>.</p>
+and R scripts within the factory.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>list_deps</span><span class='op'>(</span>factory <span class='op'>=</span> <span class='st'>"."</span>, missing <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>list_deps</span><span class='op'>(</span>
+  factory <span class='op'>=</span> <span class='st'>"."</span>,
+  missing <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  check_r <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  exclude_readme <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -136,13 +141,27 @@ factory. Defaults to the current directory.</p></td>
       <th>missing</th>
       <td><p>A logical indicating if only missing dependencies should be
 listed (<code>TRUE</code>); otherwise, all packages needed in the reports are listed;
-defaults to <code>FALSE</code></p></td>
+defaults to <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>check_r</th>
+      <td><p>If true, R scripts contained within the factory will also be
+checked. Note that this will error if the script cannot be parsed.</p></td>
+    </tr>
+    <tr>
+      <th>exclude_readme</th>
+      <td><p>If TRUE (default) README files will not be checked for
+dependencies.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A character vector of package dependencies.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This function requires that any R scripts present in the factory are
+valid syntax else the function will error.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
