@@ -1,7 +1,7 @@
 #' List dependencies of reports within a factory
 #'
-#' This function can be used to list package dependencies based of the reports
-#'   and R scripts within the factory.
+#' List package dependencies based on the reports and scripts within the
+#'   report_sources and scripts directories respectively.
 #'
 #' @inheritParams compile_reports
 #' @param missing A logical indicating if only missing dependencies should be
