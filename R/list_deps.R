@@ -22,9 +22,14 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
 
   tmp <- suppressMessages(validate_factory(factory))
   root <- tmp$root
+  config <- as.data.frame(read.dcf(file.path(root, "factory_config")))
+  report_sources <- config$report_sources
+  root_report_sources <- file.path(root, report_sources)
+  root_scripts <- file.path(root, "scripts")
+  root_to_check <- c(root_report_sources, root_scripts)
 
   # Find dependencies in R files
-  r_files <- list.files(root, pattern = "\\.[Rr]$", recursive = TRUE, full.names = TRUE)
+  r_files <- list.files(root_to_check, pattern = "\\.[Rr]$", recursive = TRUE, full.names = TRUE)
   r_files_deps <- character(0)
   if (length(r_files) && check_r) {
     r_files_deps <- list_r_file_deps(r_files)
@@ -34,7 +39,7 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
   # dependencies of code that is actually run are returned.
   op <- options(knitr.purl.inline = TRUE)
   on.exit(options(op))
-  rmd_files <- list.files(root, pattern = "\\.[Rr]md$", recursive = TRUE, full.names = TRUE)
+  rmd_files <- list.files(root_to_check, pattern = "\\.[Rr]md$", recursive = TRUE, full.names = TRUE)
   if (exclude_readme) {
     readme <- list.files(pattern = "README\\.Rmd", recursive = TRUE, ignore.case = TRUE, full.names = TRUE)
     rmd_files <- rmd_files[!rmd_files %in% readme]
