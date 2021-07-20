@@ -1,5 +1,8 @@
 # reportfactory (development version)
 
+* `list_deps()` no longer uses the `checkpoint` package so the dependency has
+  been dropped.
+
 # reportfactory 0.3.1
 
 * Fixed `list_deps()`, which was broken due to major changes in the
