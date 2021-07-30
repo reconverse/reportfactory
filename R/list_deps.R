@@ -29,7 +29,13 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
   root_to_check <- c(root_report_sources, root_scripts)
 
   # Find dependencies in R files
-  r_files <- list.files(root_to_check, pattern = "\\.[Rr]$", recursive = TRUE, full.names = TRUE)
+  r_files <- list.files(
+    root_to_check,
+    pattern = "\\.[Rr]$",
+    recursive = TRUE,
+    full.names = TRUE
+  )
+
   r_files_deps <- character(0)
   if (length(r_files) && check_r) {
     r_files_deps <- list_r_file_deps(r_files)
@@ -39,9 +45,19 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
   # dependencies of code that is actually run are returned.
   op <- options(knitr.purl.inline = TRUE)
   on.exit(options(op))
-  rmd_files <- list.files(root_to_check, pattern = "\\.[Rr]md$", recursive = TRUE, full.names = TRUE)
+  rmd_files <- list.files(
+    root_to_check,
+    pattern = "\\.[Rr]md$",
+    recursive = TRUE,
+    full.names = TRUE
+  )
   if (exclude_readme) {
-    readme <- list.files(pattern = "README\\.Rmd", recursive = TRUE, ignore.case = TRUE, full.names = TRUE)
+    readme <- list.files(
+      pattern = "README\\.Rmd",
+      recursive = TRUE,
+      ignore.case = TRUE,
+      full.names = TRUE
+    )
     rmd_files <- rmd_files[!rmd_files %in% readme]
   }
 
@@ -56,7 +72,12 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
     fe <- file(fefil, "w")
     sink(fe, type = "message")
     mapply(
-      function(x,y) try(knitr::purl(input = x, output = y, quiet = TRUE, documentation = 0), silent = TRUE),
+      function(x,y) {
+        try(
+          knitr::purl(input = x, output = y, quiet = TRUE, documentation = 0),
+          silent = TRUE
+        )
+      } ,
       rmd_files,
       fd
     )
@@ -73,6 +94,8 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
 
   deps
 }
+
+# -------------------------------------------------------------------------
 
 list_r_file_deps <- function(filepaths) {
 
