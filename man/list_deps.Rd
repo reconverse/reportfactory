@@ -8,7 +8,8 @@ list_deps(
   factory = ".",
   missing = FALSE,
   check_r = TRUE,
-  exclude_readme = TRUE
+  exclude_readme = TRUE,
+  parse_first = FALSE
 )
 }
 \arguments{
@@ -24,13 +25,19 @@ checked. Note that this will error if the script cannot be parsed.}
 
 \item{exclude_readme}{If TRUE (default) README files will not be checked for
 dependencies.}
+
+\item{parse_first}{If \code{TRUE} code will first be parsed for validity and
+unevaluated Rmd chunks will not be checked for dependencies. The default
+value is \code{FALSE} and, in this case, files will simply be checked line by
+line for calls to \code{library}, \code{require} or use of double, \code{::}, and triple,
+\code{:::} function calls.}
 }
 \value{
 A character vector of package dependencies.
 }
 \description{
-This function can be used to list package dependencies based of the reports
-and R scripts within the factory.
+List package dependencies based on the reports and scripts within the
+report_sources and scripts directories respectively.
 }
 \note{
 This function requires that any R scripts present in the factory are

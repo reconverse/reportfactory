@@ -11,6 +11,11 @@
 #'   checked. Note that this will error if the script cannot be parsed.
 #' @param exclude_readme If TRUE (default) README files will not be checked for
 #'   dependencies.
+#' @param parse_first If `TRUE` code will first be parsed for validity and
+#'   unevaluated Rmd chunks will not be checked for dependencies. The default
+#'   value is `FALSE` and, in this case, files will simply be checked line by
+#'   line for calls to `library`, `require` or use of double, `::`, and triple,
+#'   `:::` function calls.
 #'
 #' @note This function requires that any R scripts present in the factory are
 #'   valid syntax else the function will error.
@@ -18,7 +23,8 @@
 #' @return A character vector of package dependencies.
 #'
 #' @export
-list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_readme = TRUE) {
+list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE,
+                      exclude_readme = TRUE, parse_first = FALSE) {
 
   tmp <- suppressMessages(validate_factory(factory))
   root <- tmp$root
@@ -28,7 +34,7 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
   root_scripts <- file.path(root, "scripts")
   root_to_check <- c(root_report_sources, root_scripts)
 
-  # Find dependencies in R files
+  # List of R files
   r_files <- list.files(
     root_to_check,
     pattern = "\\.[Rr]$",
@@ -36,18 +42,9 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
     full.names = TRUE
   )
 
-  r_files_deps <- character(0)
-  if (length(r_files) && check_r) {
-    r_files_deps <- list_r_file_deps(r_files)
-  }
-
-  # Find dependencies in Rmd files. We knit the files first to ensure only
-  # dependencies of code that is actually run are returned.
-  op <- options(knitr.purl.inline = TRUE)
-  on.exit(options(op))
+  # List of Rmd files
   rmd_files <- list.files(
-    root_to_check,
-    pattern = "\\.[Rr]md$",
+    root_to_check, pattern = "\\.[Rr]md$",
     recursive = TRUE,
     full.names = TRUE
   )
@@ -61,31 +58,45 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
     rmd_files <- rmd_files[!rmd_files %in% readme]
   }
 
-  rmd_files_deps <- character(0)
-  if (length(rmd_files)) {
-    d <- tempdir()
-    fd <- sub(pattern = "(.*)\\..*$", replacement = "\\1", basename(rmd_files))
-    fd <- vapply(fd, function(x) file.path(d, x), character(1))
-    on.exit(unlink(fd), add = TRUE)
-    fefil <- tempfile()
-    on.exit(unlink(fefil), add = TRUE)
-    fe <- file(fefil, "w")
-    sink(fe, type = "message")
-    mapply(
-      function(x,y) {
-        try(
-          knitr::purl(input = x, output = y, quiet = TRUE, documentation = 0),
-          silent = TRUE
-        )
-      } ,
-      rmd_files,
-      fd
-    )
-    sink(type = "message")
-    close(fe)
-    rmd_files_deps <- c("rmarkdown", list_r_file_deps(fd))
+  # Find R file dependencies
+  r_files_deps <- character(0)
+  if (length(r_files) && check_r) {
+    r_files_deps <- list_r_file_deps(r_files, parse = parse_first)
   }
 
+  # Find Rmd file dependencies
+  op <- options(knitr.purl.inline = TRUE)
+  on.exit(options(op))
+  rmd_files_deps <- character(0)
+  if (length(rmd_files)) {
+    if (parse_first) {
+      d <- tempdir()
+      fd <- sub(pattern = "(.*)\\..*$", replacement = "\\1", basename(rmd_files))
+      fd <- vapply(fd, function(x) file.path(d, x), character(1))
+      on.exit(unlink(fd), add = TRUE)
+      fefil <- tempfile()
+      on.exit(unlink(fefil), add = TRUE)
+      fe <- file(fefil, "w")
+      sink(fe, type = "message")
+      mapply(
+        function(x,y) {
+          try(
+            knitr::purl(input = x, output = y, quiet = TRUE, documentation = 0),
+            silent = TRUE
+          )
+        } ,
+        rmd_files,
+        fd
+      )
+      sink(type = "message")
+      close(fe)
+      rmd_files_deps <- c("rmarkdown", list_r_file_deps(fd, parse = TRUE))
+    } else {
+      rmd_files_deps <- c("rmarkdown", list_r_file_deps(rmd_files, parse = FALSE))
+    }
+  }
+
+  # return unique dependencies
   deps <- unique(c(r_files_deps, rmd_files_deps))
   if (missing) {
     installed <- basename(find.package(deps))
@@ -97,13 +108,15 @@ list_deps <- function(factory = ".", missing = FALSE, check_r = TRUE, exclude_re
 
 # -------------------------------------------------------------------------
 
-list_r_file_deps <- function(filepaths) {
+list_r_file_deps <- function(filepaths, parse = FALSE) {
 
-  dat <- vapply(
-    filepaths,
-    function(x) paste(as.character(parse(x)), collapse = "\n"),
-    character(1)
-  )
+  if (parse) {
+    f <- function(x) paste(as.character(parse(x)), collapse = "\n")
+  } else {
+    f <- function(x) paste(readLines(x), collapse = "\n")
+  }
+
+  dat <- vapply(filepaths, f, character(1))
 
   colon_string <- r"---{([a-zA-Z][\w.]*)(?=:{2,3})}---"
   colon_greg <- gregexpr(colon_string, dat, perl = TRUE)

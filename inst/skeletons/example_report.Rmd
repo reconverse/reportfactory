@@ -12,6 +12,10 @@ output:
 knitr::opts_chunk$set(echo = TRUE, collapse = TRUE, fig.width = 8, fig.height = 6, dpi = 70)
 ```
 
+```{r, eval = FALSE}
+base::mean(c(1,2))
+```
+
 This is an example report to illustrate how `reportfactory` can be used.
 It loads the `fs` library purely for demonstration purposes. 
 
