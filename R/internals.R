@@ -37,6 +37,8 @@ factory_root <- function(directory = ".") {
   root
 }
 
+# -------------------------------------------------------------------------
+
 #' check whether a vector is "integer-like" to a given precision
 #'
 #' @param x vector to check
@@ -46,6 +48,8 @@ factory_root <- function(directory = ".") {
 is.wholenumber <- function(x, tol = .Machine$double.eps^0.5)  {
   all(abs(x - round(x)) < tol)
 }
+
+# -------------------------------------------------------------------------
 
 #' copy a file from the skeleton directory
 #'
@@ -58,6 +62,7 @@ copy_skeleton_file <- function(file, dest) {
   file.copy(f, dest)
 }
 
+# -------------------------------------------------------------------------
 
 #' Change part of the front yaml matter from an Rmarkdown file
 #'
@@ -103,6 +108,7 @@ change_yaml_matter <- function(input_file, ..., output_file) {
   }
 }
 
+# -------------------------------------------------------------------------
 
 #' Return rows of one data.frame not in another
 #'

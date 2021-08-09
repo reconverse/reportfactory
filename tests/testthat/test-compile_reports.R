@@ -25,7 +25,7 @@ test_that("test parameteriesed report output", {
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
 
-  expect_snapshot_file(md_file, "param_report_check.md", binary = FALSE)
+  expect_snapshot_file(md_file, "param_report_check.md", compare = compare_file_text)
 })
 
 test_that("test ignore_case works report output", {
@@ -54,7 +54,7 @@ test_that("test ignore_case works report output", {
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
 
-  expect_snapshot_file(md_file, "param_report_check.md", binary = FALSE)
+  expect_snapshot_file(md_file, "param_report_check.md", compare = compare_file_text)
 
   # Should error if not case insensitive
   expect_error(
@@ -98,7 +98,7 @@ test_that("test output folder gets recreated if not there", {
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
 
-  expect_snapshot_file(md_file, "outputs_deleted_param_report_check.md", binary = FALSE)
+  expect_snapshot_file(md_file, "outputs_deleted_param_report_check.md", compare = compare_file_text)
 })
 
 
@@ -127,7 +127,7 @@ test_that("parameteriesed report with missing param output but input", {
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
 
-  expect_snapshot_file(md_file, "missing_param_report_check.md", binary = FALSE)
+  expect_snapshot_file(md_file, "missing_param_report_check.md", compare = compare_file_text)
 })
 
 test_that("non parameteriesed report with param input", {
@@ -155,7 +155,7 @@ test_that("non parameteriesed report with param input", {
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
 
-  expect_snapshot_file(md_file, "nonparameterised_with_params.md", binary = FALSE)
+  expect_snapshot_file(md_file, "nonparameterised_with_params.md", compare = compare_file_text)
 })
 
 test_that("parameteriesed report with missing param (but in environment)", {
@@ -184,7 +184,7 @@ test_that("parameteriesed report with missing param (but in environment)", {
   md_file <- grep("\\.md", list_outputs(f), value = TRUE)
   md_file <- path(f, "outputs", md_file)
 
-  expect_snapshot_file(md_file, "missing_param_but_envir.md", binary = FALSE)
+  expect_snapshot_file(md_file, "missing_param_but_envir.md", compare = compare_file_text)
 })
 
 

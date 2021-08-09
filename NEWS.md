@@ -1,5 +1,7 @@
-# reportfactory (development version)
+# reportfactory 0.4.0
 
+* `list_deps()` now only checks the `report_sources` and `scripts` folders for
+  package dependencies.
 * `list_deps()` no longer uses the `checkpoint` package so the dependency has
   been dropped.
 
