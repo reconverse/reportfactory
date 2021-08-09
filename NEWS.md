@@ -1,4 +1,4 @@
-# reportfactory (development version)
+# reportfactory 0.4.0
 
 * `list_deps()` now only checks the `report_sources` and `scripts` folders for
   package dependencies.
