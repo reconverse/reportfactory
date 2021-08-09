@@ -40,8 +40,8 @@
 
 
 <meta property="og:title" content="List dependencies of reports within a factory — list_deps" />
-<meta property="og:description" content="This function can be used to list package dependencies based of the reports
-and R scripts within the factory." />
+<meta property="og:description" content="List package dependencies based on the reports and scripts within the
+report_sources and scripts directories respectively." />
 
 
 
@@ -73,7 +73,7 @@ and R scripts within the factory." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">reportfactory</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.3.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.0</span>
       </span>
     </div>
 
@@ -118,15 +118,16 @@ and R scripts within the factory." />
     </div>
 
     <div class="ref-description">
-    <p>This function can be used to list package dependencies based of the reports
-and R scripts within the factory.</p>
+    <p>List package dependencies based on the reports and scripts within the
+report_sources and scripts directories respectively.</p>
     </div>
 
     <pre class="usage"><span class='fu'>list_deps</span><span class='op'>(</span>
   factory <span class='op'>=</span> <span class='st'>"."</span>,
   missing <span class='op'>=</span> <span class='cn'>FALSE</span>,
   check_r <span class='op'>=</span> <span class='cn'>TRUE</span>,
-  exclude_readme <span class='op'>=</span> <span class='cn'>TRUE</span>
+  exclude_readme <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  parse_first <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -152,6 +153,14 @@ checked. Note that this will error if the script cannot be parsed.</p></td>
       <th>exclude_readme</th>
       <td><p>If TRUE (default) README files will not be checked for
 dependencies.</p></td>
+    </tr>
+    <tr>
+      <th>parse_first</th>
+      <td><p>If <code>TRUE</code> code will first be parsed for validity and
+unevaluated Rmd chunks will not be checked for dependencies. The default
+value is <code>FALSE</code> and, in this case, files will simply be checked line by
+line for calls to <code>library</code>, <code>require</code> or use of double, <code><a href='https://rdrr.io/r/base/ns-dblcolon.html'>::</a></code>, and triple,
+<code><a href='https://rdrr.io/r/base/ns-dblcolon.html'>:::</a></code> function calls.</p></td>
     </tr>
     </table>
 
