@@ -1,10 +1,10 @@
 Package: reportfactory
 Title: Lightweight Infrastructure for Handling Multiple R Markdown Documents
-Version: 0.4.0
+Version: 0.4.1
 Authors@R: c(
-  person("Thibaut", "Jombart", role = "aut", email = "thibautjombart@gmail.com"),
+  person("Thibaut", "Jombart", role = c("aut", "cre"), email = "thibautjombart@gmail.com"),
   person("Amy", "Gimma", role = "ctb", email = "amyg225@gmail.com"),
-  person("Tim", "Taylor", role =c("aut", "cre"), email = "tim.taylor@hiddenelephants.co.uk",
+  person("Tim", "Taylor", role = "aut", email = "tim.taylor@hiddenelephants.co.uk",
          comment = c(ORCID = "0000-0002-8587-7113"))
  )
 Description: Provides an infrastructure for handling multiple R Markdown
