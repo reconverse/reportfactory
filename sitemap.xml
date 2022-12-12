@@ -1,54 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/index.html</loc>
+    <loc>/404.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/archive_reports.html</loc>
+    <loc>/CODE_OF_CONDUCT.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/clean_report_sources.html</loc>
+    <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/compile_report.html</loc>
+    <loc>/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/install_deps.html</loc>
+    <loc>/authors.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/list_deps.html</loc>
+    <loc>/index.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/list_outputs.html</loc>
+    <loc>/news/index.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/list_reports.html</loc>
+    <loc>/reference/compile_reports.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/new_factory.html</loc>
+    <loc>/reference/factory_overview.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/random_alphanum.html</loc>
+    <loc>/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/random_factory.html</loc>
+    <loc>/reference/install_deps.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/rfh_load_scripts.html</loc>
+    <loc>/reference/list_deps.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/update_reports.html</loc>
+    <loc>/reference/list_outputs.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/reference/validate_factory.html</loc>
+    <loc>/reference/list_reports.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/articles/faqs.html</loc>
+    <loc>/reference/new_factory.html</loc>
   </url>
   <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/articles/gettingstarted.html</loc>
-  </url>
-  <url>
-    <loc>https://www.repidemicsconsortium.org/reportfactory/articles/howitworks.html</loc>
+    <loc>/reference/validate_factory.html</loc>
   </url>
 </urlset>
