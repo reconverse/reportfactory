@@ -1,3 +1,7 @@
+# reportfactory 0.4.1
+
+* maintainer changed to Thibaut Jombart
+
 # reportfactory 0.4.0
 
 * `list_deps()` now only checks the `report_sources` and `scripts` folders for
